@@ -16,6 +16,7 @@ class Combinaison{
     + Combinaison(): Combinaison 
     + getType(): Type 
     + getScore(): int 
+    + toString(): String
 }
 
 class Joueur{
@@ -25,16 +26,22 @@ class Joueur{
     + getPied(): List<Carte>
     + getId(): int
     + setId(int new_id)
-    + removeCarte(Carte carte)
-    + addCarte(Carte carte)
-    + nombreDeCartes(): int
 }
 
 class Card_list{
-    - cartes: List<Carte>
+    - liste_cartes: List<Carte>
+    - int taille_max
+    + Card_list(): Card_list
+    + Card_list(int taille_max): Card_list
+    + ajouterCarte(Carte new_carte): boolean
+    + removeCarte(Carte old_carte)
     + nombreDeCartes(): int 
-    + ajouterCarte(Carte new_carte) 
     + getCartes(): List<Carte> 
+    + getValeurCarte(int indice_carte): int
+    + getCouleurCarte(int indice_carte): Couleur
+    + toString(): String
+ 
+    
 }
 
 Combinaison --|> Card_list
