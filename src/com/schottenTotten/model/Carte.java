@@ -22,6 +22,17 @@ public class Carte {
         return valeur;
     }
 
+    public void setCouleur(Couleur new_color){
+        this.couleur = new_color;
+    }
+
+    public void setValeur(int new_valeur){
+        if (valeur < 1 || valeur > 9) {
+            throw new IllegalArgumentException("La valeur doit être comprise entre 1 et 9.");
+        }
+        this.valeur = new_valeur;
+    }
+
     // Définition des couleurs
     public enum Couleur {
         ROUGE,
@@ -31,4 +42,13 @@ public class Carte {
         VIOLET,
         ROSE
     }
+
+    @Override
+    public String toString() {
+        return "Carte{" +
+                "couleur=" + couleur +
+                ", valeur=" + valeur +
+                '}';
+    }
+
 }

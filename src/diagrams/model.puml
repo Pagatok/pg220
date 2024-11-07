@@ -1,0 +1,27 @@
+@startuml
+
+class Carte{
+    - valeur: int
+    - couleur: enum Couleur
+    + Carte(): Carte
+    + getValeur(): int
+    + getCouleur(): Couleur
+    + setValeur(int valeur)
+    + setCouleur(Couleur couleur)
+}
+
+class Combinaison{
+    - cartes: List<Carte>
+    - type: enum Type
+    + Combinaison(): Combinaison 
+    + ajouterCarte(Carte new_carte) 
+    + getCartes(): List<Carte> 
+    + getType(): Type 
+    + getScore(): int 
+    + nombreDeCartes(): int 
+}
+
+Combinaison -> Carte
+
+
+@enduml

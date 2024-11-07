@@ -8,6 +8,7 @@ L'arborescence du projet est organisée comme suit :
 
 src/
 ├── classes/
+├── diagrams/
 └── com/
     └── schottenTotten/ 
         ├── model/ 

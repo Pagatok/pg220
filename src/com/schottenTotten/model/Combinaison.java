@@ -13,7 +13,7 @@ public class Combinaison {
 
     public Combinaison() {
         this.cartes = new ArrayList<>();
-        this.type = calculate_type();
+        this.type = Type.SOMME;
     }
 
     public void ajouterCarte(Carte carte) {
@@ -40,12 +40,11 @@ public class Combinaison {
 
     public int getScore(){
 
-        // Récupère les valeurs des cartes et les trie
-        int valeur1 = cartes.get(0).getValeur();
-        int valeur2 = cartes.get(1).getValeur();
-        int valeur3 = cartes.get(2).getValeur();
+        int somme = 0;
 
-        int somme = valeur1 + valeur2 + valeur3;
+        for(int i = 0; i < nombreDeCartes(); i++){
+            somme = somme + cartes.get(i).getValeur();
+        }
 
         return somme;
     }
@@ -134,6 +133,8 @@ public class Combinaison {
     public String toString() {
         return "Combinaison{" +
                 "cartes=" + cartes +
+                ", type=" + type +
                 '}';
     }
+
 }
