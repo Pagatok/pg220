@@ -1,6 +1,7 @@
 # Schotten Totten
 
 Ce projet est une implémentation du jeu Schotten Totten en Java, structurée en plusieurs packages pour organiser le code de manière claire et modulaire.
+[Régle du Jeu:](PG220_Projet_1.pdf)
 
 ## Structure du projet
 
@@ -19,7 +20,9 @@ src/
 
 ### Détails des packages
 
-- **com.schottenTotten.model**  
+Pour une description avancée des classes: 
+
+- **com.schottenTotten.model**  [Schéma:](src/diagrams/model.png)
   Contient les classes de base du modèle de jeu.  
   Exemple de classes :
   - `Carte` : représente une carte de jeu.

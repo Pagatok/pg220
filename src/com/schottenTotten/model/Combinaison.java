@@ -1,36 +1,29 @@
 package com.schottenTotten.model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import com.schottenTotten.model.Carte.Couleur;
 
-public class Combinaison {
+public class Combinaison extends Card_list{
 
-    private final List<Carte> cartes;
+    private Card_list cartes;
     private Type type;
 
     public Combinaison() {
-        this.cartes = new ArrayList<>();
+        this.cartes = new Card_list();
         this.type = Type.SOMME;
     }
 
-    public void ajouterCarte(Carte carte) {
-        if (cartes.size() >= 3) {
-            throw new IllegalStateException("Une combinaison ne peut contenir que 3 cartes au maximum.");
+
+    public int ajouterCarte(Carte carte){
+        int taille_max = 3;
+        if(super.ajouterCarte(carte, taille_max) == 1){
+            calculate_type();
+            return 1;
         }
-        cartes.add(carte);
-        this.type = calculate_type();
+        return -1;
     }
 
-    public List<Carte> getCartes() {
-        return new ArrayList<>(cartes); // Retourne une copie pour protéger la liste originale
-    }
-
-    public int nombreDeCartes() {
-        return cartes.size();
-    }
 
     // Renvoie le type de combinaison ()
     public Type getType(){
@@ -38,17 +31,7 @@ public class Combinaison {
     }
 
 
-    public int getScore(){
-
-        int somme = 0;
-
-        for(int i = 0; i < nombreDeCartes(); i++){
-            somme = somme + cartes.get(i).getValeur();
-        }
-
-        return somme;
-    }
-
+    
 
     // ------------------------- FONCTIONS PRIVEES -------------------------
 
@@ -60,9 +43,9 @@ public class Combinaison {
         }
 
         // Récupère les valeurs des cartes et les trie
-        int valeur1 = cartes.get(0).getValeur();
-        int valeur2 = cartes.get(1).getValeur();
-        int valeur3 = cartes.get(2).getValeur();
+        int valeur1 = getValeurCarte(0);
+        int valeur2 = getValeurCarte(1);
+        int valeur3 = getValeurCarte(2);
 
         int[] valeurs = {valeur1, valeur2, valeur3};
         Arrays.sort(valeurs);
@@ -76,9 +59,10 @@ public class Combinaison {
             return false; // La combinaison doit contenir exactement 3 cartes pour former une suite
         }
 
-        Couleur color1 = cartes.get(0).getCouleur();
-        Couleur color2 = cartes.get(1).getCouleur();
-        Couleur color3 = cartes.get(2).getCouleur();
+        Couleur color1 = getCouleurCarte(0);
+        Couleur color2 = getCouleurCarte(1);
+        Couleur color3 = getCouleurCarte(2);
+
 
         return (color1 == color2) && (color2 == color3);
     }
@@ -89,9 +73,10 @@ public class Combinaison {
             return false; // La combinaison doit contenir exactement 3 cartes pour former une suite
         }
 
-        int valeur1 = cartes.get(0).getValeur();
-        int valeur2 = cartes.get(1).getValeur();
-        int valeur3 = cartes.get(2).getValeur();
+        // Récupère les valeurs des cartes et les trie
+        int valeur1 = getValeurCarte(0);
+        int valeur2 = getValeurCarte(1);
+        int valeur3 = getValeurCarte(2);
 
         return (valeur1 == valeur2) && (valeur2 == valeur3);
     }
@@ -129,12 +114,9 @@ public class Combinaison {
         SUITE_COULEUR
     }
 
-    @Override
-    public String toString() {
-        return "Combinaison{" +
-                "cartes=" + cartes +
-                ", type=" + type +
-                '}';
+    
+    public String toString(){
+        return "Combinaison: " + super.toString() + ", type=" + type +'}';
     }
 
 }

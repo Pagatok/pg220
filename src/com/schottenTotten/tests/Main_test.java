@@ -1,4 +1,4 @@
-package com.schottenTotten;
+package com.schottenTotten.tests;
 
 import com.schottenTotten.model.Carte;
 import com.schottenTotten.model.Combinaison;

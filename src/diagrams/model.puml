@@ -11,17 +11,35 @@ class Carte{
 }
 
 class Combinaison{
-    - cartes: List<Carte>
+    - cartes: Card_list
     - type: enum Type
     + Combinaison(): Combinaison 
-    + ajouterCarte(Carte new_carte) 
-    + getCartes(): List<Carte> 
     + getType(): Type 
     + getScore(): int 
-    + nombreDeCartes(): int 
 }
 
-Combinaison -> Carte
+class Joueur{
+    - id_joueur: int
+    - pied: List<Carte>
+    + Joueur(): Joueur
+    + getPied(): List<Carte>
+    + getId(): int
+    + setId(int new_id)
+    + removeCarte(Carte carte)
+    + addCarte(Carte carte)
+    + nombreDeCartes(): int
+}
+
+class Card_list{
+    - cartes: List<Carte>
+    + nombreDeCartes(): int 
+    + ajouterCarte(Carte new_carte) 
+    + getCartes(): List<Carte> 
+}
+
+Combinaison --|> Card_list
+Joueur --|> Card_list
+Card_list --> Carte
 
 
 @enduml
