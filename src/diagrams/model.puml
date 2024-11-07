@@ -1,4 +1,4 @@
-@startuml
+@startuml model
 
 class Carte{
     - valeur: int
