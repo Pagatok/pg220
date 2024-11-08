@@ -50,10 +50,6 @@ public class Combinaison extends Card_list{
     // Fonctions pour checker le type de combinaision
     private boolean check_suite(){
 
-        if (cartes.nombreDeCartes() != 3) {
-            return false; // La combinaison doit contenir exactement 3 cartes pour former une suite
-        }
-
         // Récupère les valeurs des cartes et les trie
         int valeur1 = getValeurCarte(0);
         int valeur2 = getValeurCarte(1);
@@ -62,16 +58,11 @@ public class Combinaison extends Card_list{
         int[] valeurs = {valeur1, valeur2, valeur3};
         Arrays.sort(valeurs);
 
-        System.out.print(valeurs);
-
         // Vérifie si les valeurs sont consécutives
         return (valeurs[1] == valeurs[0] + 1) && (valeurs[2] == valeurs[1] + 1);
     }
 
     private boolean check_couleur(){
-        if (cartes.nombreDeCartes() != 3) {
-            return false; // La combinaison doit contenir exactement 3 cartes pour former une suite
-        }
 
         Couleur color1 = getCouleurCarte(0);
         Couleur color2 = getCouleurCarte(1);
@@ -82,10 +73,6 @@ public class Combinaison extends Card_list{
     }
 
     private boolean check_brelan(){
-
-        if (cartes.nombreDeCartes() != 3) {
-            return false; // La combinaison doit contenir exactement 3 cartes pour former une suite
-        }
 
         // Récupère les valeurs des cartes et les trie
         int valeur1 = getValeurCarte(0);
@@ -101,7 +88,6 @@ public class Combinaison extends Card_list{
 
     // Renvoie le type de combinaision de la combianiaison actuelle
     private Type calculate_type(){
-        System.out.print(nombreDeCartes());
         if(nombreDeCartes() < 3){
             return Type.SOMME;
         }

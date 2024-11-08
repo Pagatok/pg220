@@ -45,7 +45,7 @@ public class Carte {
 
     @Override
     public String toString() {
-        return "Carte{" +
+        return "{" +
                 "couleur=" + couleur +
                 ", valeur=" + valeur +
                 '}';
