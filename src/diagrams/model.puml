@@ -21,7 +21,7 @@ class Combinaison{
 
 class Joueur{
     - id_joueur: int
-    - pied: List<Carte>
+    - pied: Card_list
     + Joueur(): Joueur
     + getPied(): List<Carte>
     + getId(): int
@@ -45,7 +45,7 @@ class Card_list{
 }
 
 Combinaison --|> Card_list
-Joueur --|> Card_list
+Joueur --> Card_list
 Card_list --> Carte
 
 
