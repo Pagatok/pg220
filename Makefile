@@ -5,7 +5,7 @@ DIAGRAMS_DIR = src/diagram
 SOURCES_MODEL =$(shell find $(SRC_DIR)/com/schottenTotten/model -name "*.java")
 SOURCES_CONTROLLER = $(shell find $(SRC_DIR)/com/schottenTotten/controller -name "*.java")
 SOURCES_DIAGRAMS = $(shell find $(SRC_DIR)/diagrams -name "*.puml")
-
+SOURCES_TESTS = $(shell find $(SRC_DIR)/com/schottenTotten/tests -name "*.java")
 
 # Commande pour PlantUML
 PLANTUML_CMD = plantuml
@@ -22,7 +22,8 @@ model:
 controller:
 	javac -d $(CLASS_DIR) $(SOURCES_CONTROLLER)
 
-run_tests:
+run_tests: model
+	javac -d $(CLASS_DIR) $(SOURCES_TESTS)
 	java -cp $(CLASS_DIR) com.schottenTotten.tests.Main_test
 
 # Génération du diagramme avec PlantUML

@@ -52,16 +52,25 @@ class Borne{
     - combinaisonJ2: Combinaison
     - revendique: boolean
     - id_joueur: int
-    + Borne(): Borne
+    - id_borne: int
+    + Borne(int id_borne): Borne
+    + Borne(Combinaison J1, Combinaison J2, int id_borne): Borne
     + determinerRevendiquation(): int
     + isRevendique(): boolean
     + getIdJoueur(): int
+    + ajouterCarte(int id_joueur, Carte carte): boolean
+    + tostring(): String
 }
 
 class Frontiere{
     - nbrBorne: int
     - liste_bornes: List<Borne>
     + Frontiere(): Frontiere
+    + getBorne(int id_borne): Borne
+    + getNbrBornes(int id_joueur): int
+    + getSuccessifs(int id_joueur): int
+    + checkVictoire(): int
+    + toString(): string
 }
 
 

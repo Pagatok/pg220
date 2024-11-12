@@ -6,13 +6,33 @@ public class Borne {
     private Combinaison J2;
     private boolean revendique;
     private int id_joueur; // 1 pour J1, 2 pour J2, 0 si neutre
+    private int id_borne;
 
-    public Borne(Combinaison J1, Combinaison J2) {
+    public Borne(int id_borne){
+        this.J1 = new Combinaison();
+        this.J2 = new Combinaison();
+        this.revendique = false;
+        this.id_joueur = 0;
+        this.id_borne = id_borne;
+    }
+
+    public Borne(Combinaison J1, Combinaison J2, int id_borne) {
         this.J1 = J1;
         this.J2 = J2;
         this.revendique = false; // Initialement non revendiquée
         this.id_joueur = 0;      // Neutre initialement
+        this.id_borne = id_borne;
     }
+
+    public boolean ajouterCarte(int id_joueur, Carte carte){
+        if(id_joueur == 1){
+            return J1.ajouterCarte(carte);
+        }
+        else{
+            return J2.ajouterCarte(carte);
+        }
+    }
+
 
     // Méthode pour comparer les combinaisons et déterminer le gagnant
     public void determinerRevendication() {
@@ -72,6 +92,10 @@ public class Borne {
         return id_joueur;
     }
 
+
+    public String toString(){
+        return "Borne " + this.id_borne + ": {" + this.J1.toString() + " vs " + this.J2.toString() + "}";
+    }
 
     
 }

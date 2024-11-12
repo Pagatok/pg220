@@ -1,8 +1,7 @@
 package com.schottenTotten.tests;
 
-import com.schottenTotten.model.Carte;
-import com.schottenTotten.model.Combinaison;
-import com.schottenTotten.model.Joueur;
+import com.schottenTotten.model.*;
+
 
 public class Main_test {
 
@@ -22,7 +21,14 @@ public class Main_test {
         j1.retirerCarte(carte_3);
         j1.retirerCarte(carte_3);
 
-        System.out.println(j1.toString());
+        Frontiere frontiere = new Frontiere();
+        Borne borne = frontiere.getBorne(1);
+        borne.ajouterCarte(1, carte_1);
+        borne.ajouterCarte(2, carte_2);
+
+        System.out.println("Yo ceci est un");
+
+        System.out.println(frontiere.toString());
 
     }
 
