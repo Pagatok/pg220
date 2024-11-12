@@ -42,6 +42,8 @@ class Card_list{
     + getCartes(): List<Carte> 
     + getValeurCarte(int indice_carte): int
     + getCouleurCarte(int indice_carte): Couleur
+    + shuffle()
+    + piocher(): Carte
     + toString(): String   
 }
 
@@ -62,11 +64,22 @@ class Frontiere{
     + Frontiere(): Frontiere
 }
 
+
+class Pioche{
+    - Card_list liste_carte
+    - int nbr_cartes
+    + Pioche(): Pioche
+    + shuffle()
+    + piocher(): Carte
+
+}
+
 Combinaison --|> Card_list
 Joueur --> Card_list
 Card_list --> Carte
 Borne --> Combinaison
 Frontiere --> Borne
+Pioche --> Card_list
 
 
 @enduml

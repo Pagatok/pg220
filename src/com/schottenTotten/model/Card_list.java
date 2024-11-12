@@ -2,6 +2,7 @@ package com.schottenTotten.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 
 import com.schottenTotten.model.Carte.Couleur;
 
@@ -35,6 +36,14 @@ public class Card_list {
         liste_cartes.remove(carte);
     }
 
+    
+    public Carte piocher(){
+        Carte carte = liste_cartes.get(0);
+        liste_cartes.remove(0);
+        return carte;
+    }
+
+
     public int nombreDeCartes(){
         return liste_cartes.size();
     }
@@ -52,6 +61,10 @@ public class Card_list {
     public Couleur getCouleurCarte(int indice_carte){
         Couleur valeur = liste_cartes.get(indice_carte).getCouleur();
         return valeur;
+    }
+
+    public void shuffle(){
+        Collections.shuffle(liste_cartes);
     }
 
     @Override
