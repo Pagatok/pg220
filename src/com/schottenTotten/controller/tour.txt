@@ -7,7 +7,7 @@ Mise en place:
     Chaque joueur pioche 6 cartes
 
 Tour:
-    on affiche la main du joueur
+    on affiche la main du joueur et la frontière
     Le joeuur choisit une carte de sa main et une bornes
     Il pose la carte sur la borne
     le joueur revendique les bornes qu il veut (il faut qu'il y ai 3 carets de chaque côté sauf si il peut prouver que quelque soit la combianison adverse, il ne peut gagner)

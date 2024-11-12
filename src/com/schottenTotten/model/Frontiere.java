@@ -64,12 +64,12 @@ public class Frontiere {
     }
 
     public String toString(){
-        String answer = "Frontière: [";
+        String answer = "Frontière: \n";
         for(Borne borne : liste_bornes){
             answer += borne.toString();
-            answer += ", ";
+            answer += "\n";
         }
-        return answer + "]";
+        return answer;
     }
 
 }

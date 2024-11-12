@@ -1,38 +1,36 @@
-# Chemins vers les fichiers et dossiers
-SRC_DIR = src
-CLASS_DIR = $(SRC_DIR)/classes
-DIAGRAMS_DIR = src/diagram
-SOURCES_MODEL =$(shell find $(SRC_DIR)/com/schottenTotten/model -name "*.java")
-SOURCES_CONTROLLER = $(shell find $(SRC_DIR)/com/schottenTotten/controller -name "*.java")
-SOURCES_DIAGRAMS = $(shell find $(SRC_DIR)/diagrams -name "*.puml")
-SOURCES_TESTS = $(shell find $(SRC_DIR)/com/schottenTotten/tests -name "*.java")
+# Chemins vers les dossiers source et de compilation
+SRC_DIR = src/com/schottenTotten
+CLASS_DIR = src/classes
 
-# Commande pour PlantUML
-PLANTUML_CMD = plantuml
+# Trouver tous les fichiers .java dans les sous-dossiers
+SOURCES_MODEL = $(shell find $(SRC_DIR)/model -name "*.java")
+SOURCES_CONTROLLER = $(shell find $(SRC_DIR)/controller -name "*.java")
+SOURCES_TESTS = $(shell find $(SRC_DIR)/tests -name "*.java")
 
-# Cible par défaut : compile et génère le diagramme
-all: model controller
+# Cible par défaut : compile tout
+all: controller
 
-
-
-# Règle pour compiler tous les fichiers .java dans SRC_DIR
-model:
+# Compilation des classes model
+model: $(SOURCES_MODEL)
+	@echo "Compilation des classes du modèle"
+	mkdir -p $(CLASS_DIR)
 	javac -d $(CLASS_DIR) $(SOURCES_MODEL)
 
-controller:
-	javac -d $(CLASS_DIR) $(SOURCES_CONTROLLER)
+# Compilation des classes controller, qui dépendent du modèle
+controller: model $(SOURCES_CONTROLLER)
+	@echo "Compilation des classes du contrôleur"
+	javac -d $(CLASS_DIR) -cp $(CLASS_DIR) $(SOURCES_CONTROLLER)
 
-run_tests: model
-	javac -d $(CLASS_DIR) $(SOURCES_TESTS)
+# Compilation des tests, qui dépendent du modèle et du contrôleur
+tests: controller $(SOURCES_TESTS)
+	@echo "Compilation des tests"
+	javac -d $(CLASS_DIR) -cp $(CLASS_DIR) $(SOURCES_TESTS)
 	java -cp $(CLASS_DIR) com.schottenTotten.tests.Main_test
+	
 
-# Génération du diagramme avec PlantUML
-diagram:
-	$(PLANTUML_CMD) -o . $(SOURCES_DIAGRAMS)
-
-# Nettoyage des fichiers compilés et des diagramme
+# Nettoyage des fichiers compilés
 clean:
-	rm -rf $(CLASS_DIR)/*
-	rm -f src/diagrams/*.png
+	@echo "Nettoyage des fichiers compilés"
+	rm -rf $(CLASS_DIR)
 
-.PHONY: all model controller run_tests diagram clean
+.PHONY: all model controller tests clean

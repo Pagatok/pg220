@@ -38,7 +38,7 @@ public class Joueur{
     }
 
     public String toString(){
-        return "{Joueur: " + id_joueur + ", Main: " + pied.toString();
+        return "Joueur: " + id_joueur + ", Main: " + pied.toString();
     }
 
     

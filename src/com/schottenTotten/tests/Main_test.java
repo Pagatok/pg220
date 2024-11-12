@@ -29,6 +29,7 @@ public class Main_test {
         System.out.println("Yo ceci est un");
 
         System.out.println(frontiere.toString());
+        System.out.println(j1.toString());
 
     }
 

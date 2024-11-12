@@ -26,13 +26,23 @@ public class Jeu {
         while(gaming){
 
             // Gestion d'un tour
-
             nbr_tours += 1;
 
-            // Selon que ce soit au J1 ou au J2 de joueru
-            if(nbr_tours % 2 == 1){
-                
+            // On définit l'id du joueur dont c'est le tour
+            int id_joueur = nbr_tours % 2;
+            if(id_joueur == 0){
+                id_joueur = 2;
             }
+
+            frontiere.toString();
+            System.out.println("\n");
+            if(id_joueur == 1){
+                J1.toString();
+            }
+            else{
+                J2.toString();
+            }
+            System.out.println("\n");
         }
     }
 }
