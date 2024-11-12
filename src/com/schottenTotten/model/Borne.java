@@ -1,6 +1,5 @@
 package com.schottenTotten.model;
 
-import java.util.List;
 
 public class Borne {
     private Combinaison J1;
@@ -18,7 +17,7 @@ public class Borne {
     // Méthode pour comparer les combinaisons et déterminer le gagnant
     public void determinerRevendication() {
         // Comparaison des types de combinaison
-        int comparaisonType = comparerTypes(J1.getType(), J2.getType());
+        int comparaisonType = comparerTypes();
 
         if (comparaisonType > 0) {
             // J1 a une meilleure combinaison
@@ -46,14 +45,22 @@ public class Borne {
     }
 
     // Méthode utilitaire pour comparer les types de combinaisons
-    private int comparerTypes(String typeJ1, String typeJ2) {
-        // Exemple d'ordre de puissance des types
-        List<String> types = List.of("Suite de même couleur", "Brelan", "Couleur", "Suite", "Somme");
+    // private int comparerTypes(String typeJ1, String typeJ2) {
+    //     // Exemple d'ordre de puissance des types
+    //     List<String> types = List.of("Suite de même couleur", "Brelan", "Couleur", "Suite", "Somme");
 
-        int indexJ1 = types.indexOf(typeJ1);
-        int indexJ2 = types.indexOf(typeJ2);
+    //     int indexJ1 = types.indexOf(typeJ1);
+    //     int indexJ2 = types.indexOf(typeJ2);
 
-        return Integer.compare(indexJ2, indexJ1); // Plus petit index signifie une meilleure combinaison
+    //     return Integer.compare(indexJ2, indexJ1); // Plus petit index signifie une meilleure combinaison
+    // }
+
+
+    private int comparerTypes(){
+        Combinaison.Type typeJ1 = J1.getType();
+        Combinaison.Type typeJ2 = J2.getType();
+
+        return typeJ1.compareTo(typeJ2);
     }
 
     // Getters pour accéder aux informations de la borne
@@ -64,4 +71,7 @@ public class Borne {
     public int getIdJoueur() {
         return id_joueur;
     }
+
+
+    
 }

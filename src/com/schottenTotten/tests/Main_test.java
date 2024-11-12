@@ -2,6 +2,7 @@ package com.schottenTotten.tests;
 
 import com.schottenTotten.model.Carte;
 import com.schottenTotten.model.Combinaison;
+import com.schottenTotten.model.Joueur;
 
 public class Main_test {
 
@@ -14,7 +15,14 @@ public class Main_test {
         combinaison.ajouterCarte(carte_2);
         combinaison.ajouterCarte(carte_3);
 
-        System.out.println(combinaison.toString());
+        Joueur j1 = new Joueur(1);
+        j1.ajouterCarte(carte_3);
+        j1.ajouterCarte(carte_2);
+        j1.ajouterCarte(carte_1);
+        j1.retirerCarte(carte_3);
+        j1.retirerCarte(carte_3);
+
+        System.out.println(j1.toString());
 
     }
 

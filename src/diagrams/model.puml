@@ -23,8 +23,11 @@ class Joueur{
     - id_joueur: int
     - pied: Card_list
     + Joueur(): Joueur
-    + getPied(): List<Carte>
+    + getPied(): Card_list
     + getId(): int
+    + getTaillePied(): int
+    + ajouterCarte(Carte new_carte)
+    + retirerCarte(Carte old_carte)
     + setId(int new_id)
 }
 
@@ -39,14 +42,31 @@ class Card_list{
     + getCartes(): List<Carte> 
     + getValeurCarte(int indice_carte): int
     + getCouleurCarte(int indice_carte): Couleur
-    + toString(): String
- 
-    
+    + toString(): String   
+}
+
+class Borne{
+    - combinaisonJ1: Combinaison
+    - combinaisonJ2: Combinaison
+    - revendique: boolean
+    - id_joueur: int
+    + Borne(): Borne
+    + determinerRevendiquation(): int
+    + isRevendique(): boolean
+    + getIdJoueur(): int
+}
+
+class Frontiere{
+    - nbrBorne: int
+    - liste_bornes: List<Borne>
+    + Frontiere(): Frontiere
 }
 
 Combinaison --|> Card_list
 Joueur --> Card_list
 Card_list --> Carte
+Borne --> Combinaison
+Frontiere --> Borne
 
 
 @enduml
