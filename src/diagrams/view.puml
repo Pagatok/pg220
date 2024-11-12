@@ -1,0 +1,13 @@
+@startuml view
+
+interface View{
+    + afficherFrontiere(Frontiere frontiere)
+    + afficherJoueur(Joueur J)
+}
+
+class Console{
+
+}
+
+Console ..|> View
+

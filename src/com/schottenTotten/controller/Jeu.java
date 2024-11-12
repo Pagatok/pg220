@@ -1,6 +1,7 @@
 package com.schottenTotten.controller;
 
 import com.schottenTotten.model.*;
+import com.schottenTotten.view.Interface;
 
 
 public class Jeu {
@@ -42,7 +43,7 @@ public class Jeu {
             else{
                 J2.toString();
             }
-            System.out.println("\n");
+            
         }
     }
 }

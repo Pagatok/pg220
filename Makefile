@@ -7,6 +7,10 @@ SOURCES_MODEL = $(shell find $(SRC_DIR)/model -name "*.java")
 SOURCES_CONTROLLER = $(shell find $(SRC_DIR)/controller -name "*.java")
 SOURCES_TESTS = $(shell find $(SRC_DIR)/tests -name "*.java")
 
+# Pour les diagrams
+PLANTUML_CMD = plantuml
+PUML_DIR = src/diagrams
+
 # Cible par défaut : compile tout
 all: controller
 
@@ -26,6 +30,9 @@ tests: controller $(SOURCES_TESTS)
 	@echo "Compilation des tests"
 	javac -d $(CLASS_DIR) -cp $(CLASS_DIR) $(SOURCES_TESTS)
 	java -cp $(CLASS_DIR) com.schottenTotten.tests.Main_test
+
+diagram:
+	$(PLANTUML_CMD) $(shell find $(PUML_DIR) -name "*.puml")
 	
 
 # Nettoyage des fichiers compilés
