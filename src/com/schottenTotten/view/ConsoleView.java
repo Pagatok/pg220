@@ -5,7 +5,7 @@ import java.util.Scanner;
 import com.schottenTotten.model.Frontiere;
 import com.schottenTotten.model.Joueur;
 
-public class Console implements View{
+public class ConsoleView implements View{
 
     private Scanner scanner = new Scanner(System.in);
 
@@ -17,5 +17,10 @@ public class Console implements View{
     @Override
     public void afficherJoueur(Joueur J){
         System.out.println(J.toString());
+    }
+
+    @Override
+    public void afficherMessage(String message){
+        System.out.println(message);
     }
 }

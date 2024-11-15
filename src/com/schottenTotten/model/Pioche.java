@@ -18,6 +18,7 @@ public class Pioche {
     }
 
     public void shuffle(){
+        System.out.println("Début du mélange de la pioche..\n");
         liste_carte.shuffle();
     }
 

@@ -1,13 +1,36 @@
 package com.schottenTotten.controller;
 
+import java.util.Scanner;
+
 import com.schottenTotten.model.*;
-import com.schottenTotten.view.Interface;
+import com.schottenTotten.view.ConsoleView;
+import com.schottenTotten.view.View;
 
 
 public class Jeu {
-    public static void jeu(String args[]){
+    public static void main(String args[]){
+
+        // Choix du mode d'affichage
+        // Demander à l'utilisateur quel mode choisir
+        System.out.println("Choisissez le mode d'affichage :");
+        System.out.println("1. Console");
+
+        Scanner scanner = new Scanner(System.in);
+        int choix = scanner.nextInt();
+        scanner.nextLine(); // Consommer la ligne
+
+        // Instancier l'objet `View` dynamiquement
+        View vue;
+        if (choix == 1) {
+            vue = new ConsoleView();
+        } else {
+            System.out.println("Veuillez chossir un mode d'affichage valide\n");
+            vue = new ConsoleView();
+        }
+
         
         // Mise en place
+        vue.afficherMessage("Début de la mise en place du jeu..\n");
 
         Frontiere frontiere = new Frontiere();
         Joueur J1 = new Joueur(1);
@@ -24,6 +47,9 @@ public class Jeu {
         boolean gaming = true;
         int nbr_tours = 0;
 
+        vue.afficherMessage("Fin de la mise en place du jeu!\n");
+        vue.afficherMessage("Début de la partie..\n");
+
         while(gaming){
 
             // Gestion d'un tour
@@ -35,13 +61,12 @@ public class Jeu {
                 id_joueur = 2;
             }
 
-            frontiere.toString();
-            System.out.println("\n");
+            vue.afficherFrontiere(frontiere);
             if(id_joueur == 1){
-                J1.toString();
+                vue.afficherJoueur(J1);
             }
             else{
-                J2.toString();
+                vue.afficherJoueur(J2);
             }
             
         }
