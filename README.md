@@ -7,23 +7,24 @@ Ce projet est une implémentation du jeu Schotten Totten en Java, structurée en
 
 L'arborescence du projet est organisée comme suit :
 
-src/
-├── classes/
-├── diagrams/
-└── com/
-    └── schottenTotten/ 
-        ├── model/ 
-        ├── controller/ 
-        ├── view/ 
-        └── ai/
+src/<br>
+├── classes/<br>
+├── diagrams/<br>
+└── com/<br>
+    └── schottenTotten/ <br>
+        ├── model/ <br>
+        ├── controller/ <br>
+        ├── view/ <br>
+        └── ai/<br>
 
 
 ### Détails des packages
 
 Pour une description avancée des classes: 
 
-- **com.schottenTotten.model**  [Schéma:](src/diagrams/model.png)
-  Contient les classes de base du modèle de jeu.  
+- **com.schottenTotten.model**  
+  Contient les classes de base du modèle de jeu.
+  [Schéma:](src/diagrams/model.png)
   Exemple de classes :
   - `Carte` : représente une carte de jeu.
   - `Joueur` : représente un joueur humain ou IA.
@@ -35,8 +36,9 @@ Pour une description avancée des classes:
   - `Jeu` : classe principale qui initialise et gère la partie.
   - `TourManager` : gère les tours des joueurs.
 
-- **com.schottenTotten.view**  
+- **com.schottenTotten.view**
   Gère l'affichage et les interactions utilisateur.
+  [Schéma:](src/diagrams/view.png)
   Exemple de classes :
   - `ConsoleView` : interface utilisateur en mode console pour afficher le jeu et les instructions.
 
