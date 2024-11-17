@@ -7,10 +7,9 @@ import com.schottenTotten.view.ConsoleView;
 import com.schottenTotten.view.View;
 
 
-public class Jeu {        
-
-    public static void main(String args[]){
-
+public class Jeu {   
+    
+    public View select_view(){
         // Choix du mode d'affichage
         // Demander à l'utilisateur quel mode choisir
         System.out.println("Choisissez le mode d'affichage :");
@@ -29,6 +28,15 @@ public class Jeu {
             vue = new ConsoleView();
         }
 
+        scanner.close();
+
+        return vue;
+    }
+
+    public static void main(String args[]){
+
+        View vue = new ConsoleView();
+
         
         // Mise en place
 
@@ -46,7 +54,7 @@ public class Jeu {
             J2.ajouterCarte(pioche.piocher());
         }
 
-        boolean gaming = false;
+        boolean gaming = true;
         int nbr_tours = 0;
 
         vue.afficherMessage("Fin de la mise en place du jeu!");
@@ -64,12 +72,20 @@ public class Jeu {
             }
 
             vue.afficherFrontiere(frontiere);
+
+            Carte carte_jouee;
             if(id_joueur == 1){
                 vue.afficherJoueur(J1);
+                carte_jouee = vue.select_card(J1);
             }
             else{
                 vue.afficherJoueur(J2);
+                carte_jouee = vue.select_card(J2);
             }
+
+            System.out.println(carte_jouee.toString());
+
+            gaming = false;
             
         }
     }

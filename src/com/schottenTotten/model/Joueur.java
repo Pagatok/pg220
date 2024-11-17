@@ -20,6 +20,19 @@ public class Joueur{
         return pied.nombreDeCartes();
     }
 
+    // Prend en entrée une carte à jouer qui à prioiri appartient à la main du joueur
+    // La fonction vérifie si la carte appartient bien à la main du joueur et si c'est le cas la retire
+    public boolean jouerCarte(Carte carte){
+        int nbr = getTaillePied();
+        retirerCarte(carte);
+        if(getTaillePied() == nbr){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
     public void setId(int id_joueur){
         this.id_joueur = id_joueur;
     }
