@@ -7,7 +7,8 @@ import com.schottenTotten.view.ConsoleView;
 import com.schottenTotten.view.View;
 
 
-public class Jeu {
+public class Jeu {        
+
     public static void main(String args[]){
 
         // Choix du mode d'affichage
@@ -30,7 +31,8 @@ public class Jeu {
 
         
         // Mise en place
-        vue.afficherMessage("Début de la mise en place du jeu..\n");
+
+        vue.afficherMessage("Début de la mise en place du jeu..");
 
         Frontiere frontiere = new Frontiere();
         Joueur J1 = new Joueur(1);
@@ -44,10 +46,10 @@ public class Jeu {
             J2.ajouterCarte(pioche.piocher());
         }
 
-        boolean gaming = true;
+        boolean gaming = false;
         int nbr_tours = 0;
 
-        vue.afficherMessage("Fin de la mise en place du jeu!\n");
+        vue.afficherMessage("Fin de la mise en place du jeu!");
         vue.afficherMessage("Début de la partie..\n");
 
         while(gaming){
