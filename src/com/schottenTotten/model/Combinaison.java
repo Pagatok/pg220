@@ -117,7 +117,7 @@ public class Combinaison extends Card_list{
 
     
     public String toString(){
-        return "Combinaison: " + super.toString() + ", type=" + type +'}';
+        return "Cbn: " + super.toString() + ", type=" + type +'}';
     }
 
 }

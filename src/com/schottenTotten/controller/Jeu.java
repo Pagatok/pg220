@@ -65,26 +65,32 @@ public class Jeu {
             // Gestion d'un tour
             nbr_tours += 1;
 
-            // On définit l'id du joueur dont c'est le tour
-            int id_joueur = nbr_tours % 2;
-            if(id_joueur == 0){
+
+            // Choix du joueur actif
+            Joueur joueur_actif;
+            int id_joueur;
+            if(nbr_tours % 2 == 0){
+                joueur_actif = J2;
                 id_joueur = 2;
+            }
+            else{
+                joueur_actif = J1;
+                id_joueur = 1;
             }
 
             vue.afficherFrontiere(frontiere);
 
-            Carte carte_jouee;
-            if(id_joueur == 1){
-                vue.afficherJoueur(J1);
-                carte_jouee = vue.select_card(J1);
-                System.out.println(J1.appartientCarte(carte_jouee));
-            }
-            else{
-                vue.afficherJoueur(J2);
-                carte_jouee = vue.select_card(J2);
-            }
+            // Le joueur sélectionne une carte de la main
+            vue.afficherJoueur(joueur_actif);
+            Carte carte_jouee = vue.select_card(joueur_actif);
+            joueur_actif.retirerCarte(carte_jouee);
 
-            System.out.println(carte_jouee.toString());
+            // Puis il sélectionne la borne sur laquelle il veut la poser
+            Borne borne = vue.select_borne(joueur_actif, frontiere);
+            borne.ajouterCarte(id_joueur, carte_jouee);
+            vue.afficherMessage("Carte ajoutée sur la borne" + borne.getId());
+
+            vue.afficherFrontiere(frontiere);
             
 
             gaming = false;

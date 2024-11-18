@@ -6,6 +6,7 @@ import com.schottenTotten.model.Carte;
 import com.schottenTotten.model.Carte.Couleur;
 import com.schottenTotten.model.Frontiere;
 import com.schottenTotten.model.Joueur;
+import com.schottenTotten.model.Borne;
 
 public class ConsoleView implements View{
 
@@ -73,10 +74,39 @@ public class ConsoleView implements View{
         try {
             Carte carte = parseCarte(input);
             System.out.println("Carte entrée : " + carte);
-            return carte;
+            if(J.appartientCarte(carte)){
+                return carte;
+            }
+            else{
+                System.out.println("Erreur: Veuillez sélectionner une carte de votre main");
+                return select_card(J);
+            }
         } catch (IllegalArgumentException e) {
             System.out.println("Erreur : " + e.getMessage());
             return select_card(J);
         }
+    }
+
+    @Override
+    public Borne select_borne(Joueur J, Frontiere F){
+        System.out.print("Sur quelle Borne poser la carte ?: ");
+        int valeur = scanner.nextInt();
+        scanner.nextLine();
+
+        // Vérifier que la valeur est entre 1 et 9
+        if (valeur < 1 || valeur > 9) {
+            System.out.println("Veuillez rentrer une valeur entre 1 et 9");
+            return select_borne(J, F);
+        }
+
+        Borne borne_selected = F.getBorne(valeur);
+
+        // Vérifier que le joueur n'a pas déjà posé 3 cartes sur cette borne
+        if(borne_selected.nbr_cartes(J.getId()) >=3){
+            System.out.println("Erreur: Vous avez déjà posé 3 cartes sur cette borne");
+            return select_borne(J, F);
+        }
+
+        return borne_selected;
     }
 }

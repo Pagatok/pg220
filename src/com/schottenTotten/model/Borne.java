@@ -24,12 +24,25 @@ public class Borne {
         this.id_borne = id_borne;
     }
 
+    public int getId(){
+        return this.id_borne;
+    }
+
     public boolean ajouterCarte(int id_joueur, Carte carte){
         if(id_joueur == 1){
             return J1.ajouterCarte(carte);
         }
         else{
             return J2.ajouterCarte(carte);
+        }
+    }
+
+    public int nbr_cartes(int id_joueur){
+        if(id_joueur == 1){
+            return this.J1.nombreDeCartes();
+        }
+        else{
+            return this.J2.nombreDeCartes();
         }
     }
 
