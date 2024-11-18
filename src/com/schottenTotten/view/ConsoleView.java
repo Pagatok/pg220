@@ -73,13 +73,7 @@ public class ConsoleView implements View{
         try {
             Carte carte = parseCarte(input);
             System.out.println("Carte entrée : " + carte);
-            if(J.jouerCarte(carte)){
-                return carte;
-            }
-            else{
-                System.out.println("Erreur: Veuillez rentrer une carte de votre main!");
-                return select_card(J);
-            }
+            return carte;
         } catch (IllegalArgumentException e) {
             System.out.println("Erreur : " + e.getMessage());
             return select_card(J);

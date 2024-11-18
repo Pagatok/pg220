@@ -77,6 +77,7 @@ public class Jeu {
             if(id_joueur == 1){
                 vue.afficherJoueur(J1);
                 carte_jouee = vue.select_card(J1);
+                System.out.println(J1.appartientCarte(carte_jouee));
             }
             else{
                 vue.afficherJoueur(J2);
@@ -84,6 +85,7 @@ public class Jeu {
             }
 
             System.out.println(carte_jouee.toString());
+            
 
             gaming = false;
             
