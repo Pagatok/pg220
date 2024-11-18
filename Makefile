@@ -5,6 +5,7 @@ CLASS_DIR = src/classes
 # Trouver tous les fichiers .java dans les sous-dossiers
 SOURCES_MODEL = $(shell find $(SRC_DIR)/model -name "*.java")
 SOURCES_CONTROLLER = $(shell find $(SRC_DIR)/controller -name "*.java")
+SOURCES_VIEW = $(shell find $(SRC_DIR)/view -name "*.java")
 SOURCES_TESTS = $(shell find $(SRC_DIR)/tests -name "*.java")
 
 # Pour les diagrams
@@ -20,10 +21,18 @@ model: $(SOURCES_MODEL)
 	mkdir -p $(CLASS_DIR)
 	javac -d $(CLASS_DIR) $(SOURCES_MODEL)
 
-# Compilation des classes controller, qui dépendent du modèle
-controller: model $(SOURCES_CONTROLLER)
+
+# Compilation des classes view
+view: model $(SOURCES_VIEW)
+	@echo "Compilation des classes de l'affichage"
+	javac -d $(CLASS_DIR) -cp $(CLASS_DIR) $(SOURCES_VIEW)
+
+
+# Compilation des classes controller, qui dépendent du modèle et de view
+controller: view model $(SOURCES_CONTROLLER)
 	@echo "Compilation des classes du contrôleur"
 	javac -d $(CLASS_DIR) -cp $(CLASS_DIR) $(SOURCES_CONTROLLER)
+
 
 # Compilation des tests, qui dépendent du modèle et du contrôleur
 tests: controller $(SOURCES_TESTS)
@@ -31,9 +40,18 @@ tests: controller $(SOURCES_TESTS)
 	javac -d $(CLASS_DIR) -cp $(CLASS_DIR) $(SOURCES_TESTS)
 	java -cp $(CLASS_DIR) com.schottenTotten.tests.Main_test
 
+
+jeu: 
+	@echo "Lancement du jeu.."
+	java -cp $(CLASS_DIR) com.schottenTotten.controller.Jeu
+
+
 diagram:
+	@echo "Compilation des diagrams puml.."
+	{ echo "@startuml all"; tail -n +2 $(PUML_DIR)/model.puml | head -n -1; tail -n +2 $(PUML_DIR)/view.puml; } > $(PUML_DIR)/all.puml
+
 	$(PLANTUML_CMD) $(shell find $(PUML_DIR) -name "*.puml")
-	
+		
 
 # Nettoyage des fichiers compilés
 clean:

@@ -31,6 +31,11 @@ public class Card_list {
         return true;
     }
 
+    // Vérifie si une carte appartient à la liste et renvoie le booléun correspondant
+    public boolean carteIn(Carte carte){
+        return liste_cartes.contains(carte);
+    }
+
 
     public void removeCarte(Carte carte){
         liste_cartes.remove(carte);

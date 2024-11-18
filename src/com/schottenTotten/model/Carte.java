@@ -33,6 +33,19 @@ public class Carte {
         this.valeur = new_valeur;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Carte carte2 = (Carte) obj;
+        if(this.valeur == carte2.valeur && this.couleur == carte2.couleur){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     // Définition des couleurs
     public enum Couleur {
         ROUGE,

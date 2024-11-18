@@ -100,6 +100,9 @@ public class Combinaison extends Card_list{
         else if(check_couleur()){
             return Type.COULEUR;
         }
+        else if(check_suite()){
+            return Type.SUITE;
+        }
         return Type.SOMME;
     }
 
@@ -117,7 +120,7 @@ public class Combinaison extends Card_list{
 
     
     public String toString(){
-        return "Combinaison: " + super.toString() + ", type=" + type +'}';
+        return "Cbn: " + super.toString() + ", type=" + type +'}';
     }
 
 }

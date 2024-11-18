@@ -1,4 +1,4 @@
-@startuml model
+@startuml all
 
 class Carte{
     - valeur: int
@@ -99,5 +99,24 @@ Borne --> Combinaison
 Frontiere --> Borne
 Pioche --> Card_list
 
+
+
+interface View{
+    + afficherFrontiere(Frontiere frontiere);
+    + afficherJoueur(Joueur J);
+    + afficherMessage(String message);
+    + afficherBorne(Borne borne);
+    + afficherWinner(int id_joueur);
+
+    + select_card(Joueur J);
+    + select_borne(Joueur J, Frontiere F);
+    + select_revendication(Frontiere F);
+}
+
+class Console{
+
+}
+
+Console ..|> View
 
 @enduml

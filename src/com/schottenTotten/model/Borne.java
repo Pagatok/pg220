@@ -24,12 +24,25 @@ public class Borne {
         this.id_borne = id_borne;
     }
 
+    public int getId(){
+        return this.id_borne;
+    }
+
     public boolean ajouterCarte(int id_joueur, Carte carte){
         if(id_joueur == 1){
             return J1.ajouterCarte(carte);
         }
         else{
             return J2.ajouterCarte(carte);
+        }
+    }
+
+    public int nbr_cartes(int id_joueur){
+        if(id_joueur == 1){
+            return this.J1.nombreDeCartes();
+        }
+        else{
+            return this.J2.nombreDeCartes();
         }
     }
 
@@ -46,6 +59,7 @@ public class Borne {
             // J2 a une meilleure combinaison
             this.id_joueur = 2;
         } else {
+            System.out.println(this.toString());
             // Types égaux, comparaison des scores
             int scoreJ1 = J1.getScore();
             int scoreJ2 = J2.getScore();
@@ -63,17 +77,6 @@ public class Borne {
         // Si un joueur l'a revendiquée, mettre à jour `revendique`
         this.revendique = (this.id_joueur != 0);
     }
-
-    // Méthode utilitaire pour comparer les types de combinaisons
-    // private int comparerTypes(String typeJ1, String typeJ2) {
-    //     // Exemple d'ordre de puissance des types
-    //     List<String> types = List.of("Suite de même couleur", "Brelan", "Couleur", "Suite", "Somme");
-
-    //     int indexJ1 = types.indexOf(typeJ1);
-    //     int indexJ2 = types.indexOf(typeJ2);
-
-    //     return Integer.compare(indexJ2, indexJ1); // Plus petit index signifie une meilleure combinaison
-    // }
 
 
     private int comparerTypes(){

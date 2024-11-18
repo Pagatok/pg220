@@ -15,6 +15,7 @@ public class Pioche {
                 liste_carte.ajouterCarte(carte);
             }
         }
+        this.liste_carte = liste_carte;
     }
 
     public void shuffle(){
@@ -31,5 +32,9 @@ public class Pioche {
             System.out.println("Pioche impossible: la pioche est vide");
             return null;
         }
+    }
+
+    public String toString(){
+        return "Pioche: " + liste_carte.toString();
     }
 }
