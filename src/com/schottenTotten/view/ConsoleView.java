@@ -37,6 +37,14 @@ public class ConsoleView implements View{
         System.out.println(borne.toString());
     }
 
+    @Override
+    public void afficherWinner(int id_joueur){
+        System.out.println("------------------\n\n");
+        System.out.println("CONGRATULATION JOUEUR " + id_joueur);
+        System.out.println("YOU WIN\n\n");
+        System.out.println("------------------");
+    }
+
 
 
 

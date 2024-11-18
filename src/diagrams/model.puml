@@ -3,33 +3,40 @@
 class Carte{
     - valeur: int
     - couleur: enum Couleur
-    + Carte(): Carte
+    + Carte(Couleur couleur, int valeur): Carte
     + getValeur(): int
     + getCouleur(): Couleur
     + setValeur(int valeur)
     + setCouleur(Couleur couleur)
+    + equals(Object obj): boolean
+    + toString(): String
 }
 
 class Combinaison{
     - cartes: Card_list
     - type: enum Type
+
     + Combinaison(): Combinaison 
     + getType(): Type 
     + getScore(): int 
+    + ajouterCarte(Carte carte)
     + toString(): String
 }
+
 
 class Joueur{
     - id_joueur: int
     - pied: Card_list
-    + Joueur(): Joueur
-    + getPied(): Card_list
-    + getId(): int
+    + Joueur(int id_joueur): Joueur
     + getTaillePied(): int
+    + getId(): int
+    + setId(int id_joueur)
+    + appartientCarte(Carte carte): boolean
     + ajouterCarte(Carte new_carte)
     + retirerCarte(Carte old_carte)
-    + setId(int new_id)
+    + toString(): String
 }
+
 
 class Card_list{
     - liste_cartes: List<Carte>
@@ -37,6 +44,7 @@ class Card_list{
     + Card_list(): Card_list
     + Card_list(int taille_max): Card_list
     + ajouterCarte(Carte new_carte): boolean
+    + carteIn(carte carte): boolean
     + removeCarte(Carte old_carte)
     + nombreDeCartes(): int 
     + getCartes(): List<Carte> 
@@ -58,12 +66,12 @@ class Borne{
     + determinerRevendiquation(): int
     + isRevendique(): boolean
     + getIdJoueur(): int
+    + nbr_cartes(int id_joueur): int
     + ajouterCarte(int id_joueur, Carte carte): boolean
-    + tostring(): String
+    + toString(): String
 }
 
 class Frontiere{
-    - nbrBorne: int
     - liste_bornes: List<Borne>
     + Frontiere(): Frontiere
     + getBorne(int id_borne): Borne
@@ -80,6 +88,7 @@ class Pioche{
     + Pioche(): Pioche
     + shuffle()
     + piocher(): Carte
+    + toString(): String
 
 }
 

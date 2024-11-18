@@ -99,7 +99,19 @@ public class Jeu {
             if(borne_revend != null){
                 borne.determinerRevendication();
                 vue.afficherMessage("Le joueur " + borne.getIdJoueur() + " remporte la borne " + borne.getId());
+
+                // On vérifie si après la revendication on a un gagnant
+                // Si c'est le cas on arrete le jeu et célèbre le gagnant
+                int victorious = frontiere.checkVictoire();
+                if(victorious != 0){
+                    vue.afficherWinner(victorious);
+                    gaming = false;
+                }
             }
+
+            // Quand il finit son tour le joueur pioche et on cache sa main
+            joueur_actif.ajouterCarte(pioche.piocher());
+
         }
     }
 }

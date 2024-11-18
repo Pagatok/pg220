@@ -1,0 +1,5 @@
+@startuml jeu
+
+class Jeu{
+    + main(String args[]
+}
