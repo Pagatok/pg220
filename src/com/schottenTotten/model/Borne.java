@@ -37,6 +37,15 @@ public class Borne {
         }
     }
 
+    public Combinaison getCombinaison(int id_joueur){
+        if(id_joueur == 1){
+            return this.J1;
+        }
+        else{
+            return this.J2;
+        }
+    }
+
     public int nbr_cartes(int id_joueur){
         if(id_joueur == 1){
             return this.J1.nombreDeCartes();

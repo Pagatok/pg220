@@ -53,7 +53,7 @@ Pour une description avancée des classes:
 
 ## Roadmap
 
-Voici les fonctionnalités à implémenter das le futur pour améliorer le jeu
+Voici les fonctionnalités à implémenter dans le futur pour améliorer le jeu
 - [ ] Ajouter une interface utilisateur graphique.
 - [ ] Implémenter une Intelligence artificielle pour jouer.
 - [ ] Corriger l'affichage terminal pour le rendre plus joli et empecher le joueur 2 de voir la main du joueur 1.

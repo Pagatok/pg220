@@ -46,6 +46,7 @@ public class Combinaison extends Card_list{
     
 
     // ------------------------- FONCTIONS PRIVEES -------------------------
+    
 
     // Fonctions pour checker le type de combinaision
     private boolean check_suite(){

@@ -1,5 +1,6 @@
 package com.schottenTotten.model;
 
+import javax.smartcardio.Card;
 
 public class Joueur{
     
@@ -22,6 +23,10 @@ public class Joueur{
 
     public boolean appartientCarte(Carte carte){
         return this.pied.carteIn(carte);
+    }
+
+    public Card_list getPied(){
+        return this.pied;
     }
 
     // // Prend en entrée une carte à jouer qui à prioiri appartient à la main du joueur
