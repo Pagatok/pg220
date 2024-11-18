@@ -78,6 +78,8 @@ public class Jeu {
                 id_joueur = 1;
             }
 
+            vue.afficherMessage("Joueur " + id_joueur + ", C'est votre tour!");
+
             vue.afficherFrontiere(frontiere);
 
             // Le joueur sélectionne une carte de la main
@@ -91,10 +93,13 @@ public class Jeu {
             vue.afficherMessage("Carte ajoutée sur la borne" + borne.getId());
 
             vue.afficherFrontiere(frontiere);
-            
 
-            gaming = false;
-            
+            // Il sélectionne les bornes qu'il veut revendiquer
+            Borne borne_revend = vue.select_revendication(frontiere);
+            if(borne_revend != null){
+                borne.determinerRevendication();
+                vue.afficherMessage("Le joueur " + borne.getIdJoueur() + " remporte la borne " + borne.getId());
+            }
         }
     }
 }

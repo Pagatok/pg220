@@ -109,4 +109,33 @@ public class ConsoleView implements View{
 
         return borne_selected;
     }
+
+
+    @Override
+    public Borne select_revendication(Frontiere F){
+        System.out.println("Quelle borne voulez-vous revendiquer? (0 pour aucune): ");
+        int valeur = scanner.nextInt();
+        scanner.nextLine();
+
+        // Vérifier que la valeur est entre 1 et 9
+        if (valeur < 0 || valeur > 9) {
+            System.out.println("Veuillez rentrer une valeur entre 1 et 9 pour revendiquer une borne (0 pour aucune)");
+            return select_revendication(F);
+        }
+
+        if(valeur == 0){
+            return null;
+        }
+
+        Borne borne_selected = F.getBorne(valeur);
+
+        // Vérifier qu'il y a 3 cartes des 2 côtés de la borne
+        if(borne_selected.nbr_cartes(1) == 3 && borne_selected.nbr_cartes(2) == 3){
+            return borne_selected;
+        }
+        else{
+            System.out.println("Vous ne pouvez pas revendiquer cette borne, vous et votre adversaire devez avoir 3 cartes de poser sur celle-ci");
+            return select_revendication(F);
+        }
+    }
 }
