@@ -8,6 +8,7 @@ public interface View {
     void afficherFrontiere(Frontiere frontiere);
     void afficherJoueur(Joueur J);
     void afficherMessage(String message);
+    void afficherBorne(Borne borne);
 
     // Fonctions d'input
     Carte select_card(Joueur J);

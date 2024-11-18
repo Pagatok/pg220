@@ -18,6 +18,7 @@ public class Combinaison extends Card_list{
     @Override
     public boolean ajouterCarte(Carte carte){
         if(super.ajouterCarte(carte) == true){
+            System.out.println("Calculating type..");
             this.type = calculate_type();
             return true;
         }

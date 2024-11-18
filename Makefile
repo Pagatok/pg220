@@ -47,8 +47,11 @@ jeu:
 
 
 diagram:
+	@echo "Compilation des diagrams puml.."
+	{ echo "@startuml all"; tail -n +2 $(PUML_DIR)/model.puml | head -n -1; tail -n +2 $(PUML_DIR)/view.puml; } > $(PUML_DIR)/all.puml
+
 	$(PLANTUML_CMD) $(shell find $(PUML_DIR) -name "*.puml")
-	
+		
 
 # Nettoyage des fichiers compilés
 clean:
