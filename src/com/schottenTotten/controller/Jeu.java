@@ -33,10 +33,39 @@ public class Jeu {
         return vue;
     }
 
-    public static void main(String args[]){
+    public enum Variante{
+        BASIQUE,
+        TACTIQUE,
+    }
 
+    private Variante variante;
+
+
+    public void setVariante(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Choisissez la variante du jeu :");
+        System.out.println("1. Basique");
+        System.out.println("2. Tactique");
+
+        int choix = scanner.nextInt();
+        scanner.nextLine(); // Consommer la ligne
+
+        if(choix ==1){
+            this.variante = Variante.BASIQUE;
+        }
+        else if(choix == 2){
+            this.variante = Variante.TACTIQUE;
+        }
+        else{
+            System.out.println("Veuillez choisir une variante valide");
+        }
+    }
+    
+    public static void main(String args[]){
+        Jeu jeu = new Jeu();
         View vue = new ConsoleView();
 
+        jeu.choisirVariante();
         
         // Mise en place
 
