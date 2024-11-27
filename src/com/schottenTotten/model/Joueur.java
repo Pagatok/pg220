@@ -6,10 +6,17 @@ public class Joueur{
     private int id_joueur;
     private Card_list pied;
     private static int taille_max_main = 6;
+    private boolean is_ia = false;
 
     public Joueur(int id_joueur){
         this.id_joueur = id_joueur;
         this.pied = new Card_list(taille_max_main);
+    }
+
+    public Joueur(int id_joueur, boolean is_ia){
+        this.id_joueur = id_joueur;
+        this.pied = new Card_list(taille_max_main);
+        this.is_ia = is_ia;
     }
 
     public int getId(){
@@ -18,6 +25,10 @@ public class Joueur{
 
     public int getTaillePied(){
         return pied.nombreDeCartes();
+    }
+
+    public boolean isIA(){
+        return this.is_ia;
     }
 
     public boolean appartientCarte(Carte carte){

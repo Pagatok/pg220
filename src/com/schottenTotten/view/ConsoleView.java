@@ -101,11 +101,12 @@ public class ConsoleView implements View{
 
     @Override
     public Borne select_revendication(Frontiere F){
+
         System.out.println("Quelle borne voulez-vous revendiquer? (0 pour aucune): ");
         int valeur = scanner.nextInt();
         scanner.nextLine();
 
-        // Vérifier que la valeur est entre 1 et 9
+        // Vérifier que la valeur est entre 0 et 9
         if (valeur < 0 || valeur > 9) {
             System.out.println("Veuillez rentrer une valeur entre 1 et 9 pour revendiquer une borne (0 pour aucune)");
             return select_revendication(F);
@@ -125,6 +126,23 @@ public class ConsoleView implements View{
             System.out.println("Vous ne pouvez pas revendiquer cette borne, vous et votre adversaire devez avoir 3 cartes de poser sur celle-ci");
             return select_revendication(F);
         }
+    }
+
+
+    @Override
+    public int select_ia(int id_joueur, int nivmax_ia){
+
+        System.out.println("Le joueur " + id_joueur + " sera t-il un humain(0) ou une ia(Difficulté 1 à " + nivmax_ia + ")?");
+        int valeur = scanner.nextInt();
+        scanner.nextLine();
+
+        // Vérifier que la valeur est entre 0 et niv_max_ia
+        if (valeur < 0 || valeur > nivmax_ia) {
+            System.out.println("Veuillez rentrer une valeur entre 1 et " + nivmax_ia);
+            return select_ia(id_joueur, nivmax_ia);
+        }
+
+        return valeur;
     }
 
 
