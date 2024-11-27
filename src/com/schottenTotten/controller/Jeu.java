@@ -37,12 +37,19 @@ public class Jeu {
 
         View vue = new ConsoleView();
 
+
         
         // Mise en place
 
         vue.afficherMessage("Début de la mise en place du jeu..");
 
         Frontiere frontiere = new Frontiere();
+
+        for(int id_joueur = 1; id_joueur<3; id_joueur++){
+            //int j1_ai = vue.select_ia(id_joueur, ia.nivMaxAi);
+        }
+
+
         Joueur J1 = new Joueur(1);
         Joueur J2 = new Joueur(2);
 

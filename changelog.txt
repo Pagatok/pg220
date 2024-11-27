@@ -1,7 +1,5 @@
-- Ajout d'un boolean is_ia à la classe joueur pour savoir si un joueur est une ia
-	celui-ci est initialement set à false
-	il faut utiliser le nouveau constructeur (qui ne remplace pas l'ancien) pour créer un joueur IA
-
-- Ajout dans View et ConsoleView d'une fonction select_ia qui demande si le joueur à crée doit être une IA
-
-
+- Ajout d'une interface Ai et d'une classe BasicIa qui l'implemente
+	(Manque encore beacoup de fonctionnalités)
+	(Manque un digramme de description de ce package)
+- Peut-être plutot en faire une superclasse
+- A etudier quoi
