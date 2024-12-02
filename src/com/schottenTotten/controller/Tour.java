@@ -1,5 +1,6 @@
 package com.schottenTotten.controller;
 
+import com.schottenTotten.ai.*;
 import com.schottenTotten.model.*;
 import com.schottenTotten.view.*;
 
@@ -45,4 +46,25 @@ public class Tour {
             }
         }
     }
-}
+
+
+    public static void gestion_tour_ia(Joueur J){
+
+        // on récupère l'IA
+        Ai ia;
+        if(J.getNivIA() == 0){
+            System.out.println("Le joueur n'est pas une IA, cette gestion de tour ne devrait pas être appellée");
+        }
+        else if(J.getNivIA() == 1){
+            ia = new BasicAi();
+        }
+        else{
+            System.out.println("Niveau d'AI non valide");
+        }
+
+        // Le joueur sélectionne une carte de sa main
+
+        // puis il sélectionne la borne sur laquelle il veut la poser
+
+        // Il sélectionne les bornes qu'il veut revendiquer
+    }

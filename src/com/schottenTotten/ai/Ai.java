@@ -1,16 +1,12 @@
 package com.schottenTotten.ai;
 
-public class Ai {
+import com.schottenTotten.model.Carte;
+import com.schottenTotten.model.Joueur;
 
-    private final int nivMaxAi = 1;
+public interface Ai {
 
-    private Ai(){
-        throw new UnsupportedOperationException("Cette classe ne peut pas être instanciée.");
-    }
-
-    public int getMaxLvlIA(){
-        return this.nivMaxAi;
-    }
+    int getLvlIA();
+    Carte select_card(Joueur J);
 
     
 } 

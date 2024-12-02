@@ -4,19 +4,20 @@ import com.schottenTotten.model.*;
 
 import java.util.Random;
 
-public class BasicAi{
+public class BasicAi implements Ai{
 
-    private static int level_ia = 1;
+    private int level_ia = 1;
 
-    private BasicAi() {
-        throw new UnsupportedOperationException("Cette classe ne peut pas être instanciée.");
+    public BasicAi() {
     }
     
-    public static int getLvlIA(){
+    @Override
+    public int getLvlIA(){
         return level_ia;
     }
 
-    public static Carte select_card(Joueur J){
+    @Override
+    public Carte select_card(Joueur J){
 
         // Génère un nombre aléatoire entre 1 et taillemainjoueur
         int id_carte = random_return(1, J.getTaillePied());
