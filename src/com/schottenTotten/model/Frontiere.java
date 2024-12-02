@@ -7,6 +7,7 @@ public class Frontiere {
 
     private final List<Borne> liste_bornes;
     private static int nbr_bornes = 9;
+    private boolean gameover = false;
 
 
     // Constructeur de Base d'une Frontière intialisée avec 9 bornes vides
@@ -34,6 +35,10 @@ public class Frontiere {
         return score;
     }
 
+    public boolean is_gameover(){
+        return this.gameover;
+    }
+
 
     // renvoi le nombre de bornes successives possédées par le joueur
     public int getSuccessifs(int id_joueur){
@@ -57,6 +62,7 @@ public class Frontiere {
     public int checkVictoire(){
         for(int i=1; i<=2; i++){
             if(getNbrBornes(i) >= 5 || getSuccessifs(i) >= 3){
+                this.gameover = true;
                 return i;
             }
         }
@@ -71,5 +77,7 @@ public class Frontiere {
         }
         return answer;
     }
+
+
 
 }

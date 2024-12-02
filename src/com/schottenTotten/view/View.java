@@ -15,5 +15,5 @@ public interface View {
     Carte select_card(Joueur J);
     Borne select_borne(Joueur J, Frontiere F);
     Borne select_revendication(Frontiere F);
-    public int select_ia(int id_joueur, int nivmax_ia);
+    Joueur select_ia(int id_joueur, int nivmax_ia);
 } 
