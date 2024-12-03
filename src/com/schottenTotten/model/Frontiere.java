@@ -39,6 +39,10 @@ public class Frontiere {
         return this.gameover;
     }
 
+    public int getNbrBornesTotal(){
+        return nbr_bornes;
+    }
+
 
     // renvoi le nombre de bornes successives possédées par le joueur
     public int getSuccessifs(int id_joueur){
@@ -67,6 +71,22 @@ public class Frontiere {
             }
         }
         return 0;
+    }
+
+    // Renvoie la liste des id de bornes revendiquables
+    public List<Integer> getBornesDispo(){
+        List<Integer> intList = new ArrayList<>();
+
+        for(int i = 0; i<nbr_bornes; i++){
+            Borne borne_selected = this.getBorne(i+1);
+
+            // Vérifier qu'il y a 3 cartes des 2 côtés de la borne et qu'elle n'est pas revendiquée
+            if(borne_selected.nbr_cartes(1) == 3 && borne_selected.nbr_cartes(2) == 3 && borne_selected.isRevendique() == false){
+                intList.add(i);
+            }
+        }
+
+        return intList;
     }
 
     public String toString(){

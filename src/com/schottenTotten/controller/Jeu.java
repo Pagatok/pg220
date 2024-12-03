@@ -72,22 +72,19 @@ public class Jeu {
 
             // Choix du joueur actif
             Joueur joueur_actif;
-            int id_joueur;
             if(nbr_tours % 2 == 0){
                 joueur_actif = J2;
-                id_joueur = 2;
             }
             else{
                 joueur_actif = J1;
-                id_joueur = 1;
             }
 
             // on gére le tour du joueur
             if(joueur_actif.isIA() == false){
-                Tour.gestion_tour_real(vue, frontiere, joueur_actif, id_joueur);
+                Tour.gestion_tour_real(vue, frontiere, joueur_actif);
             }
             else{
-
+                Tour.gestion_tour_ia(vue, frontiere, joueur_actif);
             }
 
             // On vérifie si la parte est gagnée
