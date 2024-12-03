@@ -73,6 +73,10 @@ public class Frontiere {
         return 0;
     }
 
+    public void setGameOver(){
+        this.gameover = true;
+    }
+
     // Renvoie la liste des id de bornes revendiquables
     public List<Integer> getBornesDispo(){
         List<Integer> intList = new ArrayList<>();

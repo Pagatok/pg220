@@ -63,7 +63,6 @@ public class BasicAi implements Ai{
 
         // Génère un nombre aléatoire entre 0 et nbr_bornes
         List<Integer> liste_bornes = F.getBornesDispo();
-        System.out.println("Nbr de bornes à revendiquer dispo: " + liste_bornes.size() + " ");
         int id_borne = random_return(0, liste_bornes.size());
 
         if(id_borne == 0){

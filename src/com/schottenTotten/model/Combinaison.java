@@ -33,8 +33,6 @@ public class Combinaison extends Card_list{
 
     public int getScore(){
 
-        System.out.println("Nombre de cartes dans la combinaison: " + super.nombreDeCartes());
-
         int somme = 0;
 
         for(int i = 0; i < nombreDeCartes(); i++){

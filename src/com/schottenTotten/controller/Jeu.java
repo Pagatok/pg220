@@ -90,12 +90,16 @@ public class Jeu {
             // On vérifie si la parte est gagnée
             if(frontiere.is_gameover() == true){
                 gaming = false;
+                break;
             }
 
             // Quand il finit son tour le joueur pioche et on cache sa main
-            joueur_actif.ajouterCarte(pioche.piocher());
-            System.out.println("Nbr cartes dans la main: " + joueur_actif.getTaillePied());
-
+            if(pioche.piocher() != null){
+                joueur_actif.ajouterCarte(pioche.piocher());
+            }
+            else{
+                vue.afficherMessage("On continue la partie sans piocher");
+            }
         }
     }
 }

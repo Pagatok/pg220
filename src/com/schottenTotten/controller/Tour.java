@@ -7,6 +7,7 @@ import com.schottenTotten.view.*;
 
 public class Tour {
 
+    // Décalaration d'un constructeur vide pour empecher l'instanciation
     private Tour(){
         throw new UnsupportedOperationException("Cette classe ne peut pas être instanciée.");
     }
@@ -21,6 +22,10 @@ public class Tour {
         vue.afficherMessage("Joueur " + id_joueur + ", C'est votre tour!");
 
         vue.afficherFrontiere(frontiere);
+
+        if(check_loose(joueur_actif, vue, frontiere) == true){
+            return;
+        }
 
         // Le joueur sélectionne une carte de la main
         vue.afficherJoueur(joueur_actif);
@@ -68,6 +73,10 @@ public class Tour {
             return;
         }
 
+        if(check_loose(J, vue, F) == true){
+            return;
+        }
+
         // Le joueur sélectionne une carte de la main
         Carte carte_jouee = ia.select_card(J);
         J.retirerCarte(carte_jouee);
@@ -75,7 +84,6 @@ public class Tour {
         // Puis il sélectionne la borne sur laquelle il veut la poser
         int id_borne = ia.select_borne(J, F);
         Borne borne = F.getBorne(id_borne);
-        System.out.println(borne.toString());
         borne.ajouterCarte(J.getId(), carte_jouee);
 
         // Il sélectionne les bornes qu'il veut revendiquer
@@ -93,4 +101,29 @@ public class Tour {
             }
         }
     }
+
+
+
+    // ------------------------- FONCTIONS PRIVEES -------------------------
+
+
+    private static boolean check_loose(Joueur J, View vue, Frontiere F){
+        if(J.getTaillePied() == 0){
+            vue.afficherMessage("Vous n'avez plus de cartes dans votre main et c'est à vous de jouer. Vous avez donc perdu");
+            if(J.getId() == 1){
+                vue.afficherWinner(2);
+            }
+            else{
+                vue.afficherWinner(1);
+            }
+            F.setGameOver();
+            return true;
+        }
+        else{
+            return false;
+        }     
+    }
+
+
+
 }
