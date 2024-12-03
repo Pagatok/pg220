@@ -23,7 +23,7 @@ public class Tour {
 
         vue.afficherFrontiere(frontiere);
 
-        if(check_loose(joueur_actif, vue, frontiere) == true){
+        if(check_loose(joueur_actif, vue, frontiere)){
             return;
         }
 
@@ -40,38 +40,22 @@ public class Tour {
         vue.afficherFrontiere(frontiere);
 
         // Il sélectionne les bornes qu'il veut revendiquer
-        int  id_borne_revend = vue.select_revendication(frontiere);
-        if(id_borne_revend != -1){
-            Borne borne_revend = frontiere.getBorne(id_borne_revend);
-            borne_revend.determinerRevendication();
-            vue.afficherMessage("Le joueur " + borne_revend.getIdJoueur() + " remporte la borne " + borne_revend.getId());
-
-            // On vérifie si après la revendication on a un gagnant
-            // Si c'est le cas on arrete le jeu et célèbre le gagnant
-            int victorious = frontiere.checkVictoire();
-            if(victorious != 0){
-                vue.afficherWinner(victorious);
-            }
-        }
+        int id_borne_revend = vue.select_revendication(frontiere);
+        gestion_revend(id_borne_revend, frontiere, vue);
     }
 
 
     public static void gestion_tour_ia(View vue, Frontiere F, Joueur J){
 
         // on récupère l'IA
-        Ai ia;
-        if(J.getNivIA() == 0){
-            vue.afficherMessage("Le joueur n'est pas une IA, cette gestion de tour ne devrait pas être appellée");
-            return;
-        }
-        else if(J.getNivIA() == 1){
-            ia = new BasicAi();
-        }
-        else{
-            vue.afficherMessage("Niveau d'AI non valide");
+        Ai ia = getAi(J, vue);
+        if(ia == null){
+            System.err.println("Erreur: Récupération de l'IA");
             return;
         }
 
+        
+        // On vérifie si la main du joueur est vide, si c'est le cas, le joueur perd la partie
         if(check_loose(J, vue, F) == true){
             return;
         }
@@ -86,18 +70,7 @@ public class Tour {
 
         // Il sélectionne les bornes qu'il veut revendiquer
         int id_borne_revend = ia.select_revendication(F);
-        if(id_borne_revend != -1){
-            Borne borne_revend = F.getBorne(id_borne_revend);
-            borne_revend.determinerRevendication();
-            vue.afficherMessage("Le joueur " + borne_revend.getIdJoueur() + " remporte la borne " + borne_revend.getId());
-
-            // On vérifie si après la revendication on a un gagnant
-            // Si c'est le cas on arrete le jeu et célèbre le gagnant
-            int victorious = F.checkVictoire();
-            if(victorious != 0){
-                vue.afficherWinner(victorious);
-            }
-        }
+        gestion_revend(id_borne_revend, F, vue);
     }
 
 
@@ -123,5 +96,35 @@ public class Tour {
     }
 
 
+    // Gestion de la partie revendication du tour
+    private static void gestion_revend(int id_borne_revend, Frontiere F, View vue){
+        if(id_borne_revend != -1){
+            Borne borne_revend = F.getBorne(id_borne_revend);
+            borne_revend.determinerRevendication();
+            vue.afficherMessage("Le joueur " + borne_revend.getIdJoueur() + " remporte la borne " + borne_revend.getId());
 
+            // On vérifie si après la revendication on a un gagnant
+            // Si c'est le cas on arrete le jeu et célèbre le gagnant
+            int victorious = F.checkVictoire();
+            if(victorious != 0){
+                vue.afficherWinner(victorious);
+            }
+        }
+    }
+
+
+    private static Ai getAi(Joueur J, View vue){
+        if(J.getNivIA() == 0){
+            vue.afficherMessage("Le joueur n'est pas une IA, cette gestion de tour ne devrait pas être appellée");
+            return null;
+        }
+        else if(J.getNivIA() == 1){
+            Ai ia = new BasicAi();
+            return ia;
+        }
+        else{
+            vue.afficherMessage("Niveau d'AI non valide");
+            return null;
+        }
+    }
 }
