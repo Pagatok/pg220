@@ -7,6 +7,7 @@ public class Frontiere {
 
     private final List<Borne> liste_bornes;
     private static int nbr_bornes = 9;
+    private boolean gameover = false;
 
 
     // Constructeur de Base d'une Frontière intialisée avec 9 bornes vides
@@ -34,6 +35,14 @@ public class Frontiere {
         return score;
     }
 
+    public boolean is_gameover(){
+        return this.gameover;
+    }
+
+    public int getNbrBornesTotal(){
+        return nbr_bornes;
+    }
+
 
     // renvoi le nombre de bornes successives possédées par le joueur
     public int getSuccessifs(int id_joueur){
@@ -57,10 +66,31 @@ public class Frontiere {
     public int checkVictoire(){
         for(int i=1; i<=2; i++){
             if(getNbrBornes(i) >= 5 || getSuccessifs(i) >= 3){
+                this.gameover = true;
                 return i;
             }
         }
         return 0;
+    }
+
+    public void setGameOver(){
+        this.gameover = true;
+    }
+
+    // Renvoie la liste des id de bornes revendiquables
+    public List<Integer> getBornesDispo(){
+        List<Integer> intList = new ArrayList<>();
+
+        for(int i = 0; i<nbr_bornes; i++){
+            Borne borne_selected = this.getBorne(i+1);
+
+            // Vérifier qu'il y a 3 cartes des 2 côtés de la borne et qu'elle n'est pas revendiquée
+            if(borne_selected.nbr_cartes(1) == 3 && borne_selected.nbr_cartes(2) == 3 && borne_selected.isRevendique() == false){
+                intList.add(i);
+            }
+        }
+
+        return intList;
     }
 
     public String toString(){
@@ -71,5 +101,7 @@ public class Frontiere {
         }
         return answer;
     }
+
+
 
 }
