@@ -65,7 +65,7 @@ public class Jeu {
         Jeu jeu = new Jeu();
         View vue = new ConsoleView();
 
-        jeu.choisirVariante();
+        //jeu.choisirVariante();
         
         // Mise en place
 
