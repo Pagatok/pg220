@@ -39,12 +39,7 @@ public class Joueur{
     }
 
     public boolean isIA(){
-        if(niv_ia == 0){
-            return false;
-        }
-        else{
-            return true;
-        }
+        return !(niv_ia == 0);
     }
 
     public boolean appartientCarte(Carte carte){
@@ -72,6 +67,7 @@ public class Joueur{
         pied.removeCarte(old_carte);
     }
 
+    @Override
     public String toString(){
         return "Joueur: " + id_joueur + ", Main: " + pied.toString();
     }
