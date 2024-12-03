@@ -47,7 +47,6 @@ public class BasicAi implements Ai{
 
         // Vérifier que le joueur n'a pas déjà posé 3 cartes sur cette borne
         if(borne_selected.nbr_cartes(J.getId()) >=3){
-            System.out.println("Erreur: Vous avez déjà posé 3 cartes sur cette borne");
             return select_borne(J, F);
         }
 

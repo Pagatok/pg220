@@ -75,6 +75,7 @@ public class Tour {
         // Puis il sélectionne la borne sur laquelle il veut la poser
         int id_borne = ia.select_borne(J, F);
         Borne borne = F.getBorne(id_borne);
+        System.out.println(borne.toString());
         borne.ajouterCarte(J.getId(), carte_jouee);
 
         // Il sélectionne les bornes qu'il veut revendiquer
