@@ -7,6 +7,7 @@ SOURCES_MODEL = $(shell find $(SRC_DIR)/model -name "*.java")
 SOURCES_CONTROLLER = $(shell find $(SRC_DIR)/controller -name "*.java")
 SOURCES_VIEW = $(shell find $(SRC_DIR)/view -name "*.java")
 SOURCES_TESTS = $(shell find $(SRC_DIR)/tests -name "*.java")
+SOURCES_AI = $(shell find $(SRC_DIR)/ai -name "*.java")
 
 # Pour les diagrams
 PLANTUML_CMD = plantuml
@@ -21,6 +22,11 @@ model: $(SOURCES_MODEL)
 	mkdir -p $(CLASS_DIR)
 	javac -d $(CLASS_DIR) $(SOURCES_MODEL)
 
+# Compilation des classes ai qui dépendent de model
+ai: model $(SOURCES_AI)
+	@echo "Compilation des classes d'ia"
+	javac -d $(CLASS_DIR) -cp $(CLASS_DIR) $(SOURCES_AI)
+
 
 # Compilation des classes view
 view: model $(SOURCES_VIEW)
@@ -29,7 +35,7 @@ view: model $(SOURCES_VIEW)
 
 
 # Compilation des classes controller, qui dépendent du modèle et de view
-controller: view model $(SOURCES_CONTROLLER)
+controller: view model ai $(SOURCES_CONTROLLER)
 	@echo "Compilation des classes du contrôleur"
 	javac -d $(CLASS_DIR) -cp $(CLASS_DIR) $(SOURCES_CONTROLLER)
 
