@@ -33,8 +33,7 @@ public class Tour {
         joueur_actif.retirerCarte(carte_jouee);
 
         // Puis il sélectionne la borne sur laquelle il veut la poser
-        int id_borne = vue.select_borne(joueur_actif, frontiere);
-        Borne borne = frontiere.getBorne(id_borne);
+        Borne borne = vue.select_borne(joueur_actif, frontiere);
         borne.ajouterCarte(id_joueur, carte_jouee);
         vue.afficherMessage("Carte ajoutée sur la borne" + borne.getId());
 
@@ -82,8 +81,7 @@ public class Tour {
         J.retirerCarte(carte_jouee);
 
         // Puis il sélectionne la borne sur laquelle il veut la poser
-        int id_borne = ia.select_borne(J, F);
-        Borne borne = F.getBorne(id_borne);
+        Borne borne = ia.select_borne(J, F);
         borne.ajouterCarte(J.getId(), carte_jouee);
 
         // Il sélectionne les bornes qu'il veut revendiquer

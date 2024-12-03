@@ -37,7 +37,7 @@ public class BasicAi implements Ai{
     }
 
     @Override
-    public int select_borne(Joueur J, Frontiere F){
+    public Borne select_borne(Joueur J, Frontiere F){
 
         System.out.println("Selecting borne..");
 
@@ -52,7 +52,7 @@ public class BasicAi implements Ai{
 
         System.out.println("Borne selected!");
 
-        return id_borne;
+        return borne_selected;
     }
 
 

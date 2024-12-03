@@ -76,7 +76,7 @@ public class ConsoleView implements View{
     }
 
     @Override
-    public int select_borne(Joueur J, Frontiere F){
+    public Borne select_borne(Joueur J, Frontiere F){
         System.out.print("Sur quelle Borne poser la carte ?: ");
         int valeur = scanner.nextInt();
         scanner.nextLine();
@@ -95,7 +95,7 @@ public class ConsoleView implements View{
             return select_borne(J, F);
         }
 
-        return valeur;
+        return borne_selected;
     }
 
 
