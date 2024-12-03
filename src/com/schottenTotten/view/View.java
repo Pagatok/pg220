@@ -13,7 +13,7 @@ public interface View {
 
     // Fonctions d'input
     Carte select_card(Joueur J);
-    Borne select_borne(Joueur J, Frontiere F);
-    Borne select_revendication(Frontiere F);
+    int select_borne(Joueur J, Frontiere F);
+    int select_revendication(Frontiere F);
     Joueur select_ia(int id_joueur, int nivmax_ia);
 } 

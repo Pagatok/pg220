@@ -76,7 +76,7 @@ public class ConsoleView implements View{
     }
 
     @Override
-    public Borne select_borne(Joueur J, Frontiere F){
+    public int select_borne(Joueur J, Frontiere F){
         System.out.print("Sur quelle Borne poser la carte ?: ");
         int valeur = scanner.nextInt();
         scanner.nextLine();
@@ -95,12 +95,12 @@ public class ConsoleView implements View{
             return select_borne(J, F);
         }
 
-        return borne_selected;
+        return valeur;
     }
 
 
     @Override
-    public Borne select_revendication(Frontiere F){
+    public int select_revendication(Frontiere F){
 
         System.out.println("Quelle borne voulez-vous revendiquer? (0 pour aucune): ");
         int valeur = scanner.nextInt();
@@ -113,7 +113,7 @@ public class ConsoleView implements View{
         }
 
         if(valeur == 0){
-            return null;
+            return -1;
         }
 
         Borne borne_selected = F.getBorne(valeur);
@@ -125,7 +125,7 @@ public class ConsoleView implements View{
 
         // Vérifier qu'il y a 3 cartes des 2 côtés de la borne
         if(borne_selected.nbr_cartes(1) == 3 && borne_selected.nbr_cartes(2) == 3){
-            return borne_selected;
+            return valeur;
         }
         else{
             System.out.println("Vous ne pouvez pas revendiquer cette borne, vous et votre adversaire devez avoir 3 cartes de poser sur celle-ci");

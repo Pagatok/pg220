@@ -94,6 +94,7 @@ public class Jeu {
 
             // Quand il finit son tour le joueur pioche et on cache sa main
             joueur_actif.ajouterCarte(pioche.piocher());
+            System.out.println("Nbr cartes dans la main: " + joueur_actif.getTaillePied());
 
         }
     }

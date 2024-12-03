@@ -28,17 +28,19 @@ public class Tour {
         joueur_actif.retirerCarte(carte_jouee);
 
         // Puis il sélectionne la borne sur laquelle il veut la poser
-        Borne borne = vue.select_borne(joueur_actif, frontiere);
+        int id_borne = vue.select_borne(joueur_actif, frontiere);
+        Borne borne = frontiere.getBorne(id_borne);
         borne.ajouterCarte(id_joueur, carte_jouee);
         vue.afficherMessage("Carte ajoutée sur la borne" + borne.getId());
 
         vue.afficherFrontiere(frontiere);
 
         // Il sélectionne les bornes qu'il veut revendiquer
-        Borne borne_revend = vue.select_revendication(frontiere);
-        if(borne_revend != null){
-            borne.determinerRevendication();
-            vue.afficherMessage("Le joueur " + borne.getIdJoueur() + " remporte la borne " + borne.getId());
+        int  id_borne_revend = vue.select_revendication(frontiere);
+        if(id_borne_revend != -1){
+            Borne borne_revend = frontiere.getBorne(id_borne_revend);
+            borne_revend.determinerRevendication();
+            vue.afficherMessage("Le joueur " + borne_revend.getIdJoueur() + " remporte la borne " + borne_revend.getId());
 
             // On vérifie si après la revendication on a un gagnant
             // Si c'est le cas on arrete le jeu et célèbre le gagnant
@@ -71,14 +73,16 @@ public class Tour {
         J.retirerCarte(carte_jouee);
 
         // Puis il sélectionne la borne sur laquelle il veut la poser
-        Borne borne = ia.select_borne(J, F);
+        int id_borne = ia.select_borne(J, F);
+        Borne borne = F.getBorne(id_borne);
         borne.ajouterCarte(J.getId(), carte_jouee);
 
         // Il sélectionne les bornes qu'il veut revendiquer
-        Borne borne_revend = ia.select_revendication(F);
-        if(borne_revend != null){
-            borne.determinerRevendication();
-            vue.afficherMessage("Le joueur " + borne.getIdJoueur() + " remporte la borne " + borne.getId());
+        int id_borne_revend = ia.select_revendication(F);
+        if(id_borne_revend != -1){
+            Borne borne_revend = F.getBorne(id_borne_revend);
+            borne_revend.determinerRevendication();
+            vue.afficherMessage("Le joueur " + borne_revend.getIdJoueur() + " remporte la borne " + borne_revend.getId());
 
             // On vérifie si après la revendication on a un gagnant
             // Si c'est le cas on arrete le jeu et célèbre le gagnant

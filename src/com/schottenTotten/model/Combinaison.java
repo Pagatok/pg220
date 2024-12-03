@@ -33,6 +33,8 @@ public class Combinaison extends Card_list{
 
     public int getScore(){
 
+        System.out.println(this.toString());
+
         int somme = 0;
 
         for(int i = 0; i < nombreDeCartes(); i++){
@@ -120,7 +122,7 @@ public class Combinaison extends Card_list{
 
     
     public String toString(){
-        return "Cbn: " + super.toString() + ", type=" + type +'}';
+        return "Cbn: " + cartes.toString() + ", type=" + type +'}';
     }
 
 }

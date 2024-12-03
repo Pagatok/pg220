@@ -37,7 +37,7 @@ public class BasicAi implements Ai{
     }
 
     @Override
-    public Borne select_borne(Joueur J, Frontiere F){
+    public int select_borne(Joueur J, Frontiere F){
 
         System.out.println("Selecting borne..");
 
@@ -53,12 +53,12 @@ public class BasicAi implements Ai{
 
         System.out.println("Borne selected!");
 
-        return borne_selected;
+        return id_borne;
     }
 
 
     @Override
-    public Borne select_revendication(Frontiere F){
+    public int select_revendication(Frontiere F){
 
         System.out.println("Selecting borne to revendicate..");
 
@@ -69,12 +69,11 @@ public class BasicAi implements Ai{
 
         if(id_borne == 0){
             System.out.println("Pas de bornes revendiquées!");
-            return null;
+            return -1;
         }
         else{
-            Borne borne_selected = F.getBorne(liste_bornes.get(id_borne-1));
             System.out.println("Borne à revendiquer sélectionnée");
-            return borne_selected;
+            return id_borne;
         }
     }
 

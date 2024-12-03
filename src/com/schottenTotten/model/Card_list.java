@@ -57,8 +57,9 @@ public class Card_list {
         return new ArrayList<>(liste_cartes); // Retourne une copie pour protéger la liste originale
     }
 
-        // Fonction qui renvoie la liste des valeurs des cartes
+    // Fonction qui renvoie la liste des valeurs des cartes
     public int getValeurCarte(int indice_carte){
+        System.out.println(this.toString());
         int valeur = liste_cartes.get(indice_carte).getValeur();
         return valeur;
     }
