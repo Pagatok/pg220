@@ -36,7 +36,7 @@ public class Combinaison extends Card_list{
         int somme = 0;
 
         for(int i = 0; i < nombreDeCartes(); i++){
-            somme = somme + cartes.getValeurCarte(i);
+            somme = somme + super.getValeurCarte(i);
         }
 
         return somme;
@@ -121,7 +121,7 @@ public class Combinaison extends Card_list{
 
     
     public String toString(){
-        return "Cbn: " + super.toString() + ", type=" + type +'}';
+        return "Cbn: " + cartes.toString() + ", type=" + type +'}';
     }
 
 }

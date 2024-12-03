@@ -68,7 +68,6 @@ public class Borne {
             // J2 a une meilleure combinaison
             this.id_joueur = 2;
         } else {
-            System.out.println(this.toString());
             // Types égaux, comparaison des scores
             int scoreJ1 = J1.getScore();
             int scoreJ2 = J2.getScore();

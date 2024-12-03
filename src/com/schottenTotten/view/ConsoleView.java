@@ -100,31 +100,56 @@ public class ConsoleView implements View{
 
 
     @Override
-    public Borne select_revendication(Frontiere F){
+    public int select_revendication(Frontiere F){
+
         System.out.println("Quelle borne voulez-vous revendiquer? (0 pour aucune): ");
         int valeur = scanner.nextInt();
         scanner.nextLine();
 
-        // Vérifier que la valeur est entre 1 et 9
+        // Vérifier que la valeur est entre 0 et 9
         if (valeur < 0 || valeur > 9) {
             System.out.println("Veuillez rentrer une valeur entre 1 et 9 pour revendiquer une borne (0 pour aucune)");
             return select_revendication(F);
         }
 
         if(valeur == 0){
-            return null;
+            return -1;
         }
 
         Borne borne_selected = F.getBorne(valeur);
 
+        if(borne_selected.isRevendique() == true){
+            this.afficherMessage("Cette borne est déjà revendiqué, veuiez sélectionner une borne valide");
+            return select_revendication(F);
+        }
+
         // Vérifier qu'il y a 3 cartes des 2 côtés de la borne
         if(borne_selected.nbr_cartes(1) == 3 && borne_selected.nbr_cartes(2) == 3){
-            return borne_selected;
+            return valeur;
         }
         else{
             System.out.println("Vous ne pouvez pas revendiquer cette borne, vous et votre adversaire devez avoir 3 cartes de poser sur celle-ci");
             return select_revendication(F);
         }
+    }
+
+
+    @Override
+    public Joueur select_ia(int id_joueur, int nivmax_ia){
+
+        System.out.println("Le joueur " + id_joueur + " sera t-il un humain(0) ou une ia(Difficulté 1 à " + nivmax_ia + ")?");
+        int valeur = scanner.nextInt();
+        scanner.nextLine();
+
+        // Vérifier que la valeur est entre 0 et niv_max_ia
+        if (valeur < 0 || valeur > nivmax_ia) {
+            System.out.println("Veuillez rentrer une valeur entre 1 et " + nivmax_ia);
+            return select_ia(id_joueur, nivmax_ia);
+        }
+
+        Joueur j = new Joueur(id_joueur, valeur);
+
+        return j;
     }
 
 

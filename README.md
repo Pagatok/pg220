@@ -56,5 +56,6 @@ Pour une description avancée des classes:
 Voici les fonctionnalités à implémenter dans le futur pour améliorer le jeu
 - [ ] Ajouter une interface utilisateur graphique.
 - [ ] Implémenter une Intelligence artificielle pour jouer.
-- [ ] Corriger l'affichage terminal pour le rendre plus joli et empecher le joueur 2 de voir la main du joueur 1.
-- [ ] Ajouter les cartes tactiques.
+- [ ] Corriger l'affichage terminal pour le rendre plus joli (et empecher le joueur 2 de voir la main du joueur 1. <- pas très grave selon le prof = pas but du projet)
+- [ ] Ajouter les cartes tactiques. -> choix de variante basique ou tactique
+- [ ] Joueur choix Nom, type de Jeu (humain ou IA), type d'IA.

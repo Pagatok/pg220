@@ -1,17 +1,26 @@
 package com.schottenTotten.model;
 
-import javax.smartcardio.Card;
-
 public class Joueur{
     
     private int id_joueur;
     private Card_list pied;
     private static int taille_max_main = 6;
+    private int niv_ia = 0;
+
+    // ------------------------- CONSTRUCTEURS-------------------------
 
     public Joueur(int id_joueur){
         this.id_joueur = id_joueur;
         this.pied = new Card_list(taille_max_main);
     }
+
+    public Joueur(int id_joueur, int niv_ia){
+        this.id_joueur = id_joueur;
+        this.pied = new Card_list(taille_max_main);
+        this.niv_ia = niv_ia;
+    }
+
+    // ------------------------- GETTERS -------------------------
 
     public int getId(){
         return this.id_joueur;
@@ -21,26 +30,30 @@ public class Joueur{
         return pied.nombreDeCartes();
     }
 
-    public boolean appartientCarte(Carte carte){
-        return this.pied.carteIn(carte);
-    }
-
     public Card_list getPied(){
         return this.pied;
     }
 
-    // // Prend en entrée une carte à jouer qui à prioiri appartient à la main du joueur
-    // // La fonction vérifie si la carte appartient bien à la main du joueur et si c'est le cas la retire
-    // public boolean jouerCarte(Carte carte){
-    //     int nbr = getTaillePied();
-    //     retirerCarte(carte);
-    //     if(getTaillePied() == nbr){
-    //         return false;
-    //     }
-    //     else{
-    //         return true;
-    //     }
-    // }
+    public int getNivIA(){
+        return this.niv_ia;
+    }
+
+    public boolean isIA(){
+        if(niv_ia == 0){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    public boolean appartientCarte(Carte carte){
+        return this.pied.carteIn(carte);
+    }
+
+
+    // ------------------------- SETTERS -------------------------
+
 
     public void setId(int id_joueur){
         this.id_joueur = id_joueur;
