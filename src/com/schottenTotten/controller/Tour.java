@@ -19,8 +19,6 @@ public class Tour {
 
         int id_joueur = joueur_actif.getId();
 
-        vue.afficherMessage("Joueur " + id_joueur + ", C'est votre tour!");
-
         vue.afficherFrontiere(frontiere);
 
         if(check_loose(joueur_actif, vue, frontiere)){

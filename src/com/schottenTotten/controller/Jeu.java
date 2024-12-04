@@ -62,7 +62,7 @@ public class Jeu {
         int nbr_tours = 0;
 
         vue.afficherMessage("Fin de la mise en place du jeu!");
-        vue.afficherMessage("Début de la partie..\n");
+        vue.afficherDebut();
 
         while(gaming){
 

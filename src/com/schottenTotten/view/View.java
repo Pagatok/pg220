@@ -11,6 +11,7 @@ public interface View {
     void afficherBorne(Borne borne);
     void afficherWinner(Joueur winner);
     void afficherTour(Joueur active_player);
+    void afficherDebut();
 
     // Fonctions d'input
     Carte select_card(Joueur J);
