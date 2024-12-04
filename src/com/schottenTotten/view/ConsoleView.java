@@ -40,28 +40,22 @@ public class ConsoleView implements View{
     @Override
     public void afficherWinner(Joueur winner){
 
-        String line = "CONGRATULATION " + winner.getName();
+        String line = "CONGRATULATION " + winner.getName() + "\n YOU WIN\n";
 
-        System.out.println("------------------\n");
-        System.out.println(line);
-        System.out.println("YOU WIN\n");
-        System.out.println("------------------");
+        afficherSpecialMessage(line);
     }
+
 
     @Override
     public void afficherTour(Joueur active_player){
         String line = "A toi de jouer " + active_player.getName() + "\n";
 
-        System.out.println("------------------\n");
-        System.out.println(line);
-        System.out.println("------------------\n");
+        afficherSpecialMessage(line);
     }
 
     @Override
     public void afficherDebut(){
-        System.out.println("------------------\n");
-        System.out.println("début de la partie..");
-        System.out.println("------------------\n");
+        afficherSpecialMessage("Début de la partie..");
     }
 
 
@@ -196,6 +190,12 @@ public class ConsoleView implements View{
 
 
     // ------------------------- FONCTIONS PRIVEES -------------------------
+
+    private void afficherSpecialMessage(String special_message){
+        System.out.println("------------------\n");
+        System.out.println(special_message);
+        System.out.println("------------------\n");
+    }
 
 
     // Prend en entrée une chaine rentrée par l'utilisateur et la convertir en une carte
