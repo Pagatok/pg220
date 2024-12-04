@@ -38,13 +38,24 @@ public class ConsoleView implements View{
     }
 
     @Override
-    public void afficherWinner(int id_joueur){
-        System.out.println("------------------\n\n");
-        System.out.println("CONGRATULATION JOUEUR " + id_joueur);
+    public void afficherWinner(Joueur winner){
+
+        String line = "CONGRATULATION " + winner.getName();
+
+        System.out.println("------------------\n");
+        System.out.println(line);
         System.out.println("YOU WIN\n\n");
         System.out.println("------------------");
     }
 
+    @Override
+    public void afficherTour(Joueur active_player){
+        String line = "A toi de jouer " + active_player.getName() + "\n";
+
+        System.out.println("------------------\n\n");
+        System.out.println(line);
+        System.out.println("------------------");
+    }
 
 
 
@@ -147,7 +158,17 @@ public class ConsoleView implements View{
             return select_ia(id_joueur, nivmax_ia);
         }
 
-        Joueur j = new Joueur(id_joueur, valeur);
+        boolean valid = false;
+        String input = "null";
+        while(!valid){
+            System.out.println("Comment s'appelle-t'il?");
+            input = scanner.nextLine();
+            if(isValidPseudo(input)){
+                valid = true;
+            }
+        }
+
+        Joueur j = new Joueur(id_joueur, valeur, input);
 
         return j;
     }
@@ -191,5 +212,30 @@ public class ConsoleView implements View{
         // Retourner une carte valide
         Carte carte = new Carte(couleur, valeur);
         return carte;
+    }
+
+
+    private boolean isValidPseudo(String pseudo) {
+        // Vérifie que la chaîne n'est pas nulle ou vide
+        if (pseudo == null || pseudo.isEmpty()) {
+            afficherMessage("Erreur: Veuillez rentrer un pseudo");
+            return false;
+        }
+        
+        // Vérifie que la longueur est entre 3 et 20 caractères
+        if (pseudo.length() < 3 || pseudo.length() > 20) {
+            afficherMessage("Erreur: Le pseudo doit contenir entre 3 et 20 caractères");
+            return false;
+        }
+        
+        // Vérifie qu'il ne contient que des lettres, des chiffres, ou les caractères _ et -
+        String regex = "^[a-zA-Z0-9_-]+$";
+        if (!pseudo.matches(regex)) {
+            afficherMessage("erreur: Le pseudo ne doit contenir que des caractères alphanumériques");
+            return false;
+        }
+
+        // Si toutes les vérifications passent, le pseudo est valide
+        return true;
     }
 }

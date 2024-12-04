@@ -15,7 +15,7 @@ public class Tour {
     
     // Gere un tour de SchottenTotten pour un joueur réel
     // Renvoi 1 si la partie est terminée après ce tour, 0 sinon
-    public static void gestion_tour_real(View vue, Frontiere frontiere, Joueur joueur_actif){
+    public static void gestion_tour_real(View vue, Frontiere frontiere, Joueur joueur_actif, Joueur autre_joueur){
 
         int id_joueur = joueur_actif.getId();
 
@@ -41,11 +41,11 @@ public class Tour {
 
         // Il sélectionne les bornes qu'il veut revendiquer
         int id_borne_revend = vue.select_revendication(frontiere);
-        gestion_revend(id_borne_revend, frontiere, vue);
+        gestion_revend(id_borne_revend, frontiere, vue, joueur_actif, autre_joueur);
     }
 
 
-    public static void gestion_tour_ia(View vue, Frontiere F, Joueur J){
+    public static void gestion_tour_ia(View vue, Frontiere F, Joueur J, Joueur passive_player){
 
         // on récupère l'IA
         Ai ia = getAi(J, vue);
@@ -57,6 +57,7 @@ public class Tour {
         
         // On vérifie si la main du joueur est vide, si c'est le cas, le joueur perd la partie
         if(check_loose(J, vue, F) == true){
+            vue.afficherWinner(passive_player);
             return;
         }
 
@@ -70,7 +71,7 @@ public class Tour {
 
         // Il sélectionne les bornes qu'il veut revendiquer
         int id_borne_revend = ia.select_revendication(F);
-        gestion_revend(id_borne_revend, F, vue);
+        gestion_revend(id_borne_revend, F, vue, J, passive_player);
     }
 
 
@@ -81,12 +82,6 @@ public class Tour {
     private static boolean check_loose(Joueur J, View vue, Frontiere F){
         if(J.getTaillePied() == 0){
             vue.afficherMessage("Vous n'avez plus de cartes dans votre main et c'est à vous de jouer. Vous avez donc perdu");
-            if(J.getId() == 1){
-                vue.afficherWinner(2);
-            }
-            else{
-                vue.afficherWinner(1);
-            }
             F.setGameOver();
             return true;
         }
@@ -97,7 +92,7 @@ public class Tour {
 
 
     // Gestion de la partie revendication du tour
-    private static void gestion_revend(int id_borne_revend, Frontiere F, View vue){
+    private static void gestion_revend(int id_borne_revend, Frontiere F, View vue, Joueur J1, Joueur J2){
         if(id_borne_revend != -1){
             Borne borne_revend = F.getBorne(id_borne_revend);
             borne_revend.determinerRevendication();
@@ -106,9 +101,12 @@ public class Tour {
             // On vérifie si après la revendication on a un gagnant
             // Si c'est le cas on arrete le jeu et célèbre le gagnant
             int victorious = F.checkVictoire();
-            if(victorious != 0){
-                vue.afficherWinner(victorious);
+            if(victorious == 1){
+                vue.afficherWinner(J1);
             }
+            else if(victorious == 2){
+                vue.afficherWinner(J2);
+            }  
         }
     }
 

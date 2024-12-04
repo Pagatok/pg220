@@ -9,7 +9,8 @@ public interface View {
     void afficherJoueur(Joueur J);
     void afficherMessage(String message);
     void afficherBorne(Borne borne);
-    void afficherWinner(int id_joueur);
+    void afficherWinner(Joueur winner);
+    void afficherTour(Joueur active_player);
 
     // Fonctions d'input
     Carte select_card(Joueur J);
