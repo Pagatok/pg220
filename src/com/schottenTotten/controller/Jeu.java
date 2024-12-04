@@ -104,7 +104,7 @@ public class Jeu {
                 joueur_actif.ajouterCarte(pioche.piocher());
             }
             else{
-                vue.afficherMessage("On continue la partie sans piocher");
+                vue.afficherMessage("On continue la partie sans piocher\n");
             }
         }
     }

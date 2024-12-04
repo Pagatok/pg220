@@ -1,5 +1,1 @@
-- Ajout d'une interface Ai et d'une classe BasicIa qui l'implemente
-	(Manque encore beacoup de fonctionnalités)
-	(Manque un digramme de description de ce package)
-- Peut-être plutot en faire une superclasse
-- A etudier quoi
+- Mettre à jour le README

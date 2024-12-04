@@ -94,7 +94,16 @@ public class Tour {
         if(id_borne_revend != -1){
             Borne borne_revend = F.getBorne(id_borne_revend);
             borne_revend.determinerRevendication();
-            vue.afficherMessage("Le joueur " + borne_revend.getIdJoueur() + " remporte la borne " + borne_revend.getId());
+
+            String name_joueur;
+            if(borne_revend.getIdJoueur() == 1){
+                name_joueur = J1.getName();
+            }
+            else{
+                name_joueur = J2.getName();
+            }
+            
+            vue.afficherMessage("" + name_joueur + " remporte la borne " + borne_revend.getId());
 
             // On vérifie si après la revendication on a un gagnant
             // Si c'est le cas on arrete le jeu et célèbre le gagnant
