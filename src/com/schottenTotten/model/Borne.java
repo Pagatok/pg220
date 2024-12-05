@@ -102,13 +102,7 @@ public class Borne {
             }
         }
 
-        int scoreJ1 = J1.getScore();
-        int scoreJ2 = J2.getScore();
-        System.out.println("Points");
-        System.out.println("Joueur 1 : " + scoreJ1);
-        System.out.println("Joueur 2 : " + scoreJ2);
 
-        
         // Si un joueur l'a revendiquée, mettre à jour `revendique`
         this.revendique = (this.id_joueur != 0);
         if (this.revendique) {

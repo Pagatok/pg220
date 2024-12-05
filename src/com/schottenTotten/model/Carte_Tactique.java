@@ -29,11 +29,9 @@ public class Carte_Tactique extends Carte{
 
     @Override 
     public String toString() {
-        return "Carte Tactique{" +
-                "nom='" + nom + '\'' +
+        return  "nom='" + nom + '\'' +
                 ", description='" + description + '\'' +
-                ", type=" + type +
-                '}';
+                ", type=" + type;
     }
 
     // Enum pour catégoriser les effets des cartes tactiques

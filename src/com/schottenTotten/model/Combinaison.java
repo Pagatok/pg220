@@ -6,11 +6,10 @@ import com.schottenTotten.model.Carte.Couleur;
 
 public class Combinaison extends Card_list{
 
-    private Card_list cartes;
     private Type type;
 
     public Combinaison() {
-        this.cartes = new Card_list(3);
+        super(3);
         this.type = Type.SOMME;
     }
 
@@ -33,13 +32,14 @@ public class Combinaison extends Card_list{
 
     public int getScore(){
         if (nombreDeCartes() == 0) {
+            System.out.println("erreur de calcul de score");
             return 0; // Aucun score si aucune carte
         }
         
         int somme = 0;
 
         for(int i = 0; i < nombreDeCartes(); i++){
-            somme = somme + cartes.getValeurCarte(i);
+            somme += getValeurCarte(i);
         }
 
         return somme;

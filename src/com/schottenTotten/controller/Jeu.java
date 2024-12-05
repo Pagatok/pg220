@@ -93,6 +93,7 @@ public class Jeu {
             }
         }
 
+        
 
         boolean gaming = true;
         int nbr_tours = 0;
@@ -122,22 +123,28 @@ public class Jeu {
 
             vue.afficherFrontiere(frontiere);
 
-            if(modeTactique){
-                Scanner scanner = new Scanner(System.in);
-                vue.afficherMessage("Choisissez la pioche :");
-                vue.afficherMessage("1. Pioche Clan");
-                vue.afficherMessage("2. Pioche Tactique");
-                int choixPioche = scanner.nextInt();
-                scanner.nextLine(); // Consommer la ligne
 
-                if (choixPioche == 1) {
-                    joueur_actif.piocherCarte(pioche, false);
-                } else if (choixPioche == 2) {
-                    joueur_actif.piocherCarte(pioche, true);
-                } else {
-                    vue.afficherMessage("Choix invalide. Vous piochez dans la Pioche Clan.");
-                    joueur_actif.piocherCarte(pioche, false);
+            if(modeTactique){
+                if(nbr_tours>2){
+                    Scanner scanner = new Scanner(System.in);
+                    vue.afficherMessage("Choisissez la pioche :");
+                    vue.afficherMessage("1. Pioche Clan");
+                    vue.afficherMessage("2. Pioche Tactique");
+                    int choixPioche = scanner.nextInt();
+                    scanner.nextLine(); // Consommer la ligne
+
+                    if (choixPioche == 1) {
+                        joueur_actif.piocherCarte(pioche, false);
+                    } else if (choixPioche == 2) {
+                        joueur_actif.piocherCarte(pioche, true);
+                    } else {
+                        vue.afficherMessage("Choix invalide. Vous piochez dans la Pioche Clan.");
+                        joueur_actif.piocherCarte(pioche, false);
+                    }
                 }
+            }
+            else{
+                joueur_actif.piocherCarte(pioche, false);
             }
 
             // Le joueur sélectionne une carte de la main
@@ -167,9 +174,6 @@ public class Jeu {
                     gaming = false;
                 }
             }
-            
-
-
         }
     }
 }
