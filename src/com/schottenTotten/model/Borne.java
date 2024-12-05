@@ -28,6 +28,15 @@ public class Borne {
         return this.id_borne;
     }
 
+
+    public Combinaison getJ1() {
+        return J1;
+    }
+
+    public Combinaison getJ2() {
+        return J2;
+    }
+
     public boolean ajouterCarte(int id_joueur, Carte carte){
         if(id_joueur == 1){
             return J1.ajouterCarte(carte);
@@ -36,6 +45,14 @@ public class Borne {
             return J2.ajouterCarte(carte);
         }
     }
+
+
+    public boolean ajouterCarteTactique(int id_joueur, Carte_Tactique carteTactique) {
+        EffetTactique effet = new EffetTactique();
+        return effet.ajouterCarteTactique(id_joueur, carteTactique, this);
+    }
+    
+
 
     public int nbr_cartes(int id_joueur){
         if(id_joueur == 1){
@@ -49,6 +66,17 @@ public class Borne {
 
     // Méthode pour comparer les combinaisons et déterminer le gagnant
     public void determinerRevendication() {
+        if (this.revendique) {
+            System.out.println("La borne " + this.id_borne + " a déjà été revendiquée.");
+            return;
+        }
+    
+        if (J1.nombreDeCartes() < 3 || J2.nombreDeCartes() < 3) {
+            System.out.println("Vous ne pouvez pas revendiquer cette borne, vous et votre adversaire devez avoir 3 cartes de poser sur celle-ci");
+            return;
+        }
+
+        configurerJokers();
         // Comparaison des types de combinaison
         int comparaisonType = comparerTypes();
 
@@ -73,11 +101,39 @@ public class Borne {
                 this.id_joueur = 0;
             }
         }
+
+        int scoreJ1 = J1.getScore();
+        int scoreJ2 = J2.getScore();
+        System.out.println("Points");
+        System.out.println("Joueur 1 : " + scoreJ1);
+        System.out.println("Joueur 2 : " + scoreJ2);
+
         
         // Si un joueur l'a revendiquée, mettre à jour `revendique`
         this.revendique = (this.id_joueur != 0);
+        if (this.revendique) {
+            System.out.println("La borne " + this.id_borne + " a été revendiquée par le joueur " + this.id_joueur + ".");
+        }
     }
 
+
+    private void configurerJokers() {
+        EffetTactique effet = new EffetTactique();
+
+        // Configurer les Jokers dans la combinaison de J1
+        for (Carte carte : J1.getCartes()) {
+            if (carte.getValeur() == 0 && carte.getCouleur() == null) {
+                effet.appeffetJoker(carte);
+            }
+        }
+
+        // Configurer les Jokers dans la combinaison de J2
+        for (Carte carte : J2.getCartes()) {
+            if (carte.getValeur() == 0 && carte.getCouleur() == null) {
+                effet.appeffetJoker(carte);
+            }
+        }
+    }
 
     private int comparerTypes(){
         Combinaison.Type typeJ1 = J1.getType();
@@ -96,9 +152,10 @@ public class Borne {
     }
 
 
-    public String toString(){
-        return "Borne " + this.id_borne + ": {" + this.J1.toString() + " vs " + this.J2.toString() + "}";
+    @Override
+    public String toString() {
+        return "Borne " + this.id_borne + ": {Cbn: " + this.J1.toString() + " vs " + this.J2.toString() + "}";
     }
-
+    
     
 }

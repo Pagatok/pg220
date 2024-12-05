@@ -8,7 +8,13 @@ import com.schottenTotten.view.View;
 
 
 public class Jeu {   
-    
+    public enum Variante{
+        BASIQUE,
+        TACTIQUE,
+    }
+
+    private Variante variante;
+
     public View select_view(){
         // Choix du mode d'affichage
         // Demander à l'utilisateur quel mode choisir
@@ -33,12 +39,7 @@ public class Jeu {
         return vue;
     }
 
-    public enum Variante{
-        BASIQUE,
-        TACTIQUE,
-    }
 
-    private Variante variante;
 
 
     public void setVariante(){
@@ -48,7 +49,7 @@ public class Jeu {
         System.out.println("2. Tactique");
 
         int choix = scanner.nextInt();
-        scanner.nextLine(); // Consommer la ligne
+        scanner.nextLine(); 
 
         if(choix ==1){
             this.variante = Variante.BASIQUE;
@@ -58,30 +59,40 @@ public class Jeu {
         }
         else{
             System.out.println("Veuillez choisir une variante valide");
+            this.variante = Variante.BASIQUE;
         }
     }
     
     public static void main(String args[]){
         Jeu jeu = new Jeu();
+        jeu.setVariante();
         View vue = new ConsoleView();
 
-        //jeu.choisirVariante();
-        
         // Mise en place
 
         vue.afficherMessage("Début de la mise en place du jeu..");
 
+        boolean modeTactique = (jeu.variante == Variante.TACTIQUE);
         Frontiere frontiere = new Frontiere();
-        Joueur J1 = new Joueur(1);
-        Joueur J2 = new Joueur(2);
+        Joueur J1 = new Joueur(1, modeTactique);
+        Joueur J2 = new Joueur(2, modeTactique);
 
         Pioche pioche = new Pioche();
         pioche.shuffle();
-
-        for(int i = 0; i<6; i++){
-            J1.ajouterCarte(pioche.piocher());
-            J2.ajouterCarte(pioche.piocher());
+        
+        if(modeTactique){
+            for(int i = 0; i<7; i++){
+                J1.ajouterCarte(pioche.piocher());
+                J2.ajouterCarte(pioche.piocher());
+            }
         }
+        else{
+            for(int i = 0; i<6; i++){
+                J1.ajouterCarte(pioche.piocher());
+                J2.ajouterCarte(pioche.piocher());
+            }
+        }
+
 
         boolean gaming = true;
         int nbr_tours = 0;
@@ -111,6 +122,24 @@ public class Jeu {
 
             vue.afficherFrontiere(frontiere);
 
+            if(modeTactique){
+                Scanner scanner = new Scanner(System.in);
+                vue.afficherMessage("Choisissez la pioche :");
+                vue.afficherMessage("1. Pioche Clan");
+                vue.afficherMessage("2. Pioche Tactique");
+                int choixPioche = scanner.nextInt();
+                scanner.nextLine(); // Consommer la ligne
+
+                if (choixPioche == 1) {
+                    joueur_actif.piocherCarte(pioche, false);
+                } else if (choixPioche == 2) {
+                    joueur_actif.piocherCarte(pioche, true);
+                } else {
+                    vue.afficherMessage("Choix invalide. Vous piochez dans la Pioche Clan.");
+                    joueur_actif.piocherCarte(pioche, false);
+                }
+            }
+
             // Le joueur sélectionne une carte de la main
             vue.afficherJoueur(joueur_actif);
             Carte carte_jouee = vue.select_card(joueur_actif);
@@ -125,21 +154,21 @@ public class Jeu {
 
             // Il sélectionne les bornes qu'il veut revendiquer
             Borne borne_revend = vue.select_revendication(frontiere);
-            if(borne_revend != null){
-                borne.determinerRevendication();
-                vue.afficherMessage("Le joueur " + borne.getIdJoueur() + " remporte la borne " + borne.getId());
-
-                // On vérifie si après la revendication on a un gagnant
-                // Si c'est le cas on arrete le jeu et célèbre le gagnant
+            if (borne_revend != null) {
+                borne_revend.determinerRevendication();
+                if (borne_revend.isRevendique()) {
+                    vue.afficherMessage("Le joueur " + borne_revend.getIdJoueur() + " remporte la borne " + borne_revend.getId());
+                }
+            
+                // Vérifiez si un joueur a gagné
                 int victorious = frontiere.checkVictoire();
-                if(victorious != 0){
+                if (victorious != 0) {
                     vue.afficherWinner(victorious);
                     gaming = false;
                 }
             }
+            
 
-            // Quand il finit son tour le joueur pioche et on cache sa main
-            joueur_actif.ajouterCarte(pioche.piocher());
 
         }
     }

@@ -32,7 +32,10 @@ public class Combinaison extends Card_list{
 
 
     public int getScore(){
-
+        if (nombreDeCartes() == 0) {
+            return 0; // Aucun score si aucune carte
+        }
+        
         int somme = 0;
 
         for(int i = 0; i < nombreDeCartes(); i++){

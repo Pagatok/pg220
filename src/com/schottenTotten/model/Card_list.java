@@ -43,12 +43,14 @@ public class Card_list {
 
     
     public Carte piocher(){
+        if (liste_cartes.isEmpty()){
+            throw new IllegalStateException("La liste des cartes est vide.");
+        }
         Carte carte = liste_cartes.get(0);
         liste_cartes.remove(0);
         return carte;
     }
-
-
+  
     public int nombreDeCartes(){
         return liste_cartes.size();
     }
@@ -57,11 +59,14 @@ public class Card_list {
         return new ArrayList<>(liste_cartes); // Retourne une copie pour protéger la liste originale
     }
 
-        // Fonction qui renvoie la liste des valeurs des cartes
-    public int getValeurCarte(int indice_carte){
-        int valeur = liste_cartes.get(indice_carte).getValeur();
-        return valeur;
+    // Fonction qui renvoie la liste des valeurs des cartes
+    public int getValeurCarte(int indice_carte) {
+        if (indice_carte < 0 || indice_carte >= liste_cartes.size()) {
+            throw new IndexOutOfBoundsException("Indice invalide : " + indice_carte + ", taille : " + liste_cartes.size());
+        }
+        return liste_cartes.get(indice_carte).getValeur();
     }
+        
 
     public Couleur getCouleurCarte(int indice_carte){
         Couleur valeur = liste_cartes.get(indice_carte).getCouleur();

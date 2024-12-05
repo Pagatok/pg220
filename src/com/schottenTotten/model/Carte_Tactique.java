@@ -5,6 +5,7 @@ public class Carte_Tactique extends Carte{
     private String description;
     private Type type; //3 catégories de type: Troupes d’élite,  Modes de combat,  Ruses
 
+    
     //constructeur initialisation
     public Carte_Tactique(String nom, String description, Type type){
         super(null, 0);

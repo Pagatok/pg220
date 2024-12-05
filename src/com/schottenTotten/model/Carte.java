@@ -7,8 +7,8 @@ public class Carte {
 
     // Constructeur de base
     public Carte(Couleur couleur, int valeur) {
-        if (valeur < 1 || valeur > 9) {
-            throw new IllegalArgumentException("La valeur doit être comprise entre 1 et 9.");
+        if (valeur < 0 || valeur > 9) {
+            throw new IllegalArgumentException("La valeur doit être comprise entre 1 et 9. 0 si carte Tactique.");
         }
         this.couleur = couleur;
         this.valeur = valeur;
@@ -27,8 +27,8 @@ public class Carte {
     }
 
     public void setValeur(int new_valeur){
-        if (valeur < 1 || valeur > 9) {
-            throw new IllegalArgumentException("La valeur doit être comprise entre 1 et 9.");
+        if (valeur < 0 || valeur > 9) {
+            throw new IllegalArgumentException("La valeur doit être comprise entre 1 et 9. 0 si carte Tactique.");
         }
         this.valeur = new_valeur;
     }
