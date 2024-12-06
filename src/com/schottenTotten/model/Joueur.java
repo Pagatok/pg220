@@ -7,6 +7,7 @@ public class Joueur{
     private Card_list pied;
     private static int taille_max_main = 6;
     private int niv_ia = 0;
+    private String name;
 
     // ------------------------- CONSTRUCTEURS-------------------------
 
@@ -19,6 +20,13 @@ public class Joueur{
         this.id_joueur = id_joueur;
         this.pied = new Card_list(taille_max_main);
         this.niv_ia = niv_ia;
+    }
+
+    public Joueur(int id_joueur, int niv_ia, String playerName){
+        this.id_joueur = id_joueur;
+        this.pied = new Card_list(taille_max_main);
+        this.niv_ia = niv_ia;
+        this.name = playerName;
     }
 
     // ------------------------- GETTERS -------------------------
@@ -52,6 +60,10 @@ public class Joueur{
         return this.pied.carteIn(carte);
     }
 
+    public String getName(){
+        return this.name;
+    }
+
 
     // ------------------------- SETTERS -------------------------
 
@@ -74,7 +86,14 @@ public class Joueur{
     }
 
     public String toString(){
-        return "Joueur: " + id_joueur + ", Main: " + pied.toString();
+        String answer;
+        if(this.name == null){
+            answer = "Joueur: " + id_joueur + ", Main: " + pied.toString();
+        }
+        else{
+            answer = this.name + ", Main: " + pied.toString();
+        }
+        return answer;
     }
 
     

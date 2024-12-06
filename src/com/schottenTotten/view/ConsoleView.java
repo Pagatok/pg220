@@ -38,13 +38,25 @@ public class ConsoleView implements View{
     }
 
     @Override
-    public void afficherWinner(int id_joueur){
-        System.out.println("------------------\n\n");
-        System.out.println("CONGRATULATION JOUEUR " + id_joueur);
-        System.out.println("YOU WIN\n\n");
-        System.out.println("------------------");
+    public void afficherWinner(Joueur winner){
+
+        String line = "CONGRATULATION " + winner.getName() + "\n YOU WIN\n";
+
+        afficherSpecialMessage(line);
     }
 
+
+    @Override
+    public void afficherTour(Joueur active_player){
+        String line = "A toi de jouer " + active_player.getName() + "\n";
+
+        afficherSpecialMessage(line);
+    }
+
+    @Override
+    public void afficherDebut(){
+        afficherSpecialMessage("Début de la partie..");
+    }
 
 
 
@@ -138,8 +150,21 @@ public class ConsoleView implements View{
     public Joueur select_ia(int id_joueur, int nivmax_ia){
 
         System.out.println("Le joueur " + id_joueur + " sera t-il un humain(0) ou une ia(Difficulté 1 à " + nivmax_ia + ")?");
-        int valeur = scanner.nextInt();
-        scanner.nextLine();
+        int valeur = 0;
+        boolean isValid = false;
+
+        while (!isValid) {
+            System.out.print("Niveau de l'IA entre 0 et 1 : ");
+            
+            if (scanner.hasNextInt()) {
+                valeur = scanner.nextInt(); // Récupère l'entier
+                scanner.nextLine(); // Consomme le reste de la ligne pour éviter les problèmes
+                isValid = true; // L'entrée est valide
+            } else {
+                System.out.println("Erreur : Vous devez entrer un entier entre 0 et "+nivmax_ia+".");
+                scanner.nextLine(); // Consomme l'entrée non valide
+            }
+        }
 
         // Vérifier que la valeur est entre 0 et niv_max_ia
         if (valeur < 0 || valeur > nivmax_ia) {
@@ -147,7 +172,17 @@ public class ConsoleView implements View{
             return select_ia(id_joueur, nivmax_ia);
         }
 
-        Joueur j = new Joueur(id_joueur, valeur);
+        boolean valid = false;
+        String input = "null";
+        while(!valid){
+            System.out.println("Comment s'appelle-t'il?");
+            input = scanner.nextLine();
+            if(isValidPseudo(input)){
+                valid = true;
+            }
+        }
+
+        Joueur j = new Joueur(id_joueur, valeur, input);
 
         return j;
     }
@@ -155,6 +190,12 @@ public class ConsoleView implements View{
 
 
     // ------------------------- FONCTIONS PRIVEES -------------------------
+
+    private void afficherSpecialMessage(String special_message){
+        System.out.println("------------------\n");
+        System.out.println(special_message);
+        System.out.println("------------------\n");
+    }
 
 
     // Prend en entrée une chaine rentrée par l'utilisateur et la convertir en une carte
@@ -191,5 +232,30 @@ public class ConsoleView implements View{
         // Retourner une carte valide
         Carte carte = new Carte(couleur, valeur);
         return carte;
+    }
+
+
+    private boolean isValidPseudo(String pseudo) {
+        // Vérifie que la chaîne n'est pas nulle ou vide
+        if (pseudo == null || pseudo.isEmpty()) {
+            afficherMessage("Erreur: Veuillez rentrer un pseudo");
+            return false;
+        }
+        
+        // Vérifie que la longueur est entre 3 et 20 caractères
+        if (pseudo.length() < 3 || pseudo.length() > 20) {
+            afficherMessage("Erreur: Le pseudo doit contenir entre 3 et 20 caractères");
+            return false;
+        }
+        
+        // Vérifie qu'il ne contient que des lettres, des chiffres, ou les caractères _ et -
+        String regex = "^[a-zA-Z0-9_-]+$";
+        if (!pseudo.matches(regex)) {
+            afficherMessage("erreur: Le pseudo ne doit contenir que des caractères alphanumériques");
+            return false;
+        }
+
+        // Si toutes les vérifications passent, le pseudo est valide
+        return true;
     }
 }

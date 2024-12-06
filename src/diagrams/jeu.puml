@@ -1,5 +1,15 @@
 @startuml jeu
 
 class Jeu{
-    + main(String args[]
+    + main(String args[])
+    + select_view(): View
 }
+
+class Tour{
+    + gestion_tour_real(View vue, Frontiere frontiere, Joueur joueur_actif, Joueur passive_player)
+    + gestion_tour_ia(View vue, frontiere frontiere, Joueur joueur_actif, Joueur passive_player)
+}
+
+Jeu ..> Tour
+
+@enduml

@@ -62,7 +62,7 @@ public class Jeu {
         int nbr_tours = 0;
 
         vue.afficherMessage("Fin de la mise en place du jeu!");
-        vue.afficherMessage("Début de la partie..\n");
+        vue.afficherDebut();
 
         while(gaming){
 
@@ -72,19 +72,25 @@ public class Jeu {
 
             // Choix du joueur actif
             Joueur joueur_actif;
+            Joueur passive_player;
             if(nbr_tours % 2 == 0){
                 joueur_actif = J2;
+                passive_player = J1;
             }
             else{
                 joueur_actif = J1;
+                passive_player = J2;
             }
+
+            // On dit au joueur que c'est à lui de jouer
+            vue.afficherTour(joueur_actif);
 
             // on gére le tour du joueur
             if(joueur_actif.isIA() == false){
-                Tour.gestion_tour_real(vue, frontiere, joueur_actif);
+                Tour.gestion_tour_real(vue, frontiere, joueur_actif, passive_player);
             }
             else{
-                Tour.gestion_tour_ia(vue, frontiere, joueur_actif);
+                Tour.gestion_tour_ia(vue, frontiere, joueur_actif, passive_player);
             }
 
             // On vérifie si la parte est gagnée
@@ -98,7 +104,7 @@ public class Jeu {
                 joueur_actif.ajouterCarte(pioche.piocher());
             }
             else{
-                vue.afficherMessage("On continue la partie sans piocher");
+                vue.afficherMessage("On continue la partie sans piocher\n");
             }
         }
     }

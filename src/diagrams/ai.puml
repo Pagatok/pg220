@@ -1,0 +1,15 @@
+@startuml ai
+
+interface Ai{
+	+ getlvlIA(): int
+	+ select_card(Joueur J): Carte
+	+ select_borne(Joueur J, Frontiere F): Borne
+	+ select_revendication(Frontiere F): int
+}
+
+class BasicAi{
+}
+
+BasicAi ..|> Ai
+
+@enduml

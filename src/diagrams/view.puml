@@ -5,17 +5,20 @@ interface View{
     + afficherJoueur(Joueur J);
     + afficherMessage(String message);
     + afficherBorne(Borne borne);
-    + afficherWinner(int id_joueur);
+    + afficherWinner(Joueur winner);
+    + void afficherTour(Joueur active_player)
+    + void afficherDebut()
 
-    + select_card(Joueur J);
-    + select_borne(Joueur J, Frontiere F);
-    + select_revendication(Frontiere F);
+    + select_card(Joueur J): Carte
+    + select_borne(Joueur J, Frontiere F): Borne
+    + select_revendication(Frontiere F): int
+    + select_ia(int id_joueur, int nivmax_ia): Joueur
 }
 
-class Console{
+class ConsoleView{
 
 }
 
-Console ..|> View
+ConsoleView ..|> View
 
 @enduml
