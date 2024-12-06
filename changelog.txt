@@ -1,1 +1,2 @@
 - Mettre à jour le README
+- Mettre à jour les diagrammes

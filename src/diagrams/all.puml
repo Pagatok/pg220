@@ -27,9 +27,17 @@ class Combinaison{
 class Joueur{
     - id_joueur: int
     - pied: Card_list
+    - niv_ia: int
+    - name: String
     + Joueur(int id_joueur): Joueur
+    + Joueur(int id_joueur, int niv_ia): Joueur
+    + Joueur(int id_joueur, int niv_ia, string playerName): Joueur
     + getTaillePied(): int
     + getId(): int
+    + getPied(): Card_list
+    + getNivIA(): int
+    + getName(): String
+    + isIA(): boolean
     + setId(int id_joueur)
     + appartientCarte(Carte carte): boolean
     + ajouterCarte(Carte new_carte)
@@ -63,6 +71,7 @@ class Borne{
     - id_borne: int
     + Borne(int id_borne): Borne
     + Borne(Combinaison J1, Combinaison J2, int id_borne): Borne
+    + getId(): int
     + determinerRevendiquation(): int
     + isRevendique(): boolean
     + getIdJoueur(): int
@@ -73,10 +82,15 @@ class Borne{
 
 class Frontiere{
     - liste_bornes: List<Borne>
+    - gameover: boolean
     + Frontiere(): Frontiere
     + getBorne(int id_borne): Borne
     + getNbrBornes(int id_joueur): int
     + getSuccessifs(int id_joueur): int
+    + getBornesDispo(): List<Integer>
+    + is_gameover(): boolean
+    + getNbrBornesTotal(): int
+    + setGameOver()
     + checkVictoire(): int
     + toString(): string
 }
@@ -101,22 +115,51 @@ Pioche --> Card_list
 
 
 
+interface Ai{
+	+ getlvlIA(): int
+	+ select_card(Joueur J): Carte
+	+ select_borne(Joueur J, Frontiere F): Borne
+	+ select_revendication(Frontiere F): int
+}
+
+class BasicAi{
+}
+
+BasicAi ..|> Ai
+
+
+class Jeu{
+    + main(String args[])
+    + select_view(): View
+}
+
+class Tour{
+    + gestion_tour_real(View vue, Frontiere frontiere, Joueur joueur_actif, Joueur passive_player)
+    + gestion_tour_ia(View vue, frontiere frontiere, Joueur joueur_actif, Joueur passive_player)
+}
+
+Jeu ..> Tour
+
+
 interface View{
     + afficherFrontiere(Frontiere frontiere);
     + afficherJoueur(Joueur J);
     + afficherMessage(String message);
     + afficherBorne(Borne borne);
-    + afficherWinner(int id_joueur);
+    + afficherWinner(Joueur winner);
+    + void afficherTour(Joueur active_player)
+    + void afficherDebut()
 
-    + select_card(Joueur J);
-    + select_borne(Joueur J, Frontiere F);
-    + select_revendication(Frontiere F);
+    + select_card(Joueur J): Carte
+    + select_borne(Joueur J, Frontiere F): Borne
+    + select_revendication(Frontiere F): int
+    + select_ia(int id_joueur, int nivmax_ia): Joueur
 }
 
-class Console{
+class ConsoleView{
 
 }
 
-Console ..|> View
+ConsoleView ..|> View
 
 @enduml
