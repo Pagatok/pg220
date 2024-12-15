@@ -3,21 +3,28 @@ package com.schottenTotten.model;
 import java.util.Scanner;
 
 public class EffetTactique {
-    public boolean ajouterCarteTactique(int id_joueur, Carte_Tactique carteTactique, Borne borne) {
+    public boolean ajouterCarteTactique(int id_joueur, Carte_Tactique carteTactique, Borne borne, Joueur joueur) {
+        boolean effetApplique = false;
+
         switch (carteTactique.getType()) {
             case TROUPES_ELITE:
-                return jouerTroupesElite(id_joueur, carteTactique, borne);
-
+                effetApplique = jouerTroupesElite(id_joueur, carteTactique, borne);
+                break;
             case MODES_COMBAT:
-                return appliquerModeCombat(id_joueur, carteTactique, borne);
-
+                effetApplique = appliquerModeCombat(id_joueur, carteTactique, borne);
+                break;
             case RUSES:
-                return jouerRuse(id_joueur, carteTactique, borne);
-
+                effetApplique = jouerRuse(id_joueur, carteTactique, borne);
+                break;
             default:
                 System.err.println("Type de carte Tactique inconnu : " + carteTactique.getType());
                 return false;
         }
+
+        if (effetApplique) {
+            joueur.retirerCarteTactique(carteTactique);
+        }
+        return effetApplique;
     }
 
 
@@ -30,11 +37,11 @@ public class EffetTactique {
 
             case "Espion":
                 System.out.println("Effet : Carte de valeur 7 avec couleur choisie au moment de la revendication.");
-                return true;
+                return effetEspion(borne, id_joueur);
 
             case "Porte-Bouclier":
                 System.out.println("Effet : Carte de valeur 1, 2 ou 3 avec couleur choisie au moment de la revendication.");
-                return true;
+                return effetJoker(borne, id_joueur);
 
             default:
                 System.err.println("Troupe d'élite non reconnue : " + carteTactique.getNom());
@@ -95,37 +102,112 @@ public class EffetTactique {
         return borne.ajouterCarte(id_joueur, joker);
     }
 
+    public boolean effetEspion(Borne borne, int id_joueur) {
+        Carte espion = new Carte(null, 7); // Espion initialisé avec valeur 7
+        return borne.ajouterCarte(id_joueur, espion);
+    }
+
 
     public void appeffetJoker(Carte joker) {
         Scanner scanner = new Scanner(System.in);
 
         // Choix de la couleur
-        System.out.println("Choisissez une couleur pour le Joker : (ROUGE, BLEU, VERT, JAUNE, VIOLET, ROSE)");
-        Carte.Couleur couleurChoisie;
-        try {
-            couleurChoisie = Carte.Couleur.valueOf(scanner.nextLine().toUpperCase());
-        } catch (IllegalArgumentException e) {
-            System.err.println("Couleur invalide. La couleur par défaut ROUGE est utilisée.");
-            couleurChoisie = Carte.Couleur.ROUGE;
+        Carte.Couleur couleurChoisie = null;
+        while (couleurChoisie == null) {
+            System.out.println("Choisissez une couleur pour le Joker : (ROUGE, BLEU, VERT, JAUNE, VIOLET, ROSE)");
+            String inputCouleur = scanner.nextLine().toUpperCase();
+            try {
+                couleurChoisie = Carte.Couleur.valueOf(inputCouleur);
+            } 
+            catch (IllegalArgumentException e) {
+                System.out.println("Couleur invalide. Veuillez réessayer.");
+            }
         }
+        
 
         // Choix de la valeur
-        System.out.println("Choisissez une valeur pour le Joker (entre 1 et 9) :");
-        int valeurChoisie;
-        try {
-            valeurChoisie = Integer.parseInt(scanner.nextLine());
-            if (valeurChoisie < 1 || valeurChoisie > 9) {
-                throw new NumberFormatException();
+        int valeurChoisie = -1;
+        while (valeurChoisie < 1 || valeurChoisie > 9) {
+            System.out.println("Choisissez une valeur pour le Joker (entre 1 et 9) :");
+            if (!scanner.hasNextInt()) {
+                System.out.println("Valeur invalide. Veuillez entrer un entier entre 1 et 9.");
+                scanner.next(); // Consommer l'entrée incorrecte
+                continue;
             }
-        } catch (NumberFormatException e) {
-            System.err.println("Valeur invalide. La valeur par défaut 7 est utilisée.");
-            valeurChoisie = 7;
+        
+            valeurChoisie = scanner.nextInt();
+            scanner.nextLine(); // Consommer la ligne restante
+        
+            if (valeurChoisie < 1 || valeurChoisie > 9) {
+                System.out.println("Valeur invalide. La valeur doit être entre 1 et 9.");
+            }
         }
-        scanner.close();
+        
 
         // Configuration du Joker
         joker.setCouleur(couleurChoisie);
         joker.setValeur(valeurChoisie);
         System.out.println("Le Joker est configuré avec la couleur " + couleurChoisie + " et la valeur " + valeurChoisie);
     }
+
+    public void appeffetEspion(Carte espion) {
+        Scanner scanner = new Scanner(System.in);
+    
+        // Choix de la couleur
+        Carte.Couleur couleurChoisie = null;
+        while (couleurChoisie == null) {
+            System.out.println("Choisissez une couleur pour l'Espion : (ROUGE, BLEU, VERT, JAUNE, VIOLET, ROSE)");
+            String inputCouleur = scanner.nextLine().toUpperCase();
+            try {
+                couleurChoisie = Carte.Couleur.valueOf(inputCouleur);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Couleur invalide. Veuillez réessayer.");
+            }
+        }
+    
+        // Configuration de la carte Espion
+        espion.setCouleur(couleurChoisie);
+        espion.setValeur(7);
+        System.out.println("L'Espion est configuré avec la couleur " + couleurChoisie + " et la valeur 7.");
+    }
+    
+    public void appeffetPorteBouclier(Carte porteBouclier) {
+        Scanner scanner = new Scanner(System.in);
+    
+        // Choix de la couleur
+        Carte.Couleur couleurChoisie = null;
+        while (couleurChoisie == null) {
+            System.out.println("Choisissez une couleur pour le Porte-Bouclier : (ROUGE, BLEU, VERT, JAUNE, VIOLET, ROSE)");
+            String inputCouleur = scanner.nextLine().toUpperCase();
+            try {
+                couleurChoisie = Carte.Couleur.valueOf(inputCouleur);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Couleur invalide. Veuillez réessayer.");
+            }
+        }
+    
+        // Choix de la valeur
+        int valeurChoisie = -1;
+        while (valeurChoisie < 1 || valeurChoisie > 3) {
+            System.out.println("Choisissez une valeur pour le Porte-Bouclier (1, 2 ou 3) :");
+            if (!scanner.hasNextInt()) {
+                System.out.println("Valeur invalide. Veuillez entrer un entier entre 1 et 3.");
+                scanner.next(); // Consomme l'entrée incorrecte
+                continue;
+            }
+    
+            valeurChoisie = scanner.nextInt();
+            scanner.nextLine(); // Consommer la ligne restante
+    
+            if (valeurChoisie < 1 || valeurChoisie > 3) {
+                System.out.println("Valeur invalide. La valeur doit être entre 1 et 3.");
+            }
+        }
+    
+        // Configuration de la carte Porte-Bouclier
+        porteBouclier.setCouleur(couleurChoisie);
+        porteBouclier.setValeur(valeurChoisie);
+        System.out.println("Le Porte-Bouclier est configuré avec la couleur " + couleurChoisie + " et la valeur " + valeurChoisie + ".");
+    }
+    
 }

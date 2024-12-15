@@ -1,5 +1,7 @@
 package com.schottenTotten.model;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class Joueur{
     
@@ -79,7 +81,13 @@ public class Joueur{
 
 
     public void retirerCarte(Carte old_carte){
-        pied.removeCarte(old_carte);
+        if (old_carte instanceof Carte_Tactique){
+            pied_tactique.removeCarte((Carte_Tactique) old_carte);
+        }
+        else{
+            pied.removeCarte(old_carte);
+        }
+
     }
 
     public void retirerCarteTactique(Carte_Tactique old_carte){
@@ -100,6 +108,10 @@ public class Joueur{
         else{
             System.out.println("La main ne peut contenir que " + taille_max_main + " cartes maximum");
         }
+    }
+
+    public List<Carte_Tactique> getPiedTactique(){
+        return pied_tactique.getCartes();
     }
 
     public String toString() {

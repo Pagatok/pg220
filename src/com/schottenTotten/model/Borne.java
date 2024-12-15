@@ -37,6 +37,8 @@ public class Borne {
         return J2;
     }
 
+
+    
     public boolean ajouterCarte(int id_joueur, Carte carte){
         if(id_joueur == 1){
             return J1.ajouterCarte(carte);
@@ -47,9 +49,9 @@ public class Borne {
     }
 
 
-    public boolean ajouterCarteTactique(int id_joueur, Carte_Tactique carteTactique) {
+    public boolean ajouterCarteTactique(int id_joueur, Carte_Tactique carteTactique, Joueur joueur) {
         EffetTactique effet = new EffetTactique();
-        return effet.ajouterCarteTactique(id_joueur, carteTactique, this);
+        return effet.ajouterCarteTactique(id_joueur, carteTactique, this, joueur);
     }
     
 
@@ -76,7 +78,8 @@ public class Borne {
             return;
         }
 
-        configurerJokers();
+        configurerTroupes();
+
         // Comparaison des types de combinaison
         int comparaisonType = comparerTypes();
 
@@ -111,23 +114,54 @@ public class Borne {
     }
 
 
-    private void configurerJokers() {
+    private void configurerTroupes() {
         EffetTactique effet = new EffetTactique();
-
+    
         // Configurer les Jokers dans la combinaison de J1
         for (Carte carte : J1.getCartes()) {
-            if (carte.getValeur() == 0 && carte.getCouleur() == null) {
-                effet.appeffetJoker(carte);
+            if(carte instanceof Carte_Tactique){
+                Carte_Tactique carteTactique = (Carte_Tactique) carte;
+                switch (carteTactique.getNom()) {
+                    case "Joker":
+                        effet.appeffetJoker(carte);
+                        break;
+                    case "Espion":
+                        effet.appeffetEspion(carte);
+                        break;
+                    case "Porte-Bouclier":
+                        effet.appeffetPorteBouclier(carte);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
-
+        // Recalculer le type après configuration
+        this.J1.recalculerType();
+    
         // Configurer les Jokers dans la combinaison de J2
         for (Carte carte : J2.getCartes()) {
-            if (carte.getValeur() == 0 && carte.getCouleur() == null) {
-                effet.appeffetJoker(carte);
+            if(carte instanceof Carte_Tactique){
+                Carte_Tactique carteTactique = (Carte_Tactique) carte;
+                switch (carteTactique.getNom()) {
+                    case "Joker":
+                        effet.appeffetJoker(carte);
+                        break;
+                    case "Espion":
+                        effet.appeffetEspion(carte);
+                        break;
+                    case "Porte-Bouclier":
+                        effet.appeffetPorteBouclier(carte);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
+        // Recalculer le type après configuration
+        this.J2.recalculerType();
     }
+    
 
     private int comparerTypes(){
         Combinaison.Type typeJ1 = J1.getType();

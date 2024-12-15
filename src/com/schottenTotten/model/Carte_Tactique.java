@@ -29,6 +29,14 @@ public class Carte_Tactique extends Carte{
 
     @Override 
     public String toString() {
+        if (type == Type.TROUPES_ELITE){
+            return "nom='" + nom + '\'' +
+                    ", description='" + description + '\'' +
+                    ", type=" + type + '\'' +
+                    "couleur=" + getCouleur() + '\'' + 
+                    "valeur=" + getValeur();
+        }
+
         return  "nom='" + nom + '\'' +
                 ", description='" + description + '\'' +
                 ", type=" + type;

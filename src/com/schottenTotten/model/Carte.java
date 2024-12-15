@@ -33,6 +33,15 @@ public class Carte {
         this.valeur = new_valeur;
     }
 
+    public void modifierCarte(Couleur nouvelleCouleur, int nouvelleValeur) {
+        if (nouvelleValeur < 1 || nouvelleValeur > 9) {
+            throw new IllegalArgumentException("La valeur doit être entre 1 et 9.");
+        }
+        this.couleur = nouvelleCouleur;
+        this.valeur = nouvelleValeur;
+    }
+    
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;

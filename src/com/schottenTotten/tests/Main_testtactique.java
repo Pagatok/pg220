@@ -13,7 +13,7 @@ public class Main_testtactique{
                 Carte_Tactique.Type.TROUPES_ELITE);
 
         EffetTactique effet = new EffetTactique();
-        effet.ajouterCarteTactique(1, joker, borne);
+        effet.ajouterCarteTactique(1, joker, borne, null);
 
         System.out.println("revvendic");
         // Revendication

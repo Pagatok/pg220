@@ -45,6 +45,10 @@ public class Combinaison extends Card_list{
         return somme;
     }
 
+    // Recalcule le type de la combinaison
+    public void recalculerType() {
+        this.type = calculate_type();
+    }
 
     
 

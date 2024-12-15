@@ -42,30 +42,29 @@ public class Jeu {
 
 
 
-    public void setVariante(){
-        Scanner scanner = new Scanner(System.in);
+    public void setVariante(Scanner scanner) {
         System.out.println("Choisissez la variante du jeu :");
         System.out.println("1. Basique");
         System.out.println("2. Tactique");
-
+    
         int choix = scanner.nextInt();
-        scanner.nextLine(); 
-
-        if(choix ==1){
+        scanner.nextLine();
+    
+        if (choix == 1) {
             this.variante = Variante.BASIQUE;
-        }
-        else if(choix == 2){
+        } else if (choix == 2) {
             this.variante = Variante.TACTIQUE;
-        }
-        else{
+        } else {
             System.out.println("Veuillez choisir une variante valide");
             this.variante = Variante.BASIQUE;
         }
     }
     
+    
     public static void main(String args[]){
+        Scanner scanner = new Scanner(System.in); // Créer un scanner global pour tout le programme
         Jeu jeu = new Jeu();
-        jeu.setVariante();
+        jeu.setVariante(scanner);
         View vue = new ConsoleView();
 
         // Mise en place
@@ -126,12 +125,28 @@ public class Jeu {
 
             if(modeTactique){
                 if(nbr_tours>2){
-                    Scanner scanner = new Scanner(System.in);
-                    vue.afficherMessage("Choisissez la pioche :");
-                    vue.afficherMessage("1. Pioche Clan");
-                    vue.afficherMessage("2. Pioche Tactique");
-                    int choixPioche = scanner.nextInt();
-                    scanner.nextLine(); // Consommer la ligne
+                    
+                    int choixPioche = -1;
+                    while (choixPioche != 1 && choixPioche != 2) {
+                        System.out.println("Choisissez la pioche :");
+                        System.out.println("1. Pioche Clan");
+                        System.out.println("2. Pioche Tactique");
+                    
+                        if (!scanner.hasNextInt()) {
+                            System.out.println("Entrée invalide. Veuillez choisir 1 ou 2.");
+                            scanner.next(); // Consomme l'entrée incorrecte
+                            continue;
+                        }
+                    
+                        choixPioche = scanner.nextInt();
+                        scanner.nextLine(); // Consommer la ligne restante
+                    
+                        if (choixPioche != 1 && choixPioche != 2) {
+                            System.out.println("Choix invalide. Veuillez sélectionner 1 pour Clan ou 2 pour Tactique.");
+                        }
+                    }
+                    
+                    
 
                     if (choixPioche == 1) {
                         joueur_actif.piocherCarte(pioche, false);
@@ -175,5 +190,7 @@ public class Jeu {
                 }
             }
         }
+
+        scanner.close();
     }
 }
