@@ -109,8 +109,14 @@ public class ConsoleView implements View{
 
         Borne borne_selected = F.getBorne(valeur);
 
-        // Vérifier que le joueur n'a pas déjà posé 3 cartes sur cette borne
-        if(borne_selected.nbr_cartes(J.getId()) >=3){
+        // Vérifier si l'effet Combat de Boue est actif
+        if (borne_selected.isCombatDeBoueActive() && borne_selected.nbr_cartes(J.getId()) >= 4) {
+            System.out.println("Erreur: Vous avez déjà posé 4 cartes sur cette borne en raison de l'effet Combat de Boue");
+            return select_borne(J, F);
+        }
+
+        // Vérifier que le joueur n'a pas déjà posé 3 cartes sur une borne normale
+        if (!borne_selected.isCombatDeBoueActive() && borne_selected.nbr_cartes(J.getId()) >= 3) {
             System.out.println("Erreur: Vous avez déjà posé 3 cartes sur cette borne");
             return select_borne(J, F);
         }
@@ -137,12 +143,14 @@ public class ConsoleView implements View{
 
         Borne borne_selected = F.getBorne(valeur);
 
-        // Vérifier qu'il y a 3 cartes des 2 côtés de la borne
-        if(borne_selected.nbr_cartes(1) == 3 && borne_selected.nbr_cartes(2) == 3){
+        // Vérifier le nombre de cartes nécessaires pour revendiquer
+        int cartesNecessaires = borne_selected.isCombatDeBoueActive() ? 4 : 3;
+
+        if (borne_selected.nbr_cartes(1) == cartesNecessaires && borne_selected.nbr_cartes(2) == cartesNecessaires) {
             return borne_selected;
-        }
-        else{
-            System.out.println("Vous ne pouvez pas revendiquer cette borne, vous et votre adversaire devez avoir 3 cartes de poser sur celle-ci");
+        } else {
+            System.out.println("Vous ne pouvez pas revendiquer cette borne, chaque joueur doit avoir posé " 
+                            + cartesNecessaires + " cartes.");
             return select_revendication(F);
         }
     }

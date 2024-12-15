@@ -21,6 +21,11 @@ public class Carte_Tactique_List {
         this.taille_max = taille_max;
     }
 
+    public void setTailleMax(int nouvelleTaille) {
+        this.taille_max = nouvelleTaille;
+        System.out.println("Taille maximale mise à jour : " + this.taille_max);
+    }
+    
     // Ajouter une carte tactique à la liste
     public boolean ajouterCarte(Carte_Tactique carte) {
         if (liste_cartes_tactiques.size() >= taille_max) {

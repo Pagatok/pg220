@@ -54,10 +54,14 @@ public class EffetTactique {
         switch (carteTactique.getNom()) {
             case "Colin-Maillard":
                 System.out.println("Effet : Seule la somme des cartes compte pour la revendication.");
+                borne.ajouterEffetTactique(carteTactique);
+                borne.activerColinMaillard();
                 return true;
 
             case "Combat de Boue":
                 System.out.println("Effet : Chaque joueur doit poser 4 cartes pour revendiquer la borne.");
+                borne.ajouterEffetTactique(carteTactique);
+                borne.activerCombatDeBoue();
                 return true;
 
             default:

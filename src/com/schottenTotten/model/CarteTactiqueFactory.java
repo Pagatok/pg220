@@ -23,7 +23,7 @@ public class CarteTactiqueFactory {
         cartesTactiques.add(new Carte_Tactique("Combat de Boue",
                 "Chaque joueur doit poser 4 cartes pour revendiquer la borne.", Carte_Tactique.Type.MODES_COMBAT));
 
-        // Ruses
+/*         // Ruses
         cartesTactiques.add(new Carte_Tactique("Chasseur de Tête",
                 "Piochez 3 cartes, défaussez 2.", Carte_Tactique.Type.RUSES));
         cartesTactiques.add(new Carte_Tactique("Stratège",
@@ -32,7 +32,7 @@ public class CarteTactiqueFactory {
                 "Défaussez une carte adverse.", Carte_Tactique.Type.RUSES)); //borne non revendiquée. défaussez-la face visible à côté de la pioche.
         cartesTactiques.add(new Carte_Tactique("Traître",
                 "Prenez une carte adverse et jouez-la de votre côté.", Carte_Tactique.Type.RUSES)); //borne non revendiquée à borne non revendiquée.
-
+ */
         return cartesTactiques;
     }
 }

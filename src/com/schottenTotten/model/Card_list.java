@@ -21,6 +21,12 @@ public class Card_list {
         this.taille_max = taille_max;
     }
 
+    public void setTailleMax(int nouvelleTaille) {
+        this.taille_max = nouvelleTaille;
+        System.out.println("Taille maximale mise à jour : " + this.taille_max);
+    }
+    
+
     public boolean ajouterCarte(Carte carte) {
 
         if (liste_cartes.size() >= taille_max) {
