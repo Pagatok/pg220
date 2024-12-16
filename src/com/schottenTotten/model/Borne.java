@@ -26,6 +26,18 @@ public class Borne {
         this.id_borne = id_borne;
     }
 
+
+    public Combinaison getCombinaison(int id_joueur){
+        if(id_joueur == 1){
+            return this.J1;
+        }
+        else{
+            return this.J2;
+        }
+    }
+
+
+
     public int getId(){
         return this.id_borne;
     }
@@ -120,6 +132,4 @@ public class Borne {
     public String toString(){
         return "Borne " + this.id_borne + ": {" + this.J1.toString() + " vs " + this.J2.toString() + "}";
     }
-
-    
 }

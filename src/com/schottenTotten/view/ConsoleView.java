@@ -3,10 +3,13 @@ package com.schottenTotten.view;
 import java.util.Scanner;
 
 import com.schottenTotten.model.Carte;
+import com.schottenTotten.model.CarteTactiqueFactory;
+import com.schottenTotten.model.Carte_Tactique;
 import com.schottenTotten.model.Carte.Couleur;
 import com.schottenTotten.model.Frontiere;
 import com.schottenTotten.model.Joueur;
 import com.schottenTotten.model.Borne;
+import com.schottenTotten.model.Card_list;
 
 public class ConsoleView implements View{
 
@@ -68,7 +71,7 @@ public class ConsoleView implements View{
     @Override
     public Carte select_card(Joueur J){
 
-        System.out.print("<nombre> <COULEUR> : ");
+        System.out.print("<nombre> <COULEUR> OR <nom>: ");
         String input = scanner.nextLine();
 
         try {
@@ -188,6 +191,76 @@ public class ConsoleView implements View{
     }
 
 
+    @Override
+    public boolean select_variante(){
+        this.afficherMessage("Choisissez la variante du jeu :\n1. Basique\n2. Tactique");
+        int valeur = 0;
+        boolean isValid = false;
+
+        while (!isValid) {
+            System.out.print(": ");
+            
+            if (scanner.hasNextInt()) {
+                valeur = scanner.nextInt(); // Récupère l'entier
+                scanner.nextLine(); // Consomme le reste de la ligne pour éviter les problèmes
+                isValid = true; // L'entrée est valide
+            } else {
+                System.out.println("Erreur : Vous devez entrer un entier entre 1 et 2");
+                scanner.nextLine(); // Consomme l'entrée non valide
+            }
+        }
+
+        // Vérifier que la valeur est entre 0 et niv_max_ia
+        if (valeur < 1 || valeur > 2) {
+            System.out.println("Veuillez rentrer une valeur entre 1 et 2");
+            return select_variante();
+        }
+
+        if(valeur == 1){
+            return false;
+        }
+        else{
+            return true;
+        }
+
+    }
+
+
+    @Override
+    public boolean select_pioche(){
+        this.afficherMessage("Sélectionnez la pioche dans laquelle piocher\n1. Normale\n2. Tactique");
+        int valeur = 0;
+        boolean isValid = false;
+
+        while (!isValid) {
+            System.out.print(": ");
+            
+            if (scanner.hasNextInt()) {
+                valeur = scanner.nextInt(); // Récupère l'entier
+                scanner.nextLine(); // Consomme le reste de la ligne pour éviter les problèmes
+                isValid = true; // L'entrée est valide
+            } else {
+                System.out.println("Erreur : Vous devez entrer un entier entre 1 et 2");
+                scanner.nextLine(); // Consomme l'entrée non valide
+            }
+        }
+
+        // Vérifier que la valeur est entre 0 et niv_max_ia
+        if (valeur < 1 || valeur > 2) {
+            System.out.println("Veuillez rentrer une valeur entre 1 et 2");
+            return select_variante();
+        }
+
+        if(valeur == 1){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+
+
 
     // ------------------------- FONCTIONS PRIVEES -------------------------
 
@@ -235,6 +308,19 @@ public class ConsoleView implements View{
     }
 
 
+    private static Carte parseTactique(String input)throws IllegalArgumentException{
+        Card_list liste_tactique = CarteTactiqueFactory.creerCartesTactiques();
+        for(Carte_Tactique carte : liste_tactique){
+            if(carte.getNom().equalsIgnoreCase(input)){
+                return carte;
+            }
+        }
+        throw new IllegalArgumentException("Nom invalide chef");
+    }
+
+
+
+
     private boolean isValidPseudo(String pseudo) {
         // Vérifie que la chaîne n'est pas nulle ou vide
         if (pseudo == null || pseudo.isEmpty()) {
@@ -258,4 +344,114 @@ public class ConsoleView implements View{
         // Si toutes les vérifications passent, le pseudo est valide
         return true;
     }
+
+
+
+
+
+    // TACTIQUES
+
+    @Override
+    public void appeffetJoker(Carte joker) {
+
+        // Choix de la couleur
+        Carte.Couleur couleurChoisie = null;
+        while (couleurChoisie == null) {
+            System.out.println("Choisissez une couleur pour le Joker : (ROUGE, BLEU, VERT, JAUNE, VIOLET, ROSE)");
+            String inputCouleur = scanner.nextLine().toUpperCase();
+            try {
+                couleurChoisie = Carte.Couleur.valueOf(inputCouleur);
+            } 
+            catch (IllegalArgumentException e) {
+                System.out.println("Couleur invalide. Veuillez réessayer.");
+            }
+        }
+        
+
+        // Choix de la valeur
+        int valeurChoisie = -1;
+        while (valeurChoisie < 1 || valeurChoisie > 9) {
+            System.out.println("Choisissez une valeur pour le Joker (entre 1 et 9) :");
+            if (!scanner.hasNextInt()) {
+                System.out.println("Valeur invalide. Veuillez entrer un entier entre 1 et 9.");
+                scanner.next(); // Consommer l'entrée incorrecte
+                continue;
+            }
+        
+            valeurChoisie = scanner.nextInt();
+            scanner.nextLine(); // Consommer la ligne restante
+        
+            if (valeurChoisie < 1 || valeurChoisie > 9) {
+                System.out.println("Valeur invalide. La valeur doit être entre 1 et 9.");
+            }
+        }
+        
+
+        // Configuration du Joker
+        joker.setCouleur(couleurChoisie);
+        joker.setValeur(valeurChoisie);
+        System.out.println("Le Joker est configuré avec la couleur " + couleurChoisie + " et la valeur " + valeurChoisie);
+    }
+
+    @Override
+    public void appeffetEspion(Carte espion) {
+    
+        // Choix de la couleur
+        Carte.Couleur couleurChoisie = null;
+        while (couleurChoisie == null) {
+            System.out.println("Choisissez une couleur pour l'Espion : (ROUGE, BLEU, VERT, JAUNE, VIOLET, ROSE)");
+            String inputCouleur = scanner.nextLine().toUpperCase();
+            try {
+                couleurChoisie = Carte.Couleur.valueOf(inputCouleur);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Couleur invalide. Veuillez réessayer.");
+            }
+        }
+    
+        // Configuration de la carte Espion
+        espion.setCouleur(couleurChoisie);
+        espion.setValeur(7);
+        System.out.println("L'Espion est configuré avec la couleur " + couleurChoisie + " et la valeur 7.");
+    }
+    
+
+    @Override
+    public void appeffetPorteBouclier(Carte porteBouclier) {
+    
+        // Choix de la couleur
+        Carte.Couleur couleurChoisie = null;
+        while (couleurChoisie == null) {
+            System.out.println("Choisissez une couleur pour le Porte-Bouclier : (ROUGE, BLEU, VERT, JAUNE, VIOLET, ROSE)");
+            String inputCouleur = scanner.nextLine().toUpperCase();
+            try {
+                couleurChoisie = Carte.Couleur.valueOf(inputCouleur);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Couleur invalide. Veuillez réessayer.");
+            }
+        }
+    
+        // Choix de la valeur
+        int valeurChoisie = -1;
+        while (valeurChoisie < 1 || valeurChoisie > 3) {
+            System.out.println("Choisissez une valeur pour le Porte-Bouclier (1, 2 ou 3) :");
+            if (!scanner.hasNextInt()) {
+                System.out.println("Valeur invalide. Veuillez entrer un entier entre 1 et 3.");
+                scanner.next(); // Consomme l'entrée incorrecte
+                continue;
+            }
+    
+            valeurChoisie = scanner.nextInt();
+            scanner.nextLine(); // Consommer la ligne restante
+    
+            if (valeurChoisie < 1 || valeurChoisie > 3) {
+                System.out.println("Valeur invalide. La valeur doit être entre 1 et 3.");
+            }
+        }
+    
+        // Configuration de la carte Porte-Bouclier
+        porteBouclier.setCouleur(couleurChoisie);
+        porteBouclier.setValeur(valeurChoisie);
+        System.out.println("Le Porte-Bouclier est configuré avec la couleur " + couleurChoisie + " et la valeur " + valeurChoisie + ".");
+    }
+    
 }

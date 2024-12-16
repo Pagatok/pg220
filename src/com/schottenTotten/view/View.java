@@ -18,4 +18,12 @@ public interface View {
     Borne select_borne(Joueur J, Frontiere F);
     int select_revendication(Frontiere F);
     Joueur select_ia(int id_joueur, int nivmax_ia);
+    boolean select_variante();
+    boolean select_pioche();
+
+
+    // Fonctions tactiques
+    void appeffetJoker(Carte joker);
+    void appeffetEspion(Carte espion);
+    void appeffetPorteBouclier(Carte porteBouclier);
 } 

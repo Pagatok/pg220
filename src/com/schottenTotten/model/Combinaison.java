@@ -105,7 +105,7 @@ public class Combinaison extends Card_list{
     }
 
     // Renvoie le type de combinaision de la combianiaison actuelle
-    private Type calculate_type() {
+    public Type calculate_type() {
         if (nombreDeCartes() < 3) {
             return Type.SOMME; // Pas assez de cartes pour former un type avancé
         }

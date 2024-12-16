@@ -8,6 +8,9 @@ import com.schottenTotten.view.View;
 
 
 public class Jeu {   
+
+    private static boolean variante = false;
+    private static int nbr_cartes = 6;
     
     public View select_view(){
         // Choix du mode d'affichage
@@ -37,7 +40,10 @@ public class Jeu {
 
         View vue = new ConsoleView();
 
-
+        variante = vue.select_variante();
+        if(variante){
+            nbr_cartes = 7;
+        }
         
         // Mise en place
 
@@ -49,11 +55,17 @@ public class Jeu {
         Joueur J1 = vue.select_ia(1, 1);
         Joueur J2 = vue.select_ia(2, 1);
 
-        // Initialisation de la pioche
+        // Initialisation de la pioche ou des pioches
         Pioche pioche = new Pioche();
         pioche.shuffle();
 
-        for(int i = 0; i<6; i++){
+        // Initialisation de la pioche tactique
+        Pioche pioche_tactique = new Pioche(true);
+        pioche_tactique.shuffle();
+
+
+
+        for(int i = 0; i<nbr_cartes; i++){
             J1.ajouterCarte(pioche.piocher());
             J2.ajouterCarte(pioche.piocher());
         }
@@ -100,13 +112,27 @@ public class Jeu {
             }
 
             // Quand il finit son tour le joueur pioche et on cache sa main
-            Carte carte = pioche.piocher();
-            if(carte != null){
-                joueur_actif.ajouterCarte(carte);
+            if(variante){
+                Carte carte;
+                if(vue.select_pioche()){
+                    carte = pioche_tactique.piocher();
+                }
+                else{
+                    carte = pioche.piocher();
+                    
+                }
+                if(carte != null){
+                    joueur_actif.ajouterCarte(carte);
+                }
+                else{
+                    vue.afficherMessage("On continue la partie sans piocher\n");
+                }
             }
-            else{
-                vue.afficherMessage("On continue la partie sans piocher\n");
-            }
+
+
+
+
+            
         }
     }
 }

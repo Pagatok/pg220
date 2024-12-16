@@ -93,7 +93,14 @@ public class Tour {
     private static void gestion_revend(int id_borne_revend, Frontiere F, View vue, Joueur J1, Joueur J2){
         if(id_borne_revend != -1){
             Borne borne_revend = F.getBorne(id_borne_revend);
+
+            if(borne_revend.getJoker()){
+                configurerTroupes(borne_revend, vue);
+            }
             borne_revend.determinerRevendication();
+
+
+            
 
             String name_joueur;
             if(borne_revend.getIdJoueur() == 1){
@@ -131,5 +138,57 @@ public class Tour {
             vue.afficherMessage("Niveau d'AI non valide");
             return null;
         }
+    }
+
+
+
+    private static void configurerTroupes(Borne borne, View vue) {
+
+        Combinaison J1 = borne.getCombinaison(1);
+        Combinaison J2 = borne.getCombinaison(2);
+    
+        // Configurer les Jokers dans la combinaison de J1
+        for (Carte carte : J1.getCartes()) {
+            if(carte instanceof Carte_Tactique){
+                Carte_Tactique carteTactique = (Carte_Tactique) carte;
+                switch (carteTactique.getNom()) {
+                    case "Joker":
+                        vue.appeffetJoker(carte);
+                        break;
+                    case "Espion":
+                        vue.appeffetEspion(carte);
+                        break;
+                    case "Porte-Bouclier":
+                        vue.appeffetPorteBouclier(carte);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        // Recalculer le type après configuration
+        J1.calculate_type();
+    
+        // Configurer les Jokers dans la combinaison de J2
+        for (Carte carte : J2.getCartes()) {
+            if(carte instanceof Carte_Tactique){
+                Carte_Tactique carteTactique = (Carte_Tactique) carte;
+                switch (carteTactique.getNom()) {
+                    case "Joker":
+                        vue.appeffetJoker(carte);
+                        break;
+                    case "Espion":
+                        vue.appeffetEspion(carte);
+                        break;
+                    case "Porte-Bouclier":
+                        vue.appeffetPorteBouclier(carte);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        // Recalculer le type après configuration
+        J2.calculate_type();
     }
 }
