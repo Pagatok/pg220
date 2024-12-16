@@ -7,6 +7,8 @@ public class Borne {
     private boolean revendique;
     private int id_joueur; // 1 pour J1, 2 pour J2, 0 si neutre
     private int id_borne;
+    private boolean joker = false;
+    private boolean mode_combat = false;
 
     public Borne(int id_borne){
         this.J1 = new Combinaison();
@@ -26,6 +28,22 @@ public class Borne {
 
     public int getId(){
         return this.id_borne;
+    }
+
+    public boolean getJoker(){
+        return this.joker;
+    }
+
+    public boolean getModeCombat(){
+        return this.mode_combat;
+    }
+
+    public void setJoker(boolean bool){
+        this.joker = bool;
+    }
+
+    public void setModeCombat(boolean bool){
+        this.mode_combat = bool;
     }
 
     public boolean ajouterCarte(int id_joueur, Carte carte){
