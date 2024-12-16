@@ -18,6 +18,15 @@ public class Pioche {
         this.liste_carte = liste_carte;
     }
 
+
+    public Pioche(boolean mode_tactique){
+        this.liste_carte = CarteTactiqueFactory.creerCartesTactiques();
+    }
+
+
+
+
+
     public void shuffle(){
         liste_carte.shuffle();
     }

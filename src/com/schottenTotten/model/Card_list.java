@@ -72,6 +72,18 @@ public class Card_list {
         Collections.shuffle(liste_cartes);
     }
 
+
+    public boolean isTacticIn(){
+        for(Carte carte : liste_cartes){
+            if(carte instanceof Carte_Tactique){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
     @Override
     public String toString() {
         return "" + liste_cartes;

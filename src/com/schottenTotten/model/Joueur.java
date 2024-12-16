@@ -5,7 +5,7 @@ public class Joueur{
     
     private int id_joueur;
     private Card_list pied;
-    private static int taille_max_main = 6;
+    private int taille_max_main = 6;
     private int niv_ia = 0;
     private String name;
 
@@ -27,6 +27,14 @@ public class Joueur{
         this.pied = new Card_list(taille_max_main);
         this.niv_ia = niv_ia;
         this.name = playerName;
+    }
+
+    public Joueur(int id_joueur, int niv_ia, int nbr_cartes, String playerName){
+        this.id_joueur = id_joueur;
+        this.pied = new Card_list(taille_max_main);
+        this.niv_ia = niv_ia;
+        this.name = playerName;
+        this.taille_max_main = nbr_cartes;
     }
 
     // ------------------------- GETTERS -------------------------

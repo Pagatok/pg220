@@ -37,6 +37,10 @@ public class Borne {
         }
     }
 
+    public boolean isTactic(){
+        return J1.isTacticIn() || J2.isTacticIn();
+    }
+
     public int nbr_cartes(int id_joueur){
         if(id_joueur == 1){
             return this.J1.nombreDeCartes();
