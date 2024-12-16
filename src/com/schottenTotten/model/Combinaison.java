@@ -14,6 +14,11 @@ public class Combinaison extends Card_list{
         this.type = Type.SOMME;
     }
 
+    public Combinaison(int taille_max){
+        this.cartes = new Card_list(taille_max);
+        this.type = Type.SOMME;
+    }
+
 
     @Override
     public boolean ajouterCarte(Carte carte){
