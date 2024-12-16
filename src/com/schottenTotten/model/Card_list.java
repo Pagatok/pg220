@@ -9,17 +9,22 @@ import com.schottenTotten.model.Carte.Couleur;
 public class Card_list {
 
     private final List<Carte> liste_cartes;
-    int taille_max;
+    int taille_max = 1000;
 
     public Card_list(){
         this.liste_cartes = new ArrayList<>();
-        this.taille_max = 1000;
     }
 
     public Card_list(int taille_max){
         this.liste_cartes = new ArrayList<>();
         this.taille_max = taille_max;
     }
+
+    public void setTailleMax(int nouvelleTaille) {
+        this.taille_max = nouvelleTaille;
+        System.out.println("Taille maximale mise à jour : " + this.taille_max);
+    }
+    
 
     public boolean ajouterCarte(Carte carte) {
 
@@ -43,12 +48,14 @@ public class Card_list {
 
     
     public Carte piocher(){
+        if (liste_cartes.isEmpty()){
+            throw new IllegalStateException("La liste des cartes est vide.");
+        }
         Carte carte = liste_cartes.get(0);
         liste_cartes.remove(0);
         return carte;
     }
-
-
+  
     public int nombreDeCartes(){
         return liste_cartes.size();
     }
@@ -58,10 +65,13 @@ public class Card_list {
     }
 
     // Fonction qui renvoie la liste des valeurs des cartes
-    public int getValeurCarte(int indice_carte){
-        int valeur = liste_cartes.get(indice_carte).getValeur();
-        return valeur;
+    public int getValeurCarte(int indice_carte) {
+        if (indice_carte < 0 || indice_carte >= liste_cartes.size()) {
+            throw new IndexOutOfBoundsException("Indice invalide : " + indice_carte + ", taille : " + liste_cartes.size());
+        }
+        return liste_cartes.get(indice_carte).getValeur();
     }
+        
 
     public Couleur getCouleurCarte(int indice_carte){
         Couleur valeur = liste_cartes.get(indice_carte).getCouleur();
