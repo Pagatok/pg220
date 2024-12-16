@@ -22,7 +22,7 @@ public class Combinaison extends Card_list{
 
     @Override
     public boolean ajouterCarte(Carte carte){
-        if(super.ajouterCarte(carte) == true){
+        if(cartes.ajouterCarte(carte)){
             this.type = calculate_type();
             return true;
         }

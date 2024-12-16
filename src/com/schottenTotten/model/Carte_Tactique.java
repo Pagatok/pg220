@@ -13,6 +13,7 @@ public class Carte_Tactique extends Carte {
     }
 
     // Getter pour 'nom'
+    @Override
     public String getNom() {
         return nom;
     }
@@ -23,6 +24,7 @@ public class Carte_Tactique extends Carte {
     }
 
     // Getter pour 'description'
+    @Override
     public String getDescription() {
         return description;
     }

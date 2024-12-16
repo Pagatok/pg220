@@ -29,17 +29,21 @@ public class Tour {
         vue.afficherJoueur(joueur_actif);
         Carte carte_jouee = vue.select_card(joueur_actif);
         joueur_actif.retirerCarte(carte_jouee);
+        System.out.println(carte_jouee.toString());
 
         // Puis il sélectionne la borne sur laquelle il veut la poser
         Borne borne = vue.select_borne(joueur_actif, frontiere);
         borne.ajouterCarte(id_joueur, carte_jouee);
-        vue.afficherMessage("Carte ajoutée sur la borne" + borne.getId());
+        vue.afficherMessage("Carte ajoutée sur la borne " + borne.getId());
+        System.out.println(borne.toString());
 
         vue.afficherFrontiere(frontiere);
 
         // Il sélectionne les bornes qu'il veut revendiquer
-        int id_borne_revend = vue.select_revendication(frontiere);
-        gestion_revend(id_borne_revend, frontiere, vue, joueur_actif, autre_joueur);
+        Borne borne_revend = vue.select_revendication(frontiere);
+        if(borne_revend != null){
+            gestion_revend(borne_revend, frontiere, vue, joueur_actif, autre_joueur);
+        }
     }
 
 
@@ -68,8 +72,12 @@ public class Tour {
         borne.ajouterCarte(J.getId(), carte_jouee);
 
         // Il sélectionne les bornes qu'il veut revendiquer
-        int id_borne_revend = ia.select_revendication(F);
-        gestion_revend(id_borne_revend, F, vue, J, passive_player);
+        int id_borne = ia.select_revendication(F);
+        if(id_borne != -1){
+            Borne borne_revend = F.getBorne(id_borne);
+            gestion_revend(borne_revend, F, vue, J, passive_player);
+        }
+        
     }
 
 
@@ -90,38 +98,36 @@ public class Tour {
 
 
     // Gestion de la partie revendication du tour
-    private static void gestion_revend(int id_borne_revend, Frontiere F, View vue, Joueur J1, Joueur J2){
-        if(id_borne_revend != -1){
-            Borne borne_revend = F.getBorne(id_borne_revend);
+    private static void gestion_revend(Borne borne_revend, Frontiere F, View vue, Joueur J1, Joueur J2){
 
-            if(borne_revend.getJoker()){
-                configurerTroupes(borne_revend, vue);
-            }
-            borne_revend.determinerRevendication();
-
-
-            
-
-            String name_joueur;
-            if(borne_revend.getIdJoueur() == 1){
-                name_joueur = J1.getName();
-            }
-            else{
-                name_joueur = J2.getName();
-            }
-            
-            vue.afficherMessage("" + name_joueur + " remporte la borne " + borne_revend.getId());
-
-            // On vérifie si après la revendication on a un gagnant
-            // Si c'est le cas on arrete le jeu et célèbre le gagnant
-            int victorious = F.checkVictoire();
-            if(victorious == 1){
-                vue.afficherWinner(J1);
-            }
-            else if(victorious == 2){
-                vue.afficherWinner(J2);
-            }  
+        if(borne_revend.getJoker()){
+            System.out.println("Joker Trouvé !");
+            configurerTroupes(borne_revend, vue);
         }
+        borne_revend.determinerRevendication();
+
+
+        
+
+        String name_joueur;
+        if(borne_revend.getIdJoueur() == 1){
+            name_joueur = J1.getName();
+        }
+        else{
+            name_joueur = J2.getName();
+        }
+        
+        vue.afficherMessage("" + name_joueur + " remporte la borne " + borne_revend.getId());
+
+        // On vérifie si après la revendication on a un gagnant
+        // Si c'est le cas on arrete le jeu et célèbre le gagnant
+        int victorious = F.checkVictoire();
+        if(victorious == 1){
+            vue.afficherWinner(J1);
+        }
+        else if(victorious == 2){
+            vue.afficherWinner(J2);
+        }  
     }
 
 

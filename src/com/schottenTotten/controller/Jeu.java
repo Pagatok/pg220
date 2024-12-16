@@ -128,11 +128,6 @@ public class Jeu {
                     vue.afficherMessage("On continue la partie sans piocher\n");
                 }
             }
-
-
-
-
-            
         }
     }
 }

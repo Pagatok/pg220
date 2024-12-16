@@ -40,5 +40,6 @@ public class CarteTactiqueFactory {
 
         return liste_cartes;
     }
+
 }
 

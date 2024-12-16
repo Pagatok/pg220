@@ -1,5 +1,6 @@
 package com.schottenTotten.model;
 
+import com.schottenTotten.model.Carte_Tactique.Type;
 
 public class Borne {
     private Combinaison J1;
@@ -9,6 +10,8 @@ public class Borne {
     private int id_borne;
     private boolean joker = false;
     private boolean mode_combat = false;
+    private int nbrCartes1 = 0;
+    private int nbrCartes2 = 0;
 
     public Borne(int id_borne){
         this.J1 = new Combinaison();
@@ -60,12 +63,46 @@ public class Borne {
 
     public boolean ajouterCarte(int id_joueur, Carte carte){
         if(id_joueur == 1){
-            return J1.ajouterCarte(carte);
+            if(J1.ajouterCarte(carte)){
+                this.nbrCartes1 += 1;
+                setTactic(carte);
+                return true;
+            }
+            else{
+                return false;
+            }
         }
         else{
-            return J2.ajouterCarte(carte);
+            if(J2.ajouterCarte(carte)){
+                this.nbrCartes2 += 1;
+                setTactic(carte);
+                return true;
+            }
+            else{
+                return false;
+            }
         }
     }
+
+    private void setTactic(Carte carte){
+        if(carte instanceof Carte_Tactique){
+            switch(((Carte_Tactique)carte).getType()){
+                case TROUPE_ELITE:
+                    this.joker = true;
+                    break;
+                case MODES_COMBAT:
+                    this.mode_combat = true;
+                    break;
+                case RUSES:
+                    break;
+                default:
+                    System.err.println("Bizarre bizarre la carte tactique mais en fait nan");
+            }
+        }
+    }
+
+
+
 
     public boolean isTactic(){
         return J1.isTacticIn() || J2.isTacticIn();
@@ -73,10 +110,10 @@ public class Borne {
 
     public int nbr_cartes(int id_joueur){
         if(id_joueur == 1){
-            return this.J1.nombreDeCartes();
+            return this.nbrCartes1;
         }
         else{
-            return this.J2.nombreDeCartes();
+            return this.nbrCartes2;
         }
     }
 

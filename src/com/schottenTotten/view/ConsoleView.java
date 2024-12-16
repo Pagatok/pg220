@@ -1,6 +1,8 @@
 package com.schottenTotten.view;
 
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.schottenTotten.model.Carte;
 import com.schottenTotten.model.CarteTactiqueFactory;
@@ -74,19 +76,26 @@ public class ConsoleView implements View{
         System.out.print("<nombre> <COULEUR> OR <nom>: ");
         String input = scanner.nextLine();
 
-        try {
-            Carte carte = parseCarte(input);
-            System.out.println("Carte entrée : " + carte);
-            if(J.appartientCarte(carte)){
-                return carte;
-            }
-            else{
-                System.out.println("Erreur: Veuillez sélectionner une carte de votre main");
+        try{
+            Carte carte = parseTactique(input);
+            return carte;
+        } 
+        catch (IllegalArgumentException f){
+
+            try {
+                Carte carte = parseCarte(input);
+                System.out.println("Carte entrée : " + carte);
+                if(J.appartientCarte(carte)){
+                    return carte;
+                }
+                else{
+                    System.out.println("Erreur: Veuillez sélectionner une carte de votre main");
+                    return select_card(J);
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("Erreur : " + e.getMessage());
                 return select_card(J);
             }
-        } catch (IllegalArgumentException e) {
-            System.out.println("Erreur : " + e.getMessage());
-            return select_card(J);
         }
     }
 
@@ -115,7 +124,7 @@ public class ConsoleView implements View{
 
 
     @Override
-    public int select_revendication(Frontiere F){
+    public Borne select_revendication(Frontiere F){
 
         System.out.println("Quelle borne voulez-vous revendiquer? (0 pour aucune): ");
         int valeur = scanner.nextInt();
@@ -128,10 +137,12 @@ public class ConsoleView implements View{
         }
 
         if(valeur == 0){
-            return -1;
+            return null;
         }
 
         Borne borne_selected = F.getBorne(valeur);
+
+        System.out.println(borne_selected.toString());
 
         if(borne_selected.isRevendique() == true){
             this.afficherMessage("Cette borne est déjà revendiqué, veuiez sélectionner une borne valide");
@@ -140,7 +151,7 @@ public class ConsoleView implements View{
 
         // Vérifier qu'il y a 3 cartes des 2 côtés de la borne
         if(borne_selected.nbr_cartes(1) == 3 && borne_selected.nbr_cartes(2) == 3){
-            return valeur;
+            return borne_selected;
         }
         else{
             System.out.println("Vous ne pouvez pas revendiquer cette borne, vous et votre adversaire devez avoir 3 cartes de poser sur celle-ci");
@@ -278,7 +289,7 @@ public class ConsoleView implements View{
         // Diviser la chaîne d'entrée en deux parties : nombre et couleur
         String[] parts = input.trim().split(" ");
         if (parts.length != 2) {
-            throw new IllegalArgumentException("Format invalide, attendu : <nombre> <couleur>");
+            throw new IllegalArgumentException("Format invalide, attendu : <nombre> <couleur> OR <nom>");
         }
 
         // Extraire et valider la valeur entière
@@ -310,7 +321,8 @@ public class ConsoleView implements View{
 
     private static Carte parseTactique(String input)throws IllegalArgumentException{
         Card_list liste_tactique = CarteTactiqueFactory.creerCartesTactiques();
-        for(Carte_Tactique carte : liste_tactique){
+        List<Carte> liste = liste_tactique.getCartes();
+        for(Carte carte : liste){
             if(carte.getNom().equalsIgnoreCase(input)){
                 return carte;
             }

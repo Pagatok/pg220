@@ -46,6 +46,14 @@ public class Carte {
         }
     }
 
+    public String getNom(){
+        return this.toString();
+    }
+
+    public String getDescription(){
+        return "Carte Normale";
+    }
+
     // Définition des couleurs
     public enum Couleur {
         ROUGE,
