@@ -100,8 +100,9 @@ public class Jeu {
             }
 
             // Quand il finit son tour le joueur pioche et on cache sa main
-            if(pioche.piocher() != null){
-                joueur_actif.ajouterCarte(pioche.piocher());
+            Carte carte = pioche.piocher();
+            if(carte != null){
+                joueur_actif.ajouterCarte(carte);
             }
             else{
                 vue.afficherMessage("On continue la partie sans piocher\n");
