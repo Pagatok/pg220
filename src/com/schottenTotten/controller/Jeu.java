@@ -175,6 +175,13 @@ public class Jeu {
                     }
                 }
             }
+
+            if(nbr_tours % 2 == 0){
+                vue.afficherFrontiere(frontiere);
+            }
+            if(nbr_tours == 50){
+                break;
+            }
         }
     }
 
