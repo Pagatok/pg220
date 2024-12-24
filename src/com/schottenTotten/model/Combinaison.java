@@ -36,6 +36,11 @@ public class Combinaison extends Card_list{
     }
 
 
+    public void setType(Type type){
+        this.type = type;
+    }
+
+
     public int getScore(){
 
         int somme = 0;

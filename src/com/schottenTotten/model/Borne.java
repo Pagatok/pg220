@@ -1,6 +1,5 @@
 package com.schottenTotten.model;
 
-import com.schottenTotten.model.Carte_Tactique.Type;
 
 public class Borne {
     private Combinaison J1;
@@ -125,9 +124,11 @@ public class Borne {
 
         if (comparaisonType > 0) {
             // J1 a une meilleure combinaison
+            System.out.println("J1 a une meilleure combinaison");
             this.id_joueur = 1;
         } else if (comparaisonType < 0) {
             // J2 a une meilleure combinaison
+            System.out.println("J2 a une meilleure combinaison");
             this.id_joueur = 2;
         } else {
             // Types égaux, comparaison des scores
@@ -135,8 +136,10 @@ public class Borne {
             int scoreJ2 = J2.getScore();
 
             if (scoreJ1 > scoreJ2) {
+                System.out.println("J1 a un meilleur score");
                 this.id_joueur = 1;
             } else if (scoreJ1 < scoreJ2) {
+                System.out.println("J2 a un meilleur score");
                 this.id_joueur = 2;
             } else {
                 // Score égal, reste neutre

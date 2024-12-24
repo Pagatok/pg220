@@ -1,6 +1,7 @@
 package com.schottenTotten.ai;
 
 import com.schottenTotten.model.*;
+import com.schottenTotten.model.Carte.Couleur;
 
 import java.util.Random;
 import java.util.List;
@@ -73,6 +74,24 @@ public class BasicAi implements Ai{
             System.out.println("Borne à revendiquer sélectionnée");
             return id_borne;
         }
+    }
+
+
+    @Override
+    public Carte create_card(List<Integer> valeursPossibles){
+
+        // Génération aléatoire de la valeur en focntion des valeurs possibles
+        int id_valeur = random_return(0, valeursPossibles.size()-1);
+        int valeur = valeursPossibles.get(id_valeur);
+
+        // Génération aléatoire de la couleur
+        Couleur[] colors = Couleur.values();
+        int id_color = random_return(0, colors.length-1);
+        Couleur couleur = colors[id_color];
+
+        // Compilation de la carte
+        Carte carte = new Carte(couleur, valeur);
+        return carte;
     }
 
 

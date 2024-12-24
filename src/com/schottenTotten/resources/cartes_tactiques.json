@@ -1,0 +1,27 @@
+[
+    {
+      "nom": "Joker",
+      "nbr_dans_pioche": 2,
+      "type_tactique": "TROUPE_ELITE",
+      "description": "Peut prendre n'importe quelle couleur et valeur au moment de la revendication.",
+      "valeurs_possibles": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      "effet": "appJoker"
+    },
+    {
+      "nom": "Espion",
+      "nbr_dans_pioche": 1,
+      "type_tactique": "TROUPE_ELITE",
+      "description": "Carte de valeur 7 avec couleur choisie au moment de la revendication.",
+      "valeurs_possibles": [7],
+      "effet": "appJoker"
+    },
+    {
+      "nom": "Porte-Bouclier",
+      "nbr_dans_pioche": 1,
+      "type_tactique": "TROUPE_ELITE",
+      "description": "Carte de valeur 1 2 ou 3 avec couleur choisie au moment de la revendication.",
+      "valeurs_possibles": [1, 2, 3],
+      "effet": "appJoker"  
+    }
+]
+  

@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.schottenTotten.model.Carte;
 import com.schottenTotten.model.CarteTactiqueFactory;
-import com.schottenTotten.model.Carte_Tactique;
 import com.schottenTotten.model.Carte.Couleur;
 import com.schottenTotten.model.Frontiere;
 import com.schottenTotten.model.Joueur;
@@ -76,6 +75,12 @@ public class ConsoleView implements View{
         System.out.print("<nombre> <COULEUR> OR <nom>: ");
         String input = scanner.nextLine();
 
+        //ON construit le tableau de valeurs possibles
+        List<Integer> valeursPossibles = new ArrayList<>();
+        for(int i=1; i<=9; i++){
+            valeursPossibles.add(i);
+        }
+
         try{
             Carte carte = parseTactique(input);
             return carte;
@@ -83,7 +88,7 @@ public class ConsoleView implements View{
         catch (IllegalArgumentException f){
 
             try {
-                Carte carte = parseCarte(input);
+                Carte carte = parseCarte(input, valeursPossibles);
                 System.out.println("Carte entrée : " + carte);
                 if(J.appartientCarte(carte)){
                     return carte;
@@ -271,6 +276,32 @@ public class ConsoleView implements View{
     }
 
 
+    @Override
+    // Fonction similaire à select_card mais qui permet de renvoyer n'importe quelle carte non tactique
+    // Sert majoritairement pour appliquer les effets des Jokers
+    public Carte create_card(List<Integer> valeursPossibles) throws IllegalArgumentException {
+
+        // On crée la question en fonction des valeurs possibles
+        String part1 = "<nombre " + valeursPossibles.get(0) + "-" + valeursPossibles.get(valeursPossibles.size() - 1) + ">";
+        String part2 = "<COULEUR>";
+        String question = part1 + " " + part2;
+
+
+        // On gére la demande
+        System.out.print(question);
+        String input = scanner.nextLine();
+
+        try{
+            Carte carte = parseCarte(input, valeursPossibles);
+            System.out.println("Carte entrée : " + carte);
+            return carte;
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println("Erreur : " + e.getMessage());
+            return create_card(valeursPossibles);
+        }
+    }
+
 
 
     // ------------------------- FONCTIONS PRIVEES -------------------------
@@ -284,7 +315,7 @@ public class ConsoleView implements View{
 
     // Prend en entrée une chaine rentrée par l'utilisateur et la convertir en une carte
     // gére les exceptions en cas de mauvaise utilisation
-    private static Carte parseCarte(String input) throws IllegalArgumentException {
+    private static Carte parseCarte(String input, List<Integer> valeursPossibles) throws IllegalArgumentException {
 
         // Diviser la chaîne d'entrée en deux parties : nombre et couleur
         String[] parts = input.trim().split(" ");
@@ -301,8 +332,8 @@ public class ConsoleView implements View{
         }
 
         // Vérifier que la valeur est entre 1 et 9
-        if (valeur < 1 || valeur > 9) {
-            throw new IllegalArgumentException("La valeur doit être entre 1 et 9.");
+        if (!valeursPossibles.contains(valeur)) {
+            throw new IllegalArgumentException("La valeur doit être dans " + valeursPossibles.toString());
         }
 
         // Extraire et valider la couleur
@@ -360,110 +391,4 @@ public class ConsoleView implements View{
 
 
 
-
-    // TACTIQUES
-
-    @Override
-    public void appeffetJoker(Carte joker) {
-
-        // Choix de la couleur
-        Carte.Couleur couleurChoisie = null;
-        while (couleurChoisie == null) {
-            System.out.println("Choisissez une couleur pour le Joker : (ROUGE, BLEU, VERT, JAUNE, VIOLET, ROSE)");
-            String inputCouleur = scanner.nextLine().toUpperCase();
-            try {
-                couleurChoisie = Carte.Couleur.valueOf(inputCouleur);
-            } 
-            catch (IllegalArgumentException e) {
-                System.out.println("Couleur invalide. Veuillez réessayer.");
-            }
-        }
-        
-
-        // Choix de la valeur
-        int valeurChoisie = -1;
-        while (valeurChoisie < 1 || valeurChoisie > 9) {
-            System.out.println("Choisissez une valeur pour le Joker (entre 1 et 9) :");
-            if (!scanner.hasNextInt()) {
-                System.out.println("Valeur invalide. Veuillez entrer un entier entre 1 et 9.");
-                scanner.next(); // Consommer l'entrée incorrecte
-                continue;
-            }
-        
-            valeurChoisie = scanner.nextInt();
-            scanner.nextLine(); // Consommer la ligne restante
-        
-            if (valeurChoisie < 1 || valeurChoisie > 9) {
-                System.out.println("Valeur invalide. La valeur doit être entre 1 et 9.");
-            }
-        }
-        
-
-        // Configuration du Joker
-        joker.setCouleur(couleurChoisie);
-        joker.setValeur(valeurChoisie);
-        System.out.println("Le Joker est configuré avec la couleur " + couleurChoisie + " et la valeur " + valeurChoisie);
-    }
-
-    @Override
-    public void appeffetEspion(Carte espion) {
-    
-        // Choix de la couleur
-        Carte.Couleur couleurChoisie = null;
-        while (couleurChoisie == null) {
-            System.out.println("Choisissez une couleur pour l'Espion : (ROUGE, BLEU, VERT, JAUNE, VIOLET, ROSE)");
-            String inputCouleur = scanner.nextLine().toUpperCase();
-            try {
-                couleurChoisie = Carte.Couleur.valueOf(inputCouleur);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Couleur invalide. Veuillez réessayer.");
-            }
-        }
-    
-        // Configuration de la carte Espion
-        espion.setCouleur(couleurChoisie);
-        espion.setValeur(7);
-        System.out.println("L'Espion est configuré avec la couleur " + couleurChoisie + " et la valeur 7.");
-    }
-    
-
-    @Override
-    public void appeffetPorteBouclier(Carte porteBouclier) {
-    
-        // Choix de la couleur
-        Carte.Couleur couleurChoisie = null;
-        while (couleurChoisie == null) {
-            System.out.println("Choisissez une couleur pour le Porte-Bouclier : (ROUGE, BLEU, VERT, JAUNE, VIOLET, ROSE)");
-            String inputCouleur = scanner.nextLine().toUpperCase();
-            try {
-                couleurChoisie = Carte.Couleur.valueOf(inputCouleur);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Couleur invalide. Veuillez réessayer.");
-            }
-        }
-    
-        // Choix de la valeur
-        int valeurChoisie = -1;
-        while (valeurChoisie < 1 || valeurChoisie > 3) {
-            System.out.println("Choisissez une valeur pour le Porte-Bouclier (1, 2 ou 3) :");
-            if (!scanner.hasNextInt()) {
-                System.out.println("Valeur invalide. Veuillez entrer un entier entre 1 et 3.");
-                scanner.next(); // Consomme l'entrée incorrecte
-                continue;
-            }
-    
-            valeurChoisie = scanner.nextInt();
-            scanner.nextLine(); // Consommer la ligne restante
-    
-            if (valeurChoisie < 1 || valeurChoisie > 3) {
-                System.out.println("Valeur invalide. La valeur doit être entre 1 et 3.");
-            }
-        }
-    
-        // Configuration de la carte Porte-Bouclier
-        porteBouclier.setCouleur(couleurChoisie);
-        porteBouclier.setValeur(valeurChoisie);
-        System.out.println("Le Porte-Bouclier est configuré avec la couleur " + couleurChoisie + " et la valeur " + valeurChoisie + ".");
-    }
-    
 }

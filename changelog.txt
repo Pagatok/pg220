@@ -1,2 +1,4 @@
-- Mettre à jour le README
-- Mettre à jour les diagrammes
+- Utilisation de json pour spécifier les cartes tactiques, leurs noms etc..
+- Modification de CarteTActiqueFactory en conséquence et qui donc est plus lisible
+- Gestion des cartes tactiques de type joker (vari joueur et ia)
+- Manque débuggage

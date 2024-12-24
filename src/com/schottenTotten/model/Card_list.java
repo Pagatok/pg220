@@ -48,6 +48,10 @@ public class Card_list {
         return carte;
     }
 
+    public Carte getCartePrecise(int id_carte){
+        return this.liste_cartes.get(id_carte);
+    }
+
 
     public int nombreDeCartes(){
         return liste_cartes.size();

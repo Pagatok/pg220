@@ -1,5 +1,7 @@
 package com.schottenTotten.view;
 
+import java.util.List;
+
 import com.schottenTotten.model.*;
 
 public interface View {
@@ -21,9 +23,6 @@ public interface View {
     boolean select_variante();
     boolean select_pioche();
 
-
-    // Fonctions tactiques
-    void appeffetJoker(Carte joker);
-    void appeffetEspion(Carte espion);
-    void appeffetPorteBouclier(Carte porteBouclier);
+    // Focntions tactiques
+    Carte create_card(List<Integer> valeursPossibles);
 } 
