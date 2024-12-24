@@ -1,5 +1,7 @@
 package com.schottenTotten.model;
 
+import java.util.NoSuchElementException;
+
 public class Pioche {
     private Card_list liste_carte;
     private int nbr_cartes = 54; // Au début la pioche est plein et contient 54 cartes
@@ -31,15 +33,14 @@ public class Pioche {
         liste_carte.shuffle();
     }
 
-    public Carte piocher(){
+    public Carte piocher() throws NoSuchElementException{
         if(nbr_cartes != 0){
             Carte carte = liste_carte.piocher();
             nbr_cartes = nbr_cartes - 1;
             return carte;
         }
         else{
-            System.out.println("Pioche impossible: la pioche est vide");
-            return null;
+            throw new NoSuchElementException("La pioche est vide.");
         }
     }
 

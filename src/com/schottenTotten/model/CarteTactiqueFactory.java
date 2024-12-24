@@ -112,7 +112,6 @@ public class CarteTactiqueFactory {
         if(nbr_exemplaires != 1){
             carte.setNbrExemplaires(nbr_exemplaires);
         }
-        System.out.println(carte.toString());
 
         return carte;
     }

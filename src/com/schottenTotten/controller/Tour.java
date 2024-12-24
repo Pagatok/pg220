@@ -81,6 +81,22 @@ public class Tour {
     }
 
 
+    public static Ai getAi(Joueur J, View vue){
+        if(J.getNivIA() == 0){
+            vue.afficherMessage("Le joueur n'est pas une IA, cette gestion de tour ne devrait pas être appellée");
+            return null;
+        }
+        else if(J.getNivIA() == 1){
+            Ai ia = new BasicAi();
+            return ia;
+        }
+        else{
+            vue.afficherMessage("Niveau d'AI non valide");
+            return null;
+        }
+    }
+
+
 
     // ------------------------- FONCTIONS PRIVEES -------------------------
 
@@ -124,26 +140,6 @@ public class Tour {
             vue.afficherWinner(J2);
         }  
     }
-
-
-    public static Ai getAi(Joueur J, View vue){
-        if(J.getNivIA() == 0){
-            vue.afficherMessage("Le joueur n'est pas une IA, cette gestion de tour ne devrait pas être appellée");
-            return null;
-        }
-        else if(J.getNivIA() == 1){
-            Ai ia = new BasicAi();
-            return ia;
-        }
-        else{
-            vue.afficherMessage("Niveau d'AI non valide");
-            return null;
-        }
-    }
-
-
-    
-
 
 
     // private static void configurerTroupes(Borne borne, View vue) {

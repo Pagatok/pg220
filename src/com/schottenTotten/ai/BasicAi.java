@@ -94,6 +94,12 @@ public class BasicAi implements Ai{
         return carte;
     }
 
+    @Override
+    public int select_pioche(){
+        int valeur = random_return(1, 2);
+        return valeur;
+    }
+
 
 
     // ------------------------- FONCTIONS PRIVEES -------------------------

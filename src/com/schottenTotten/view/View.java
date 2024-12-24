@@ -21,7 +21,7 @@ public interface View {
     Borne select_revendication(Frontiere F);
     Joueur select_ia(int id_joueur, int nivmax_ia);
     boolean select_variante();
-    boolean select_pioche();
+    int select_pioche();
 
     // Focntions tactiques
     Carte create_card(List<Integer> valeursPossibles);

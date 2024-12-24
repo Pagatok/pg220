@@ -1,4 +1,6 @@
-- Utilisation de json pour spécifier les cartes tactiques, leurs noms etc..
-- Modification de CarteTActiqueFactory en conséquence et qui donc est plus lisible
-- Gestion des cartes tactiques de type joker (vari joueur et ia)
-- Manque débuggage
+- Suppression d'un print de debugage qui restait dans CarteTActiqueFactory
+- piocher renvoie une erreur maintenant quand on essaye de la piocher alors que'elle est vide
+- select_pioche renvoie un int maintenant
+- L'IA est capable de choisir dans quelle pioche piocher
+Problème:
+- En partie IAvsIA, ca bloque a select borne indefiniment à un moment

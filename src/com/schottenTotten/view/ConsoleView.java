@@ -243,7 +243,7 @@ public class ConsoleView implements View{
 
 
     @Override
-    public boolean select_pioche(){
+    public int select_pioche(){
         this.afficherMessage("Sélectionnez la pioche dans laquelle piocher\n1. Normale\n2. Tactique");
         int valeur = 0;
         boolean isValid = false;
@@ -264,15 +264,10 @@ public class ConsoleView implements View{
         // Vérifier que la valeur est entre 0 et niv_max_ia
         if (valeur < 1 || valeur > 2) {
             System.out.println("Veuillez rentrer une valeur entre 1 et 2");
-            return select_variante();
+            return select_pioche();
         }
 
-        if(valeur == 1){
-            return false;
-        }
-        else{
-            return true;
-        }
+        return valeur;
     }
 
 

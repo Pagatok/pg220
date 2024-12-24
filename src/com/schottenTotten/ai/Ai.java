@@ -11,5 +11,6 @@ public interface Ai {
     Borne select_borne(Joueur J, Frontiere F);
     int select_revendication(Frontiere F);
     Carte create_card(List<Integer> valeursPossibles);
+    int select_pioche();
     
 } 

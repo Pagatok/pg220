@@ -5,6 +5,7 @@ import java.util.Scanner;
 import com.schottenTotten.model.*;
 import com.schottenTotten.view.ConsoleView;
 import com.schottenTotten.view.View;
+import com.schottenTotten.ai.*;
 
 
 public class Jeu {   
@@ -58,10 +59,12 @@ public class Jeu {
         // Initialisation de la pioche ou des pioches
         Pioche pioche = new Pioche();
         pioche.shuffle();
+        boolean pioche_vide = false;
 
         // Initialisation de la pioche tactique
         Pioche pioche_tactique = new Pioche(true);
         pioche_tactique.shuffle();
+        boolean pioche_tactique_vide = !variante;
 
 
 
@@ -111,23 +114,81 @@ public class Jeu {
                 break;
             }
 
-            // Quand il finit son tour le joueur pioche et on cache sa main
-            if(variante){
-                Carte carte;
-                if(vue.select_pioche()){
-                    carte = pioche_tactique.piocher();
+
+            //---------------GESTION PIOCHE------------------
+
+            // Si les 2 pioches sont vides, rien besoin de faire
+            if(pioche_vide & pioche_tactique_vide){
+                vue.afficherMessage("Aucune carte ne peut être piocher");
+            }
+
+            // On est en variante basique et la pioche normale n'est pas vide
+            if(!variante & !pioche_vide){
+                 pioche_vide = tentative_pioche(pioche, vue, joueur_actif);
+            }
+
+            // Variante Tactique et les deux pioches ont des cartes
+            // Le joueur doit choisir dans quelle pioche piocher et si ca ne marche pas il tente l'autre
+            if(variante & !pioche_vide & !pioche_tactique_vide){
+                if(joueur_actif.getNivIA() == 0){
+                    int valeur = vue.select_pioche();
+                    if(valeur == 1){
+                        pioche_vide = tentative_pioche(pioche, vue, joueur_actif);
+                    }
+                    else{
+                        pioche_tactique_vide = tentative_pioche(pioche_tactique, vue, joueur_actif);
+                    }
                 }
                 else{
-                    carte = pioche.piocher();
-                    
+                    Ai ia = new BasicAi();
+                    int valeur = ia.select_pioche();
+                    if(valeur == 1){
+                        pioche_vide = tentative_pioche(pioche, vue, joueur_actif);
+                    }
+                    else{
+                        pioche_tactique_vide = tentative_pioche(pioche_tactique, vue, joueur_actif);
+                    }
                 }
-                if(carte != null){
-                    joueur_actif.ajouterCarte(carte);
+            }
+
+            // Variante Tactique et une des deux pioches est vide (on peut s'en être rendu compte que juste au-dessus)
+            // le joueur pioche automatiquement dans la non-vide
+            if(variante & (pioche_vide ^ pioche_tactique_vide)){
+                if(pioche_vide){
+                    vue.afficherMessage("La pioche tactique est vide");
+                    pioche_vide = tentative_pioche(pioche, vue, joueur_actif);
+                    if(!pioche_vide){
+                        vue.afficherMessage("Carte clan piochée !");
+                    }
+                    else{
+                        vue.afficherMessage("Pioche Normale vide aussi, on continue sans piocher");
+                    }
                 }
                 else{
-                    vue.afficherMessage("On continue la partie sans piocher\n");
+                    vue.afficherMessage("La pioche normale est vide");
+                    pioche_tactique_vide = tentative_pioche(pioche_tactique, vue, joueur_actif);
+                    if(!pioche_tactique_vide){
+                        vue.afficherMessage("Carte tactique piochée !");
+                    }
+                    else{
+                        vue.afficherMessage("Pioche tactique vide aussi, on continue sans piocher");
+                    }
                 }
             }
         }
+    }
+
+
+    // Renvoi si la pioche est vide
+    private static boolean tentative_pioche(Pioche pioche, View vue, Joueur J){
+        try{
+            Carte carte = pioche.piocher();
+            J.ajouterCarte(carte);
+            return false;
+        }
+        catch(Exception e){
+            vue.afficherMessage("Il n'y a plus de cartes dans cette pioche");
+            return true;
+        } 
     }
 }

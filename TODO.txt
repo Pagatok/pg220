@@ -1,0 +1,4 @@
+- Déplacer les constantes de jeu dans des json pour mieux différenceir variante absique et tactique
+    ex: Le nombre de cartes dans la main
+- La main ne peut contenir que 6 cartes maximum alors qu'on veut 7
+- Résoudre le bug de select_borne indéfiniment en IAvsIA
