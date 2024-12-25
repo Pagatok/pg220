@@ -1,7 +1,6 @@
 --------------v 2.1-----------------
 
-- Ajouter cartes tactiques de type mode combat
-- Décelenchement de l'effet colin maillard quand on rajoute la carte
+- Ne pas pouvoir jouer une carte tactique de plus que l'adversaire
 
 --------------v 2.2-----------------
 
@@ -11,9 +10,7 @@
     ex: Le nombre de cartes dans la main
 - Peut-être parcourir les JSON avec la bibliothèque
 - supprimer les derniers appels à CarteTactiqueFactory
-- Faire en sorte qu'on ne puisse jouer qu'un seul Joker
 - Supprimer les méthodes inutiles
-- Ne pas pouvoir jouer une carte tactique de plus que l'adversaire
 - Ajouter cartes tactiques de type ruse
 
 --------------v 2.3-----------------

@@ -1,1 +1,2 @@
-- Combat de Boue est fonctionnel
+- On ne peut jouer qu'un seul joker par partie
+- La partie n'est plus limitée à 60 tours

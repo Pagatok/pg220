@@ -44,7 +44,7 @@ public class EffetsTactiques {
 
     // A lancer juste après avoir posé n'importe quelle carte tactique
     // ne fais rien pour les troupes d'élite car leur effet se déclenche à la revendication
-    public static void gestionTacticPostposeCarte(Borne borne, Carte_Tactique carte, View vue){
+    public static void gestionTacticPostposeCarte(Borne borne, Carte_Tactique carte, View vue, Joueur player) throws IllegalStateException{
         if(carte.getType() == Carte_Tactique.Type.MODE_COMBAT){
             String methodName = carte.getEffet();
             try {
@@ -54,6 +54,15 @@ public class EffetsTactiques {
             }
             catch(Exception e){
                 e.printStackTrace();
+            }
+        }
+        else if(carte.getNom() == "Joker"){
+            if(player.hasPlayedJoker()){
+                throw new IllegalStateException("Erreur: Vous ne pouvez joué qu'un seul joker dans une partie");
+            }
+            else{
+                player.setPlayedJoker(true);
+                vue.afficherMessage("Vous avez joué votre Joker, vous ne pourrez pas en jouer d'autres durant la partie");
             }
         }
     }

@@ -8,6 +8,7 @@ public class Joueur{
     private int taille_max_main = 6;
     private int niv_ia = 0;
     private String name;
+    private boolean joker_played = false;
 
     // ------------------------- CONSTRUCTEURS-------------------------
 
@@ -73,6 +74,11 @@ public class Joueur{
     }
 
 
+    public boolean hasPlayedJoker(){
+        return this.joker_played;
+    }
+
+
     // ------------------------- SETTERS -------------------------
 
 
@@ -82,6 +88,10 @@ public class Joueur{
 
     public void setTailleMaxMain(int taille_max){
         this.taille_max_main = taille_max;
+    }
+
+    public void setPlayedJoker(boolean bool){
+        this.joker_played = bool;
     }
 
     public void ajouterCarte(Carte new_carte){

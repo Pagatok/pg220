@@ -32,13 +32,24 @@ public class Tour {
         joueur_actif.retirerCarte(carte_jouee);
         System.out.println(carte_jouee.toString());
 
-        // Puis il sélectionne la borne sur laquelle il veut la poser
-        Borne borne = vue.select_borne(joueur_actif, frontiere);
-        borne.ajouterCarte(id_joueur, carte_jouee);
-        vue.afficherMessage("Carte ajoutée sur la borne " + borne.getId());
+        boolean lock = true;
         if(carte_jouee instanceof Carte_Tactique){
-            EffetsTactiques.gestionTacticPostposeCarte(borne, (Carte_Tactique)carte_jouee, vue);
+            if(((Carte_Tactique)carte_jouee).getNom() == "Joker" & joueur_actif.hasPlayedJoker()){
+                vue.afficherMessage("Erreur: Vous ne pouvez joué qu'un seul joker dans une partie");
+                lock = false;
+            }
         }
+
+        // Puis il sélectionne la borne sur laquelle il veut la poser
+        if(lock){
+            Borne borne = vue.select_borne(joueur_actif, frontiere);
+            borne.ajouterCarte(id_joueur, carte_jouee);
+            vue.afficherMessage("Carte ajoutée sur la borne " + borne.getId());
+            if(carte_jouee instanceof Carte_Tactique){
+                EffetsTactiques.gestionTacticPostposeCarte(borne, (Carte_Tactique)carte_jouee, vue, joueur_actif);
+            }
+        }
+
 
         vue.afficherFrontiere(frontiere);
 
@@ -77,15 +88,25 @@ public class Tour {
         Carte carte_jouee = ia.select_card(J);
         J.retirerCarte(carte_jouee);
 
-        // Puis il sélectionne la borne sur laquelle il veut la poser
-        Borne borne = ia.select_borne(J, F);
-        if(borne == null){
-            System.out.println("Tour: L'IA est bloqué sur select_borne");
+        boolean lock = true;
+        if(carte_jouee instanceof Carte_Tactique){
+            if(((Carte_Tactique)carte_jouee).getNom() == "Joker" & J.hasPlayedJoker()){
+                vue.afficherMessage("Erreur: Vous ne pouvez joué qu'un seul joker dans une partie");
+                lock = false;
+            }
         }
-        else{
-            borne.ajouterCarte(J.getId(), carte_jouee);
-            if(carte_jouee instanceof Carte_Tactique){
-                EffetsTactiques.gestionTacticPostposeCarte(borne, (Carte_Tactique)carte_jouee, vue);
+
+        // Puis il sélectionne la borne sur laquelle il veut la poser
+        if(lock){
+            Borne borne = ia.select_borne(J, F);
+            if(borne == null){
+                System.out.println("Tour: L'IA est bloqué sur select_borne");
+            }
+            else{
+                borne.ajouterCarte(J.getId(), carte_jouee);
+                if(carte_jouee instanceof Carte_Tactique){
+                    EffetsTactiques.gestionTacticPostposeCarte(borne, (Carte_Tactique)carte_jouee, vue, J);
+                }
             }
         }
 
