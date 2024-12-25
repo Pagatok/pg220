@@ -1,16 +1,20 @@
----------------v 2.0----------------
-
-- Check bugs
-
-
 --------------v 2.1-----------------
 
-- Comportement bizarre de la pioche pour l'IA quit dit plusieurs fois on continue sans piocher
+- Ajouter cartes tactiques de type mode combat
+
+--------------v 2.2-----------------
+
+- Mise à jour du README
+- Mettre à jour les diagrames de classes
 - Déplacer les constantes de jeu dans des json pour mieux différenceir variante absique et tactique
     ex: Le nombre de cartes dans la main
-- Mettre à jour les diagrames de classes
 - Peut-être parcourir les JSON avec la bibliothèque
-- Ajouter cartes tactiques de type ruse et mode_combat
-- Mise à jour du README
 - supprimer les derniers appels à CarteTactiqueFactory
+- Faire en sorte qu'on ne puisse jouer qu'un seul Joker
+- Supprimer les méthodes inutiles
+- Ne pas pouvoir jouer une carte tactique de plus que l'adversaire
+- Ajouter cartes tactiques de type ruse
 
+--------------v 2.3-----------------
+
+- Variante experte: La revendication des bornes a lieu au début du tour pas à la fin

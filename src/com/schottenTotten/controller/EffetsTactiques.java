@@ -5,6 +5,7 @@ import com.schottenTotten.model.Carte;
 import com.schottenTotten.model.Carte_Tactique;
 import com.schottenTotten.model.Combinaison;
 import com.schottenTotten.model.Joueur;
+import com.schottenTotten.model.Borne;
 import com.schottenTotten.view.View;
 
 import java.lang.reflect.Method;
@@ -60,5 +61,10 @@ public class EffetsTactiques {
         comb.removeCarte(joker);
         comb.ajouterCarte(new_carte);
         
+    }
+
+
+    public static void appColin(Borne borne){
+        borne.setLockType(true);
     }
 }

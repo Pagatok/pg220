@@ -8,6 +8,7 @@ public class Combinaison extends Card_list{
 
     private Type type;
     private int max_cartes = 3; // Initilaisé à 3 mais des cartes tactiques peuvent la monter à 4
+    private boolean type_lock = false;
 
     public Combinaison() {
         super();
@@ -27,7 +28,11 @@ public class Combinaison extends Card_list{
             return false;
         }
         else{
-            return super.ajouterCarte(carte);
+            boolean result = super.ajouterCarte(carte);
+            if(result){
+                calculateType();
+            }
+            return result;
         }
     }
 
@@ -40,6 +45,11 @@ public class Combinaison extends Card_list{
 
     public void setType(Type type){
         this.type = type;
+    }
+
+
+    public void lockType(boolean lock){
+        this.type_lock = lock;
     }
 
 
@@ -125,15 +135,24 @@ public class Combinaison extends Card_list{
         return check_suite() && check_couleur();
     }
 
+    private Type calculateType(){
+        if(this.type_lock){
+            return Type.SOMME;
+        }
+        else{
+            return real_calculate_type();
+        }
+    }
+
     // Renvoie le type de combinaision de la combianiaison actuelle
-    public Type calculate_type() {
-        if (nombreDeCartes() < 3) {
+    private Type real_calculate_type() {
+        if (super.nombreDeCartes() < max_cartes) {
             return Type.SOMME; // Pas assez de cartes pour former un type avancé
         }
     
         if (check_suite_couleur()) {
             return Type.SUITE_COULEUR;
-        } else if (check_brelan() && nombreDeCartes() == 3) { // Brelan reste limité à 3 cartes
+        } else if (check_brelan() && super.nombreDeCartes() == 3) { // Brelan reste limité à 3 cartes
             return Type.BRELAN;
         } else if (check_couleur()) {
             return Type.COULEUR;

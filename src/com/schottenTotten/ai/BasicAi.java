@@ -52,7 +52,7 @@ public class BasicAi implements Ai{
         Borne borne_selected = F.getBorne(id_borne);
 
         // Vérifier que le joueur n'a pas déjà posé 3 cartes sur cette borne
-        if(borne_selected.nbr_cartes(J.getId()) >= borne_selected.getCombinaison(J.getId()).getMaxTaille()){
+        if(borne_selected.getCombinaison(J.getId()).nombreDeCartes() >= borne_selected.getCombinaison(J.getId()).getMaxTaille()){
             counter_select_borne += 1;
             if(counter_select_borne <= 10){
                 return select_borne(J, F);

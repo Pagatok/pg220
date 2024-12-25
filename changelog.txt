@@ -1,3 +1,2 @@
-- Résolution du bug qui faisait piocher dans carte tactique meme quand celle-ci est vide repectivement normale
-- Pioche est maintenant une sous-classe de Card_list
-- Les fonctions de Factory ont été déplacées et adpatés dans Pioche
+- Ajout de la carte Colin-Maillard et de sa fonction d'effet
+- Simplification de la structure de Borne et de Combianison pour éviter les répetitions

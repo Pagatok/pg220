@@ -7,10 +7,6 @@ public class Borne {
     private boolean revendique;
     private int id_joueur; // 1 pour J1, 2 pour J2, 0 si neutre
     private int id_borne;
-    private boolean joker = false;
-    private boolean mode_combat = false;
-    private int nbrCartes1 = 0;
-    private int nbrCartes2 = 0;
 
     public Borne(int id_borne){
         this.J1 = new Combinaison();
@@ -39,32 +35,22 @@ public class Borne {
     }
 
 
+    // Verrouille type de combianison des deux côtés de la borne
+    public void setLockType(boolean lock){
+        this.J1.lockType(lock);
+        this.J1.lockType(lock);
+    }
+
+
 
     public int getId(){
         return this.id_borne;
     }
 
-    public boolean getJoker(){
-        return this.joker;
-    }
-
-    public boolean getModeCombat(){
-        return this.mode_combat;
-    }
-
-    public void setJoker(boolean bool){
-        this.joker = bool;
-    }
-
-    public void setModeCombat(boolean bool){
-        this.mode_combat = bool;
-    }
 
     public boolean ajouterCarte(int id_joueur, Carte carte){
         if(id_joueur == 1){
             if(J1.ajouterCarte(carte)){
-                this.nbrCartes1 += 1;
-                setTactic(carte);
                 return true;
             }
             else{
@@ -73,8 +59,6 @@ public class Borne {
         }
         else{
             if(J2.ajouterCarte(carte)){
-                this.nbrCartes2 += 1;
-                setTactic(carte);
                 return true;
             }
             else{
@@ -83,38 +67,10 @@ public class Borne {
         }
     }
 
-    private void setTactic(Carte carte){
-        if(carte instanceof Carte_Tactique){
-            switch(((Carte_Tactique)carte).getType()){
-                case TROUPE_ELITE:
-                    this.joker = true;
-                    break;
-                case MODES_COMBAT:
-                    this.mode_combat = true;
-                    break;
-                case RUSES:
-                    break;
-                default:
-                    System.err.println("Bizarre bizarre la carte tactique mais en fait nan");
-            }
-        }
-    }
 
 
 
 
-    public boolean isTactic(){
-        return J1.isTacticIn() || J2.isTacticIn();
-    }
-
-    public int nbr_cartes(int id_joueur){
-        if(id_joueur == 1){
-            return this.nbrCartes1;
-        }
-        else{
-            return this.nbrCartes2;
-        }
-    }
 
 
     // Méthode pour comparer les combinaisons et déterminer le gagnant
