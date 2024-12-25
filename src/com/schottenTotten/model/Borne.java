@@ -164,6 +164,12 @@ public class Borne {
         return revendique;
     }
 
+
+    // Vérifie si la borne est revendiquable, cad si les 2 combinaisons sont pleines
+    public boolean isRevendiquable(){
+        return (J1.isFull() & J2.isFull());
+    }
+
     public int getIdJoueur() {
         return id_joueur;
     }

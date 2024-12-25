@@ -1,2 +1,2 @@
-Ajout d'une option permettant de push automatiquement depuis make
-Usage: make git
+- Correction d'un bug où l'IA sélectionnais mal les bornes à revendiquer
+- Correction d'un bug où l'IA pouvait rester bloquée sur select_borne

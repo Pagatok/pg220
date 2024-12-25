@@ -4,11 +4,13 @@ import com.schottenTotten.model.*;
 import com.schottenTotten.model.Carte.Couleur;
 
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 import java.util.List;
 
 public class BasicAi implements Ai{
 
     private int level_ia = 1;
+    private int counter_select_borne = 0;
 
     public BasicAi() {
     }
@@ -38,7 +40,7 @@ public class BasicAi implements Ai{
     }
 
     @Override
-    public Borne select_borne(Joueur J, Frontiere F){
+    public Borne select_borne(Joueur J, Frontiere F) throws IllegalStateException{
 
         System.out.println("Selecting borne..");
 
@@ -47,11 +49,19 @@ public class BasicAi implements Ai{
         Borne borne_selected = F.getBorne(id_borne);
 
         // Vérifier que le joueur n'a pas déjà posé 3 cartes sur cette borne
-        if(borne_selected.nbr_cartes(J.getId()) >=3){
-            return select_borne(J, F);
+        if(borne_selected.nbr_cartes(J.getId()) >= borne_selected.getCombinaison(J.getId()).getMaxTaille()){
+            counter_select_borne += 1;
+            if(counter_select_borne <= 10){
+                return select_borne(J, F);
+            }
+            else{
+                return null;
+            }
+
         }
 
         System.out.println("Borne selected!");
+        counter_select_borne = 0;
 
         return borne_selected;
     }
@@ -61,19 +71,17 @@ public class BasicAi implements Ai{
     public int select_revendication(Frontiere F){
 
         System.out.println("Selecting borne to revendicate..");
+        List <Integer> liste_revendiquables = F.getRevendiquables();
 
-        // Génère un nombre aléatoire entre 0 et nbr_bornes
-        List<Integer> liste_bornes = F.getBornesDispo();
-        int id_borne = random_return(0, liste_bornes.size());
-
-        if(id_borne == 0){
-            System.out.println("Pas de bornes revendiquées!");
+        if(liste_revendiquables.size() == 0){
             return -1;
         }
-        else{
-            System.out.println("Borne à revendiquer sélectionnée");
-            return id_borne;
-        }
+
+        // Génère un nombre aléatoire entre 0 et nbr_bornes
+        System.out.println("Taille: " + liste_revendiquables.size());
+        int id_borne = random_return(0, liste_revendiquables.size() - 1);
+        System.out.println("Borne à revendiquer sélectionnée");
+        return id_borne;
     }
 
 

@@ -48,6 +48,7 @@ public class Combinaison extends Card_list{
         return somme;
     }
 
+
     public int getMaxTaille(){
         return this.max_cartes;
     }
@@ -58,6 +59,10 @@ public class Combinaison extends Card_list{
     }
 
 
+    // Vérifie si la combinaison est plein, cad si on ne peut pas rajouter de cartes
+    public boolean isFull(){
+        return !(this.max_cartes > super.nombreDeCartes()); 
+    }
     
 
     // ------------------------- FONCTIONS PRIVEES -------------------------

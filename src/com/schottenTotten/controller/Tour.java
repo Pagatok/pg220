@@ -77,15 +77,20 @@ public class Tour {
 
         // Puis il sélectionne la borne sur laquelle il veut la poser
         Borne borne = ia.select_borne(J, F);
-        borne.ajouterCarte(J.getId(), carte_jouee);
+        if(borne == null){
+            System.out.println("Tour: L'IA est bloqué sur select_borne");
+            vue.afficherWinner(passive_player);
+        }
+        else{
+            borne.ajouterCarte(J.getId(), carte_jouee);
+        }
 
         // Il sélectionne les bornes qu'il veut revendiquer
         int id_borne = ia.select_revendication(F);
         if(id_borne != -1){
-            Borne borne_revend = F.getBorne(id_borne);
+            Borne borne_revend = F.getBorne(id_borne+1);
             gestion_revend(borne_revend, F, vue, J, passive_player);
         }
-        
     }
 
 
