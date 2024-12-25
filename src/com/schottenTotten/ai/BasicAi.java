@@ -4,7 +4,6 @@ import com.schottenTotten.model.*;
 import com.schottenTotten.model.Carte.Couleur;
 
 import java.util.Random;
-import java.util.concurrent.ExecutionException;
 import java.util.List;
 
 public class BasicAi implements Ai{

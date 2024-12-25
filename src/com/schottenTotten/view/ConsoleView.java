@@ -164,7 +164,7 @@ public class ConsoleView implements View{
 
 
     @Override
-    public Joueur select_ia(int id_joueur, int nivmax_ia){
+    public Joueur select_ia(int id_joueur, int nivmax_ia, int taille_max_main){
 
         System.out.println("Le joueur " + id_joueur + " sera t-il un humain(0) ou une ia(Difficulté 1 à " + nivmax_ia + ")?");
         int valeur = 0;
@@ -186,7 +186,7 @@ public class ConsoleView implements View{
         // Vérifier que la valeur est entre 0 et niv_max_ia
         if (valeur < 0 || valeur > nivmax_ia) {
             System.out.println("Veuillez rentrer une valeur entre 1 et " + nivmax_ia);
-            return select_ia(id_joueur, nivmax_ia);
+            return select_ia(id_joueur, nivmax_ia, taille_max_main);
         }
 
         boolean valid = false;
@@ -199,7 +199,7 @@ public class ConsoleView implements View{
             }
         }
 
-        Joueur j = new Joueur(id_joueur, valeur, input);
+        Joueur j = new Joueur(id_joueur, valeur, taille_max_main, input);
 
         return j;
     }

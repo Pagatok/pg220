@@ -19,7 +19,7 @@ public interface View {
     Carte select_card(Joueur J);
     Borne select_borne(Joueur J, Frontiere F);
     Borne select_revendication(Frontiere F, List <Integer> liste_revendiquation);
-    Joueur select_ia(int id_joueur, int nivmax_ia);
+    Joueur select_ia(int id_joueur, int nivmax_ia, int taille_max_main);
     boolean select_variante();
     int select_pioche();
 

@@ -37,14 +37,22 @@ public class Jeu {
         return vue;
     }
 
-    public static void main(String args[]){
 
-        View vue = new ConsoleView();
-
+    public static boolean gestion_variante(View vue){
         variante = vue.select_variante();
         if(variante){
             nbr_cartes = 7;
         }
+        return variante;
+    }
+
+
+
+    public static void main(String args[]){
+
+        View vue = new ConsoleView();
+
+        boolean variante = gestion_variante(vue);
         
         // Mise en place
 
@@ -53,8 +61,8 @@ public class Jeu {
         Frontiere frontiere = new Frontiere();
 
         // Création des joueurs
-        Joueur J1 = vue.select_ia(1, 1);
-        Joueur J2 = vue.select_ia(2, 1);
+        Joueur J1 = vue.select_ia(1, 1, nbr_cartes);
+        Joueur J2 = vue.select_ia(2, 1, nbr_cartes);
 
         // Initialisation de la pioche ou des pioches
         Pioche pioche = new Pioche();

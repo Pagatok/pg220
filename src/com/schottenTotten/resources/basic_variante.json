@@ -1,0 +1,10 @@
+[
+    {
+        "nom": "Basic",
+        "nbr_cartes_main": 6 
+    },
+    {
+        "nom": "Tactique",
+        "nbr_cartes_main": 7
+    }
+]

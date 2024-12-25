@@ -79,7 +79,6 @@ public class Tour {
         Borne borne = ia.select_borne(J, F);
         if(borne == null){
             System.out.println("Tour: L'IA est bloqué sur select_borne");
-            vue.afficherWinner(passive_player);
         }
         else{
             borne.ajouterCarte(J.getId(), carte_jouee);

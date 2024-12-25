@@ -1,2 +1,1 @@
-- Correction d'un bug où l'IA sélectionnais mal les bornes à revendiquer
-- Correction d'un bug où l'IA pouvait rester bloquée sur select_borne
+Correction d'un bug qui faisait que la taille de la main ne pouvait pas être de 7 mais bloqué à 6
