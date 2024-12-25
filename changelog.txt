@@ -1,4 +1,2 @@
-Lorsqu'elle est revendiquée une borne affiche juste son possesseur en toString();
-L'application des effets des cartes tactiques de type joker est fonctionelle
-Problème:
-Néanmoins les noms de joueurs sont parfois échangés
+Ajout d'une option permettant de push automatiquement depuis make
+Usage: make git
