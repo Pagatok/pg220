@@ -1,2 +1,2 @@
-- Ajout de la carte Colin-Maillard et de sa fonction d'effet
-- Simplification de la structure de Borne et de Combianison pour éviter les répetitions
+- Colin-Maillard fonctionnel
+- Correcton d'un bug qui affichait le mauvais nom quand une personne remportait une borne

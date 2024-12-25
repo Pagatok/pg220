@@ -1,6 +1,7 @@
 --------------v 2.1-----------------
 
 - Ajouter cartes tactiques de type mode combat
+- Décelenchement de l'effet colin maillard quand on rajoute la carte
 
 --------------v 2.2-----------------
 

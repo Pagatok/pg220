@@ -19,7 +19,7 @@ public class EffetsTactiques {
     }
 
 
-    // Cette fonction parcourt une borne qui veut être revendiqueée et lance les effets tactiques des cartes
+    // Cette fonction parcourt une borne qui veut être revendiqueée et lance les effets tactiques des cartes de type joker
     public static void gestionTactic(Joueur joueur, Combinaison C, View vue){
 
         for(int i=0; i<C.nombreDeCartes(); i++){
@@ -37,6 +37,23 @@ public class EffetsTactiques {
                         e.printStackTrace();
                     }
                 }
+            }
+        }
+    }
+
+
+    // A lancer juste après avoir posé n'importe quelle carte tactique
+    // ne fais rien pour les troupes d'élite car leur effet se déclenche à la revendication
+    public static void gestionTacticPostposeCarte(Borne borne, Carte_Tactique carte, View vue){
+        if(carte.getType() == Carte_Tactique.Type.MODE_COMBAT){
+            String methodName = carte.getEffet();
+            try {
+                Class<?> clazz = EffetsTactiques.class;
+                Method method = clazz.getMethod(methodName, Borne.class, View.class);
+                method.invoke(null, borne, vue);
+            }
+            catch(Exception e){
+                e.printStackTrace();
             }
         }
     }
@@ -64,7 +81,8 @@ public class EffetsTactiques {
     }
 
 
-    public static void appColin(Borne borne){
+    public static void appColin(Borne borne, View vue){
         borne.setLockType(true);
+        vue.afficherMessage("Le type des Comb de la borne " + borne.getId() + " est bloqué sur SOMME");
     }
 }

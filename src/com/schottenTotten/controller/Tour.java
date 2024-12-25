@@ -36,7 +36,9 @@ public class Tour {
         Borne borne = vue.select_borne(joueur_actif, frontiere);
         borne.ajouterCarte(id_joueur, carte_jouee);
         vue.afficherMessage("Carte ajoutée sur la borne " + borne.getId());
-        System.out.println(borne.toString());
+        if(carte_jouee instanceof Carte_Tactique){
+            EffetsTactiques.gestionTacticPostposeCarte(borne, (Carte_Tactique)carte_jouee, vue);
+        }
 
         vue.afficherFrontiere(frontiere);
 
@@ -82,6 +84,9 @@ public class Tour {
         }
         else{
             borne.ajouterCarte(J.getId(), carte_jouee);
+            if(carte_jouee instanceof Carte_Tactique){
+                EffetsTactiques.gestionTacticPostposeCarte(borne, (Carte_Tactique)carte_jouee, vue);
+            }
         }
 
         // Il sélectionne les bornes qu'il veut revendiquer
@@ -134,10 +139,10 @@ public class Tour {
 
         String name_joueur;
         if(borne_revend.getIdJoueur() == 1){
-            name_joueur = J1.getName();
+            name_joueur = J2.getName();
         }
         else{
-            name_joueur = J2.getName();
+            name_joueur = J1.getName();
         }
         
         vue.afficherMessage("" + name_joueur + " remporte la borne " + borne_revend.getId());

@@ -94,7 +94,7 @@ public class Carte_Tactique extends Carte {
 
     public enum Type {
         TROUPE_ELITE,
-        MODES_COMBAT,
+        MODE_COMBAT,
         RUSES
     }
 }
