@@ -12,7 +12,7 @@ public interface View {
     void afficherMessage(String message);
     void afficherBorne(Borne borne);
     void afficherWinner(Joueur winner);
-    void afficherTour(Joueur active_player);
+    void afficherTour(Joueur active_player, int nbr_tours);
     void afficherDebut();
 
     // Fonctions d'input

@@ -106,7 +106,7 @@ public class Jeu {
             }
 
             // On dit au joueur que c'est à lui de jouer
-            vue.afficherTour(joueur_actif);
+            vue.afficherTour(joueur_actif, nbr_tours);
 
             // on gére le tour du joueur
             if(joueur_actif.isIA() == false){

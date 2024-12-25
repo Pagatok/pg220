@@ -65,6 +65,8 @@ git:
 	cat changelog.txt
 	@echo "Push des modifications sur la branche courante.."
 	git push
+	@echo "Remise à 0 du changelog"
+	> changelog.txt
 	@echo "Done !"
 		
 

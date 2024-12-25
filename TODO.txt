@@ -1,6 +1,7 @@
 ---------------v 2.0----------------
 
-- Plein de color null et valeur 0
+- Quand 2 IA jouent les pioches sont vides au tour 24 alors qu'il y a plus de cartes normalement
+- l'IA n'as pas l'air de savoir choisir un joker
 
 
 --------------v 2.1-----------------

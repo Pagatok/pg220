@@ -20,6 +20,12 @@ public class Combinaison extends Card_list{
         if(super.nombreDeCartes() == max_cartes){
             return false;
         }
+        else if((carte.getCouleur() == null | carte.getValeur() == 0) & !(carte instanceof Carte_Tactique)){
+            System.err.println(carte.toString());
+            System.err.println("carte Vide détectée !");
+            System.exit(0);
+            return false;
+        }
         else{
             return super.ajouterCarte(carte);
         }

@@ -1,1 +1,6 @@
-Correction d'un bug qui faisait que la taille de la main ne pouvait pas être de 7 mais bloqué à 6
+- Résolution d'un bug qui faisait que quand l'IA voulait jouer une carte tactique ca jouait une carte vide
+- Le changelog se réinitialise tout seul après un make git
+- Suppression des fichiers vides json en attendant d'implémenter ces features
+Problèmes:
+- Quand 2 IA jouent les pioches sont vides au tour 24 alors qu'il y a plus de cartes normalement
+- l'IA n'as pas l'air de savoir choisir un joker

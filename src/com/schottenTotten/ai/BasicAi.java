@@ -29,13 +29,17 @@ public class BasicAi implements Ai{
 
         // Construction de la carte
         Card_list pied = J.getPied();
-        int valeur = pied.getValeurCarte(id_carte);
-        Carte.Couleur color = pied.getCouleurCarte(id_carte);
-        Carte to_return = new Carte(color, valeur);
+        Carte carte = pied.getCartePrecise(id_carte);
+
+        //System.out.println("MAin: " + pied.toString());
+        // int valeur = pied.getValeurCarte(id_carte);
+        // Carte.Couleur color = pied.getCouleurCarte(id_carte);
+        // Carte to_return = new Carte(color, valeur);
+        //System.out.println(to_return.toString());
+        //return to_return;
 
         System.out.println("Carte selected!");
-
-        return to_return;
+        return carte;
     }
 
     @Override

@@ -51,10 +51,11 @@ public class ConsoleView implements View{
 
 
     @Override
-    public void afficherTour(Joueur active_player){
-        String line = "A toi de jouer " + active_player.getName() + "\n";
+    public void afficherTour(Joueur active_player, int nbr_tours){
+        String part1 = "Tour n° " + nbr_tours;
+        String part2 = "A toi de jouer " + active_player.getName() + "\n";
 
-        afficherSpecialMessage(line);
+        afficherSpecialMessage(part1 + "\n" + part2);
     }
 
     @Override
