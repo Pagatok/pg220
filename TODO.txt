@@ -6,3 +6,4 @@
 - Peut-être parcourir les JSON avec la bibliothèque
 - Comportement bizarre de la pioche pour l'IA quit dit plusieurs fois on continue sans piocher
 - Plein de color null et valeur 0
+- Bug de borne revendiquables pas proposées

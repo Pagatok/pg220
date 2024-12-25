@@ -6,23 +6,22 @@ import com.schottenTotten.model.Carte.Couleur;
 
 public class Combinaison extends Card_list{
 
-    private Card_list cartes;
     private Type type;
     private int max_cartes = 3; // Initilaisé à 3 mais des cartes tactiques peuvent la monter à 4
 
     public Combinaison() {
-        this.cartes = new Card_list(4);
+        super();
         this.type = Type.SOMME;
     }
 
 
     @Override
     public boolean ajouterCarte(Carte carte){
-        if(cartes.nombreDeCartes() == max_cartes){
+        if(super.nombreDeCartes() == max_cartes){
             return false;
         }
         else{
-            return cartes.ajouterCarte(carte);
+            return super.ajouterCarte(carte);
         }
     }
 
@@ -42,7 +41,7 @@ public class Combinaison extends Card_list{
 
         int somme = 0;
 
-        for(int i = 0; i < nombreDeCartes(); i++){
+        for(int i = 0; i < super.nombreDeCartes(); i++){
             somme = somme + super.getValeurCarte(i);
         }
 
@@ -147,7 +146,7 @@ public class Combinaison extends Card_list{
 
     
     public String toString(){
-        return "Cbn: " + cartes.toString() + ", type=" + type +'}';
+        return "Cbn: " + super.toString() + ", type=" + type +'}';
     }
 
 }

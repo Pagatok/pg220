@@ -103,6 +103,9 @@ public class Frontiere {
             if(!borne.isRevendique() & (C1.nombreDeCartes() == C1.getMaxTaille()) & (C2.nombreDeCartes() == C2.getMaxTaille())){
                 answer.add(borne.getId());
             }
+            System.out.println("Borne N°" + borne.getId() + " revendiquée: " + borne.isRevendique() +
+                                "\n C1: nbr_cartes: " + C1.nombreDeCartes() + " getMaxTaille: " + C1.getMaxTaille() +
+                                "\n C1: nbr_cartes: " + C2.nombreDeCartes() + " getMaxTaille: " + C2.getMaxTaille());
         }
         return answer;
     }
