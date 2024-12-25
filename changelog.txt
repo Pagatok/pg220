@@ -1,1 +1,1 @@
-Plus de bugs trouvés
+On demande au joueur quelle borne revendiquer que si il y en a revendiquables

@@ -8,25 +8,22 @@ public class Combinaison extends Card_list{
 
     private Card_list cartes;
     private Type type;
+    private int max_cartes = 3; // Initilaisé à 3 mais des cartes tactiques peuvent la monter à 4
 
     public Combinaison() {
-        this.cartes = new Card_list(3);
-        this.type = Type.SOMME;
-    }
-
-    public Combinaison(int taille_max){
-        this.cartes = new Card_list(taille_max);
+        this.cartes = new Card_list(4);
         this.type = Type.SOMME;
     }
 
 
     @Override
     public boolean ajouterCarte(Carte carte){
-        if(cartes.ajouterCarte(carte)){
-            this.type = calculate_type();
-            return true;
+        if(cartes.nombreDeCartes() == max_cartes){
+            return false;
         }
-        return false;
+        else{
+            return cartes.ajouterCarte(carte);
+        }
     }
 
 
@@ -50,6 +47,15 @@ public class Combinaison extends Card_list{
         }
 
         return somme;
+    }
+
+    public int getMaxTaille(){
+        return this.max_cartes;
+    }
+
+
+    public void setMaxTaille(int nbr_max_cartes){
+        this.max_cartes = nbr_max_cartes;
     }
 
 

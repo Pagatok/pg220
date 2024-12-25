@@ -129,39 +129,37 @@ public class ConsoleView implements View{
 
 
     @Override
-    public Borne select_revendication(Frontiere F){
+    public Borne select_revendication(Frontiere F, List <Integer> liste_revendiquables){
 
-        System.out.println("Quelle borne voulez-vous revendiquer? (0 pour aucune): ");
+        // Affichage du message
+        String question = "Quelle borne voulez-vous revendiquer? (0 pour aucune)\n0";
+        for(int valeur: liste_revendiquables){
+            question = question + " " + valeur;
+        }
+
+
+        System.out.println(question);
         int valeur = scanner.nextInt();
         scanner.nextLine();
 
         // Vérifier que la valeur est entre 0 et 9
         if (valeur < 0 || valeur > 9) {
             System.out.println("Veuillez rentrer une valeur entre 1 et 9 pour revendiquer une borne (0 pour aucune)");
-            return select_revendication(F);
+            return select_revendication(F, liste_revendiquables);
         }
 
         if(valeur == 0){
             return null;
         }
 
+        if(!liste_revendiquables.contains(valeur)){
+            System.out.println("Cette borne n'est pas revendiquable, Veuillez en choisir une valide");
+            return select_revendication(F, liste_revendiquables);
+        }
+
         Borne borne_selected = F.getBorne(valeur);
-
         System.out.println(borne_selected.toString());
-
-        if(borne_selected.isRevendique() == true){
-            this.afficherMessage("Cette borne est déjà revendiqué, veuiez sélectionner une borne valide");
-            return select_revendication(F);
-        }
-
-        // Vérifier qu'il y a 3 cartes des 2 côtés de la borne
-        if(borne_selected.nbr_cartes(1) == 3 && borne_selected.nbr_cartes(2) == 3){
-            return borne_selected;
-        }
-        else{
-            System.out.println("Vous ne pouvez pas revendiquer cette borne, vous et votre adversaire devez avoir 3 cartes de poser sur celle-ci");
-            return select_revendication(F);
-        }
+        return borne_selected;
     }
 
 

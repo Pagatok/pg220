@@ -93,6 +93,20 @@ public class Frontiere {
         return intList;
     }
 
+    // Renvoi la liste des bornes dites "revendiquables"
+    // C'est à dire max cartes de chaques côté et non déjà revendiquées
+    public List<Integer> getRevendiquables(){
+        List<Integer> answer = new ArrayList<>();
+        for(Borne borne : this.liste_bornes){
+            Combinaison C1 = borne.getCombinaison(1);
+            Combinaison C2 = borne.getCombinaison(2);
+            if(!borne.isRevendique() & (C1.nombreDeCartes() == C1.getMaxTaille()) & (C2.nombreDeCartes() == C2.getMaxTaille())){
+                answer.add(borne.getId());
+            }
+        }
+        return answer;
+    }
+
     public String toString(){
         String answer = "Frontière: \n";
         for(Borne borne : liste_bornes){

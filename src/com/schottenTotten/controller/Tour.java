@@ -4,6 +4,7 @@ import com.schottenTotten.ai.*;
 import com.schottenTotten.model.*;
 import com.schottenTotten.view.*;
 
+import java.util.List;
 
 public class Tour {
 
@@ -39,11 +40,18 @@ public class Tour {
 
         vue.afficherFrontiere(frontiere);
 
-        // Il sélectionne les bornes qu'il veut revendiquer
-        Borne borne_revend = vue.select_revendication(frontiere);
-        if(borne_revend != null){
-            gestion_revend(borne_revend, frontiere, vue, joueur_actif, autre_joueur);
+        // On regarde quelles bornes sont revendiquables
+        List <Integer> listes_revendiquables = frontiere.getRevendiquables();
+        if(listes_revendiquables.size() == 0){
+            vue.afficherMessage("Aucunes bornes revendiquables ce tour-ci");
         }
+        else{
+            // Il sélectionne les bornes qu'il veut revendiquer
+            Borne borne_revend = vue.select_revendication(frontiere, listes_revendiquables);
+            if(borne_revend != null){
+                gestion_revend(borne_revend, frontiere, vue, joueur_actif, autre_joueur);
+            }
+        } 
     }
 
 
