@@ -7,7 +7,7 @@ public class Carte {
 
     // Constructeur de base
     public Carte(Couleur couleur, int valeur) {
-        if (valeur < 1 || valeur > 9) {
+        if (valeur < 0 || valeur > 9) {
             throw new IllegalArgumentException("La valeur doit être comprise entre 1 et 9.");
         }
         this.couleur = couleur;
@@ -44,6 +44,14 @@ public class Carte {
         else{
             return false;
         }
+    }
+
+    public String getNom(){
+        return this.toString();
+    }
+
+    public String getDescription(){
+        return "Carte Normale";
     }
 
     // Définition des couleurs

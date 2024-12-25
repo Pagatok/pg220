@@ -1,0 +1,16 @@
+---------------v 2.0----------------
+
+- Check bugs
+
+
+--------------v 2.1-----------------
+
+- Comportement bizarre de la pioche pour l'IA quit dit plusieurs fois on continue sans piocher
+- Déplacer les constantes de jeu dans des json pour mieux différenceir variante absique et tactique
+    ex: Le nombre de cartes dans la main
+- Mettre à jour les diagrames de classes
+- Peut-être parcourir les JSON avec la bibliothèque
+- Ajouter cartes tactiques de type ruse et mode_combat
+- Mise à jour du README
+- supprimer les derniers appels à CarteTactiqueFactory
+

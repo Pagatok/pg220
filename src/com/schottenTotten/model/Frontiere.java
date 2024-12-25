@@ -43,6 +43,15 @@ public class Frontiere {
         return nbr_bornes;
     }
 
+    public boolean isFrontiereFull(){
+        for(Borne borne: liste_bornes){
+            if(!borne.isRevendiquable() || !borne.isRevendique()){
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     // renvoi le nombre de bornes successives possédées par le joueur
     public int getSuccessifs(int id_joueur){
@@ -77,21 +86,24 @@ public class Frontiere {
         this.gameover = true;
     }
 
-    // Renvoie la liste des id de bornes revendiquables
-    public List<Integer> getBornesDispo(){
-        List<Integer> intList = new ArrayList<>();
 
-        for(int i = 0; i<nbr_bornes; i++){
-            Borne borne_selected = this.getBorne(i+1);
-
-            // Vérifier qu'il y a 3 cartes des 2 côtés de la borne et qu'elle n'est pas revendiquée
-            if(borne_selected.nbr_cartes(1) == 3 && borne_selected.nbr_cartes(2) == 3 && borne_selected.isRevendique() == false){
-                intList.add(i);
+    // Renvoi la liste des bornes dites "revendiquables"
+    // C'est à dire max cartes de chaques côté et non déjà revendiquées
+    public List<Integer> getRevendiquables(){
+        List<Integer> answer = new ArrayList<>();
+        for(Borne borne : this.liste_bornes){
+            //Combinaison C1 = borne.getCombinaison(1);
+            //Combinaison C2 = borne.getCombinaison(2);
+            if(borne.isRevendiquable() & !borne.isRevendique()){
+                answer.add(borne.getId());
             }
+            //System.out.println("Borne N°" + borne.getId() + " revendiquée: " + borne.isRevendique() +
+                                //"\n C1: nbr_cartes: " + C1.nombreDeCartes() + " getMaxTaille: " + C1.getMaxTaille() +
+                                //"\n C1: nbr_cartes: " + C2.nombreDeCartes() + " getMaxTaille: " + C2.getMaxTaille());
         }
-
-        return intList;
+        return answer;
     }
+
 
     public String toString(){
         String answer = "Frontière: \n";

@@ -7,6 +7,10 @@ public class Borne {
     private boolean revendique;
     private int id_joueur; // 1 pour J1, 2 pour J2, 0 si neutre
     private int id_borne;
+    private boolean joker = false;
+    private boolean mode_combat = false;
+    private int nbrCartes1 = 0;
+    private int nbrCartes2 = 0;
 
     public Borne(int id_borne){
         this.J1 = new Combinaison();
@@ -24,25 +28,91 @@ public class Borne {
         this.id_borne = id_borne;
     }
 
+
+    public Combinaison getCombinaison(int id_joueur){
+        if(id_joueur == 1){
+            return this.J1;
+        }
+        else{
+            return this.J2;
+        }
+    }
+
+
+
     public int getId(){
         return this.id_borne;
     }
 
+    public boolean getJoker(){
+        return this.joker;
+    }
+
+    public boolean getModeCombat(){
+        return this.mode_combat;
+    }
+
+    public void setJoker(boolean bool){
+        this.joker = bool;
+    }
+
+    public void setModeCombat(boolean bool){
+        this.mode_combat = bool;
+    }
+
     public boolean ajouterCarte(int id_joueur, Carte carte){
         if(id_joueur == 1){
-            return J1.ajouterCarte(carte);
+            if(J1.ajouterCarte(carte)){
+                this.nbrCartes1 += 1;
+                setTactic(carte);
+                return true;
+            }
+            else{
+                return false;
+            }
         }
         else{
-            return J2.ajouterCarte(carte);
+            if(J2.ajouterCarte(carte)){
+                this.nbrCartes2 += 1;
+                setTactic(carte);
+                return true;
+            }
+            else{
+                return false;
+            }
         }
+    }
+
+    private void setTactic(Carte carte){
+        if(carte instanceof Carte_Tactique){
+            switch(((Carte_Tactique)carte).getType()){
+                case TROUPE_ELITE:
+                    this.joker = true;
+                    break;
+                case MODES_COMBAT:
+                    this.mode_combat = true;
+                    break;
+                case RUSES:
+                    break;
+                default:
+                    System.err.println("Bizarre bizarre la carte tactique mais en fait nan");
+            }
+        }
+    }
+
+
+
+
+    public boolean isTactic(){
+        return J1.isTacticIn() || J2.isTacticIn();
     }
 
     public int nbr_cartes(int id_joueur){
         if(id_joueur == 1){
-            return this.J1.nombreDeCartes();
+            return this.nbrCartes1;
         }
         else{
-            return this.J2.nombreDeCartes();
+            return this.nbrCartes2;
         }
     }
 
@@ -54,9 +124,11 @@ public class Borne {
 
         if (comparaisonType > 0) {
             // J1 a une meilleure combinaison
+            System.out.println("J1 a une meilleure combinaison");
             this.id_joueur = 1;
         } else if (comparaisonType < 0) {
             // J2 a une meilleure combinaison
+            System.out.println("J2 a une meilleure combinaison");
             this.id_joueur = 2;
         } else {
             // Types égaux, comparaison des scores
@@ -64,8 +136,10 @@ public class Borne {
             int scoreJ2 = J2.getScore();
 
             if (scoreJ1 > scoreJ2) {
+                System.out.println("J1 a un meilleur score");
                 this.id_joueur = 1;
             } else if (scoreJ1 < scoreJ2) {
+                System.out.println("J2 a un meilleur score");
                 this.id_joueur = 2;
             } else {
                 // Score égal, reste neutre
@@ -90,14 +164,23 @@ public class Borne {
         return revendique;
     }
 
+
+    // Vérifie si la borne est revendiquable, cad si les 2 combinaisons sont pleines
+    public boolean isRevendiquable(){
+        return (J1.isFull() & J2.isFull());
+    }
+
     public int getIdJoueur() {
         return id_joueur;
     }
 
 
     public String toString(){
-        return "Borne " + this.id_borne + ": {" + this.J1.toString() + " vs " + this.J2.toString() + "}";
+        if(!isRevendique()){
+            return "Borne " + this.id_borne + ": {" + this.J1.toString() + " vs " + this.J2.toString() + "}";
+        }
+        else{
+            return "Borne " + this.id_borne + " REVENDIQUE --- JOUEUR " + this.id_joueur;
+        }
     }
-
-    
 }

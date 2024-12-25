@@ -5,33 +5,20 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.schottenTotten.model.Carte_Tactique.Type;
 
-public class Pioche extends Card_list{
-
-    private Pioche_Type type = Pioche_Type.NORMALE; 
-
-
-    // Intialise la pioche avec toutes les cartes dedans (pas triées)
-    public Pioche(){
-        
-        super(54);
-        for(Carte.Couleur couleur : Carte.Couleur.values()){
-            for(int numero = 1; numero <= 9; numero++){
-                Carte carte = new Carte(couleur, numero);
-                super.ajouterCarte(carte);
-            }
-        }
+public class CarteTactiqueFactory {
+    public static void main(String[] args) {
+        creerCartesTactiques();
     }
 
-    public Pioche(boolean isTactic) {
 
-        super(10);
-        this.type = Pioche_Type.TACTIQUE;
+    public static Card_list creerCartesTactiques() {
+
+        Card_list liste_cartes = new Card_list(10);
 
         try (BufferedReader reader = new BufferedReader(new FileReader("src/com/schottenTotten/resources/cartes_tactiques.json"))) {
             StringBuilder jsonBuilder = new StringBuilder();
@@ -42,47 +29,17 @@ public class Pioche extends Card_list{
 
             String json = jsonBuilder.toString();
             // Conversion du JSON en objets Java
-            tacticJsonToList(json);
+            tacticJsonToList(json, liste_cartes);
             
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return liste_cartes;
     }
 
 
-    @Override
-    public Carte piocher() throws NoSuchElementException{
-        if(super.nombreDeCartes() != 0){
-            Carte carte = super.piocher();
-            System.out.println("From Pioche " + this.type);
-            return carte;
-        }
-        else{
-            throw new NoSuchElementException("La pioche est vide.");
-        }
-    }
-
-
-    public boolean isPiocheTactique(){
-        if(this.type == Pioche_Type.TACTIQUE){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-
-    public String toString(){
-        return "Pioche: " + super.toString();
-    }
-
-
-
-    // ------------------------- FONCTIONS PRIVEES -------------------------
-
-
-    private void tacticJsonToList(String json){
+    public static void tacticJsonToList(String json, Card_list liste_cartes){
 
         Pattern pattern = Pattern.compile("\\{(.*?)\\}");
         Matcher matcher = pattern.matcher(json);
@@ -91,13 +48,12 @@ public class Pioche extends Card_list{
             String data = matcher.group(1);
             Carte_Tactique carte = jsonToTacticCard(data);
             for(int i=0; i<carte.getNbrexemplaires(); i++){
-                super.ajouterCarte(carte);
+                liste_cartes.ajouterCarte(carte);
             }
         }
     }
 
-
-    private static Carte_Tactique jsonToTacticCard(String json) {
+    public static Carte_Tactique jsonToTacticCard(String json) {
 
         String carteData = json.replace("\"", "");
         String[] lignes = carteData.split(",");
@@ -173,10 +129,5 @@ public class Pioche extends Card_list{
 
         return integers;
     }   
-
-
-    public enum Pioche_Type {
-        NORMALE,
-        TACTIQUE
-    }
 }
+

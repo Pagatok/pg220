@@ -57,6 +57,17 @@ diagram:
 	{ echo "@startuml all"; tail -n +2 $(PUML_DIR)/model.puml | head -n -1; tail -n +2 $(PUML_DIR)/ai.puml | head -n -1; tail -n +2 $(PUML_DIR)/jeu.puml | head -n -1; tail -n +2 $(PUML_DIR)/view.puml; } > $(PUML_DIR)/all.puml
 
 	$(PLANTUML_CMD) $(shell find $(PUML_DIR) -name "*.puml")
+
+git:
+	git add *
+	@echo "Commit des changements:"
+	git commit -F changelog.txt
+	cat changelog.txt
+	@echo "Push des modifications sur la branche courante.."
+	git push
+	@echo "Remise à 0 du changelog"
+	> changelog.txt
+	@echo "Done !"
 		
 
 # Nettoyage des fichiers compilés

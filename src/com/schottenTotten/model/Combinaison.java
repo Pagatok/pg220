@@ -6,22 +6,29 @@ import com.schottenTotten.model.Carte.Couleur;
 
 public class Combinaison extends Card_list{
 
-    private Card_list cartes;
     private Type type;
+    private int max_cartes = 3; // Initilaisé à 3 mais des cartes tactiques peuvent la monter à 4
 
     public Combinaison() {
-        this.cartes = new Card_list(3);
+        super();
         this.type = Type.SOMME;
     }
 
 
     @Override
     public boolean ajouterCarte(Carte carte){
-        if(super.ajouterCarte(carte) == true){
-            this.type = calculate_type();
-            return true;
+        if(super.nombreDeCartes() == max_cartes){
+            return false;
         }
-        return false;
+        else if((carte.getCouleur() == null | carte.getValeur() == 0) & !(carte instanceof Carte_Tactique)){
+            System.err.println(carte.toString());
+            System.err.println("carte Vide détectée !");
+            System.exit(0);
+            return false;
+        }
+        else{
+            return super.ajouterCarte(carte);
+        }
     }
 
 
@@ -31,11 +38,16 @@ public class Combinaison extends Card_list{
     }
 
 
+    public void setType(Type type){
+        this.type = type;
+    }
+
+
     public int getScore(){
 
         int somme = 0;
 
-        for(int i = 0; i < nombreDeCartes(); i++){
+        for(int i = 0; i < super.nombreDeCartes(); i++){
             somme = somme + super.getValeurCarte(i);
         }
 
@@ -43,34 +55,61 @@ public class Combinaison extends Card_list{
     }
 
 
+    public int getMaxTaille(){
+        return this.max_cartes;
+    }
+
+
+    public void setMaxTaille(int nbr_max_cartes){
+        this.max_cartes = nbr_max_cartes;
+    }
+
+
+    // Vérifie si la combinaison est plein, cad si on ne peut pas rajouter de cartes
+    public boolean isFull(){
+        return !(this.max_cartes > super.nombreDeCartes()); 
+    }
     
 
     // ------------------------- FONCTIONS PRIVEES -------------------------
 
     // Fonctions pour checker le type de combinaision
-    private boolean check_suite(){
-
+    private boolean check_suite() {
+        if (nombreDeCartes() < 3) {
+            return false; // Pas assez de cartes pour une suite
+        }
+    
         // Récupère les valeurs des cartes et les trie
-        int valeur1 = getValeurCarte(0);
-        int valeur2 = getValeurCarte(1);
-        int valeur3 = getValeurCarte(2);
-
-        int[] valeurs = {valeur1, valeur2, valeur3};
+        int[] valeurs = new int[nombreDeCartes()];
+        for (int i = 0; i < nombreDeCartes(); i++) {
+            valeurs[i] = getValeurCarte(i);
+        }
         Arrays.sort(valeurs);
-
-        // Vérifie si les valeurs sont consécutives
-        return (valeurs[1] == valeurs[0] + 1) && (valeurs[2] == valeurs[1] + 1);
+    
+        // Vérifie si toutes les cartes sont consécutives
+        for (int i = 1; i < valeurs.length; i++) {
+            if (valeurs[i] != valeurs[i - 1] + 1) {
+                return false;
+            }
+        }
+        return true;
     }
+    
 
-    private boolean check_couleur(){
-
-        Couleur color1 = getCouleurCarte(0);
-        Couleur color2 = getCouleurCarte(1);
-        Couleur color3 = getCouleurCarte(2);
-
-
-        return (color1 == color2) && (color2 == color3);
+    private boolean check_couleur() {
+        if (nombreDeCartes() < 3) {
+            return false; // Pas assez de cartes pour une couleur
+        }
+    
+        Couleur premiereCouleur = getCouleurCarte(0);
+        for (int i = 1; i < nombreDeCartes(); i++) {
+            if (getCouleurCarte(i) != premiereCouleur) {
+                return false;
+            }
+        }
+        return true;
     }
+    
 
     private boolean check_brelan(){
 
@@ -87,25 +126,23 @@ public class Combinaison extends Card_list{
     }
 
     // Renvoie le type de combinaision de la combianiaison actuelle
-    private Type calculate_type(){
-        if(nombreDeCartes() < 3){
-            return Type.SOMME;
+    public Type calculate_type() {
+        if (nombreDeCartes() < 3) {
+            return Type.SOMME; // Pas assez de cartes pour former un type avancé
         }
-        if(check_suite_couleur()){
+    
+        if (check_suite_couleur()) {
             return Type.SUITE_COULEUR;
-        }
-        else if(check_brelan()){
+        } else if (check_brelan() && nombreDeCartes() == 3) { // Brelan reste limité à 3 cartes
             return Type.BRELAN;
-        }
-        else if(check_couleur()){
+        } else if (check_couleur()) {
             return Type.COULEUR;
-        }
-        else if(check_suite()){
+        } else if (check_suite()) {
             return Type.SUITE;
         }
+    
         return Type.SOMME;
     }
-
 
     // ------------------------- DEFINTION ENUM TYPE -------------------------
 
@@ -120,7 +157,7 @@ public class Combinaison extends Card_list{
 
     
     public String toString(){
-        return "Cbn: " + cartes.toString() + ", type=" + type +'}';
+        return "Cbn: " + super.toString() + ", type=" + type +'}';
     }
 
 }

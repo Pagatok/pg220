@@ -45,7 +45,12 @@ public class Card_list {
     public Carte piocher(){
         Carte carte = liste_cartes.get(0);
         liste_cartes.remove(0);
+        System.out.println("Carte piochée ! Cartes restantes: " + liste_cartes.size());
         return carte;
+    }
+
+    public Carte getCartePrecise(int id_carte){
+        return this.liste_cartes.get(id_carte);
     }
 
 
@@ -71,6 +76,18 @@ public class Card_list {
     public void shuffle(){
         Collections.shuffle(liste_cartes);
     }
+
+
+    public boolean isTacticIn(){
+        for(Carte carte : liste_cartes){
+            if(carte instanceof Carte_Tactique){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 
     @Override
     public String toString() {
