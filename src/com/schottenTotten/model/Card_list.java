@@ -45,6 +45,7 @@ public class Card_list {
     public Carte piocher(){
         Carte carte = liste_cartes.get(0);
         liste_cartes.remove(0);
+        System.out.println("Carte piochée ! Cartes restantes: " + liste_cartes.size());
         return carte;
     }
 

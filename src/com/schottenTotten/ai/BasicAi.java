@@ -77,6 +77,7 @@ public class BasicAi implements Ai{
         List <Integer> liste_revendiquables = F.getRevendiquables();
 
         if(liste_revendiquables.size() == 0){
+            System.out.println("Pas de bornes revendiquables!");
             return -1;
         }
 

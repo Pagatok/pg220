@@ -1,7 +1,6 @@
 ---------------v 2.0----------------
 
-- Quand 2 IA jouent les pioches sont vides au tour 24 alors qu'il y a plus de cartes normalement
-- l'IA n'as pas l'air de savoir choisir un joker
+- Check bugs
 
 
 --------------v 2.1-----------------
@@ -12,4 +11,6 @@
 - Mettre à jour les diagrames de classes
 - Peut-être parcourir les JSON avec la bibliothèque
 - Ajouter cartes tactiques de type ruse et mode_combat
+- Mise à jour du README
+- supprimer les derniers appels à CarteTactiqueFactory
 

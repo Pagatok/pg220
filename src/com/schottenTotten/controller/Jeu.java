@@ -135,7 +135,15 @@ public class Jeu {
                  pioche_vide = tentative_pioche(pioche, vue, joueur_actif);
             }
 
-            System.out.println("Pioche Normale: " + !pioche_vide + "\nPioche Tactique: " + !pioche_tactique_vide);
+            // Mise à jour des états de spioches
+            if(pioche.nombreDeCartes() == 0){
+                pioche_vide = true;
+            }
+            if(pioche_tactique.nombreDeCartes() == 0){
+                pioche_tactique_vide = true;
+            }
+
+            System.out.println("Pioche Normale: " + pioche_vide + "\nPioche Tactique: " + pioche_tactique_vide);
 
             // Variante Tactique et les deux pioches ont des cartes
             // Le joueur doit choisir dans quelle pioche piocher et si ca ne marche pas il tente l'autre
@@ -164,7 +172,7 @@ public class Jeu {
             // Variante Tactique et une des deux pioches est vide (on peut s'en être rendu compte que juste au-dessus)
             // le joueur pioche automatiquement dans la non-vide
             if(variante & (pioche_vide ^ pioche_tactique_vide)){
-                if(pioche_vide){
+                if(pioche_tactique_vide){
                     vue.afficherMessage("La pioche tactique est vide");
                     pioche_vide = tentative_pioche(pioche, vue, joueur_actif);
                     if(!pioche_vide){
@@ -174,7 +182,7 @@ public class Jeu {
                         vue.afficherMessage("Pioche Normale vide aussi, on continue sans piocher");
                     }
                 }
-                else{
+                else if(pioche_vide){
                     vue.afficherMessage("La pioche normale est vide");
                     pioche_tactique_vide = tentative_pioche(pioche_tactique, vue, joueur_actif);
                     if(!pioche_tactique_vide){
@@ -201,14 +209,14 @@ public class Jeu {
 
 
     // Renvoi si la pioche est vide
-    private static boolean tentative_pioche(Pioche pioche, View vue, Joueur J){
+    private static boolean tentative_pioche(Pioche piochez, View vue, Joueur J){
         try{
-            Carte carte = pioche.piocher();
+            Carte carte = piochez.piocher();
             J.ajouterCarte(carte);
             return false;
         }
         catch(Exception e){
-            vue.afficherMessage("Il n'y a plus de cartes dans cette pioche");
+            vue.afficherMessage("Il n'y a plus de cartes dans cette pioche: " + piochez.isPiocheTactique());
             return true;
         } 
     }
