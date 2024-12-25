@@ -127,6 +127,8 @@ public class Jeu {
                  pioche_vide = tentative_pioche(pioche, vue, joueur_actif);
             }
 
+            System.out.println("Pioche Normale: " + !pioche_vide + "\nPioche Tactique: " + !pioche_tactique_vide);
+
             // Variante Tactique et les deux pioches ont des cartes
             // Le joueur doit choisir dans quelle pioche piocher et si ca ne marche pas il tente l'autre
             if(variante & !pioche_vide & !pioche_tactique_vide){
@@ -179,7 +181,7 @@ public class Jeu {
             if(nbr_tours % 2 == 0){
                 vue.afficherFrontiere(frontiere);
             }
-            if(nbr_tours == 50){
+            if(nbr_tours == 60){
                 break;
             }
         }

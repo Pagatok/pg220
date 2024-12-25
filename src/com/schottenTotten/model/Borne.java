@@ -170,6 +170,11 @@ public class Borne {
 
 
     public String toString(){
-        return "Borne " + this.id_borne + ": {" + this.J1.toString() + " vs " + this.J2.toString() + "}";
+        if(!isRevendique()){
+            return "Borne " + this.id_borne + ": {" + this.J1.toString() + " vs " + this.J2.toString() + "}";
+        }
+        else{
+            return "Borne " + this.id_borne + " REVENDIQUE --- JOUEUR " + this.id_joueur;
+        }
     }
 }

@@ -1,1 +1,4 @@
-Résolution d'une confusion de longue date sur les superclasses avec Combinaison et Card_list où la sous-classe recréait une instance de CArd_list alors qu'elle en était déjà une
+Lorsqu'elle est revendiquée une borne affiche juste son possesseur en toString();
+L'application des effets des cartes tactiques de type joker est fonctionelle
+Problème:
+Néanmoins les noms de joueurs sont parfois échangés

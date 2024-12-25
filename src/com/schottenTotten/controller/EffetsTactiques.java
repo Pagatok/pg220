@@ -29,8 +29,8 @@ public class EffetsTactiques {
                     String methodName = ((Carte_Tactique)carte).getEffet();
                     try {
                         Class<?> clazz = EffetsTactiques.class;
-                        Method method = clazz.getMethod(methodName);
-                        method.invoke(null, C, vue, carte);
+                        Method method = clazz.getMethod(methodName, Combinaison.class, View.class, Carte_Tactique.class, Joueur.class);
+                        method.invoke(null, C, vue, carte, joueur);
                     }
                     catch(Exception e){
                         e.printStackTrace();
@@ -41,7 +41,7 @@ public class EffetsTactiques {
     }
 
 
-    public void appJoker(Combinaison comb, View vue, Carte_Tactique joker, Joueur J){
+    public static void appJoker(Combinaison comb, View vue, Carte_Tactique joker, Joueur J){
         // La carte se transforme en la carte désirée par le joueur
         // Le joker est initialisé
 
