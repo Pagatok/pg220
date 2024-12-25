@@ -85,4 +85,12 @@ public class EffetsTactiques {
         borne.setLockType(true);
         vue.afficherMessage("Le type des Comb de la borne " + borne.getId() + " est bloqué sur SOMME");
     }
+
+
+    public static void appCombatBoue(Borne borne, View vue){
+        borne.raiseMaxNbrCard();
+        int nbrmax1 = borne.getCombinaison(1).getMaxTaille();
+        int nbrmax2 = borne.getCombinaison(2).getMaxTaille();
+        vue.afficherMessage("Nombre de cartes à poser sur cette borne: J1: " + nbrmax1 + ", J2: " + nbrmax2);
+    }
 }

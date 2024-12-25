@@ -79,6 +79,11 @@ public class Combinaison extends Card_list{
     public boolean isFull(){
         return !(this.max_cartes > super.nombreDeCartes()); 
     }
+
+
+    public void raiseMaxNbrCard(){
+        this.max_cartes += 1;
+    }
     
 
     // ------------------------- FONCTIONS PRIVEES -------------------------

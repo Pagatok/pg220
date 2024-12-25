@@ -1,2 +1,1 @@
-- Colin-Maillard fonctionnel
-- Correcton d'un bug qui affichait le mauvais nom quand une personne remportait une borne
+- Combat de Boue est fonctionnel

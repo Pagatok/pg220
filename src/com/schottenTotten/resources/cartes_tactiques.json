@@ -30,6 +30,14 @@
       "description": "Le type des combinaisons de la borne est fixé sur SOMME",
       "valeurs_possibles": [0],
       "effet": "appColin"  
+    },
+    {
+      "nom": "Combat-Boue",
+      "nbr_dans_pioche": 1,
+      "type_tactique": "MODE_COMBAT",
+      "description": "Le nombre de cartes a poser sur cette borne augmente de 1",
+      "valeurs_possibles": [0],
+      "effet": "appCombatBoue"  
     }
 ]
   

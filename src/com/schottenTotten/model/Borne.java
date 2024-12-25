@@ -42,6 +42,11 @@ public class Borne {
     }
 
 
+    public void raiseMaxNbrCard(){
+        this.J1.raiseMaxNbrCard();
+        this.J2.raiseMaxNbrCard();
+    }
+
 
     public int getId(){
         return this.id_borne;
