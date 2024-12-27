@@ -197,9 +197,6 @@ public class Jeu {
             if(nbr_tours % 2 == 0){
                 vue.afficherFrontiere(frontiere);
             }
-            if(nbr_tours == 60){
-                break;
-            }
             if(frontiere.isFrontiereFull()){
                 vue.afficherMessage("La frontière est pleine, on arrête le jeu");
                 vue.afficherWinner(passive_player);

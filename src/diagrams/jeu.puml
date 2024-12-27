@@ -1,15 +1,27 @@
 @startuml jeu
 
 class Jeu{
-    + main(String args[])
-    + select_view(): View
+	+ main(String args[])
+	+ select_view(): View
+	+ gestion_variante(View vue): boolean
 }
 
 class Tour{
-    + gestion_tour_real(View vue, Frontiere frontiere, Joueur joueur_actif, Joueur passive_player)
-    + gestion_tour_ia(View vue, frontiere frontiere, Joueur joueur_actif, Joueur passive_player)
+	+ gestion_tour_real(View vue, Frontiere frontiere, Joueur joueur_actif, Joueur passive_player)
+	+ gestion_tour_ia(View vue, frontiere frontiere, Joueur joueur_actif, Joueur passive_player)
+	+ getAi(Joueur J, View vue): Ai
+}
+
+class EffetsTactiques{
+	+ gestionTactic(Joueur J, Combinaison C, View vue)
+	+ gestionTacticPostSelectCard(Joueur active_player, Joueur passive_player, Carte_Tactique carte, View vue)
+	+ gestionTacticPostposecarte(Borne borne, Carte_Tactique carte, View vue, Joueur, player)
+	+ appJoker(Combinaison Comb, View vue, Carte_Tactique joker, Joueur J)
+	+ appColin(Borne borne, View vue, Joueur J, Carte_Tactique colin)
+	+ appCombatBoue(Borne borne, View vue, Joueur J, Carte_tactique combatboue)
 }
 
 Jeu ..> Tour
+Tour ..> EffetsTactiques
 
 @enduml

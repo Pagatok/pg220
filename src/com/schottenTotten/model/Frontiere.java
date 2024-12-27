@@ -10,6 +10,9 @@ public class Frontiere {
     private boolean gameover = false;
 
 
+    // ------------------------- CONSTRUCTEUR -------------------------
+
+
     // Constructeur de Base d'une Frontière intialisée avec 9 bornes vides
     public Frontiere(){
         this.liste_bornes = new ArrayList<>();
@@ -19,30 +22,30 @@ public class Frontiere {
         }
     }
 
+
+    // ------------------------- GETTERS -------------------------
+
+    
     // Renvoie la borne d'id donnée en paramètre
     public Borne getBorne(int id_borne){
         return liste_bornes.get(id_borne-1);
     }
 
-    // renvoie le nombre de bornes possedées par le joueur id_joueur
-    public int getNbrBornes(int id_joueur){
-        int score = 0;
-        for(Borne borne : liste_bornes){
-            if(borne.getIdJoueur() == id_joueur){
-                score += 1;
-            }
-        }
-        return score;
-    }
 
+    // Indique si la frontière considère que la partie est terminée ou non
     public boolean is_gameover(){
         return this.gameover;
     }
 
+
+    // Renvoi le nombre de bornes qu'il ya sur la frontière
     public int getNbrBornesTotal(){
         return nbr_bornes;
     }
 
+
+    // Vérifie si la frontiere est pleine
+    // Càd si il reste ou non de la place pour des cartes à poser sur la frontière
     public boolean isFrontiereFull(){
         for(Borne borne: liste_bornes){
             if(!borne.isRevendiquable() || !borne.isRevendique()){
@@ -53,25 +56,8 @@ public class Frontiere {
     }
 
 
-    // renvoi le nombre de bornes successives possédées par le joueur
-    public int getSuccessifs(int id_joueur){
-        int successifs = 0;
-        int score = 0;
-        for(Borne borne : liste_bornes){
-            if(borne.getIdJoueur() == id_joueur){
-                score += 1;
-            }
-            else{
-                if(score > successifs){
-                    successifs = score;
-                }
-                score = 0;
-            }
-        }
-        return successifs;
-    }
-
-
+    // Vérifie que les conditions de victoires sont remplises par l'un des 2 jouers
+    // Renvoie l'id du gagnant ou 0 par défaut si pas de vainquers
     public int checkVictoire(){
         for(int i=1; i<=2; i++){
             if(getNbrBornes(i) >= 5 || getSuccessifs(i) >= 3){
@@ -80,10 +66,6 @@ public class Frontiere {
             }
         }
         return 0;
-    }
-
-    public void setGameOver(){
-        this.gameover = true;
     }
 
 
@@ -105,6 +87,54 @@ public class Frontiere {
     }
 
 
+
+    // ------------------------- SETTERS -------------------------
+
+
+    // Indique à la frontiere que la partie est terminée
+    public void setGameOver(){
+        this.gameover = true;
+    }
+
+
+
+    // ------------------------- FONCTIONS PRIVEES -------------------------
+
+
+    // Renvoi le nombre de bornes successives possédées par le joueur
+    private int getSuccessifs(int id_joueur){
+        int successifs = 0;
+        int score = 0;
+        for(Borne borne : liste_bornes){
+            if(borne.getIdJoueur() == id_joueur){
+                score += 1;
+            }
+            else{
+                if(score > successifs){
+                    successifs = score;
+                }
+                score = 0;
+            }
+        }
+        return successifs;
+    }
+
+
+    // Renvoie le nombre de bornes possedées par le joueur id_joueur
+    private int getNbrBornes(int id_joueur){
+        int score = 0;
+        for(Borne borne : liste_bornes){
+            if(borne.getIdJoueur() == id_joueur){
+                score += 1;
+            }
+        }
+        return score;
+    }
+
+
+    // ------------------------- TOSTRING -------------------------
+
+
     public String toString(){
         String answer = "Frontière: \n";
         for(Borne borne : liste_bornes){
@@ -113,7 +143,4 @@ public class Frontiere {
         }
         return answer;
     }
-
-
-
 }

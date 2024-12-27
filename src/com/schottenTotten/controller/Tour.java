@@ -18,11 +18,10 @@ public class Tour {
     // Renvoi 1 si la partie est terminée après ce tour, 0 sinon
     public static void gestion_tour_real(View vue, Frontiere frontiere, Joueur joueur_actif, Joueur autre_joueur){
 
-        int id_joueur = joueur_actif.getId();
-
         vue.afficherFrontiere(frontiere);
 
         if(check_loose(joueur_actif, vue, frontiere)){
+            vue.afficherWinner(autre_joueur);
             return;
         }
 
@@ -32,11 +31,27 @@ public class Tour {
         joueur_actif.retirerCarte(carte_jouee);
         System.out.println(carte_jouee.toString());
 
+        boolean lock = true;
+        if(carte_jouee instanceof Carte_Tactique){
+            try{
+                EffetsTactiques.gestionTacticPostSelectCard(joueur_actif, autre_joueur, (Carte_Tactique)carte_jouee, vue);
+            }
+            catch(Exception e){
+                lock = false;
+                vue.afficherMessage(e.getMessage());
+            }
+        }
+
         // Puis il sélectionne la borne sur laquelle il veut la poser
-        Borne borne = vue.select_borne(joueur_actif, frontiere);
-        borne.ajouterCarte(id_joueur, carte_jouee);
-        vue.afficherMessage("Carte ajoutée sur la borne " + borne.getId());
-        System.out.println(borne.toString());
+        if(lock){
+            Borne borne = vue.select_borne(joueur_actif, frontiere);
+            borne.ajouterCarte(joueur_actif.getId(), carte_jouee);
+            vue.afficherMessage("Carte ajoutée sur la borne " + borne.getId());
+            if(carte_jouee instanceof Carte_Tactique){
+                EffetsTactiques.gestionTacticPostposeCarte(borne, (Carte_Tactique)carte_jouee, vue, joueur_actif);
+            }
+        }
+
 
         vue.afficherFrontiere(frontiere);
 
@@ -75,13 +90,29 @@ public class Tour {
         Carte carte_jouee = ia.select_card(J);
         J.retirerCarte(carte_jouee);
 
-        // Puis il sélectionne la borne sur laquelle il veut la poser
-        Borne borne = ia.select_borne(J, F);
-        if(borne == null){
-            System.out.println("Tour: L'IA est bloqué sur select_borne");
+        boolean lock = true;
+        if(carte_jouee instanceof Carte_Tactique){
+            try{
+                EffetsTactiques.gestionTacticPostSelectCard(J, passive_player, (Carte_Tactique)carte_jouee, vue);
+            }
+            catch(Exception e){
+                lock = false;
+                vue.afficherMessage(e.getMessage());
+            }
         }
-        else{
-            borne.ajouterCarte(J.getId(), carte_jouee);
+
+        // Puis il sélectionne la borne sur laquelle il veut la poser
+        if(lock){
+            Borne borne = ia.select_borne(J, F);
+            if(borne == null){
+                System.out.println("Tour: L'IA est bloqué sur select_borne");
+            }
+            else{
+                borne.ajouterCarte(J.getId(), carte_jouee);
+                if(carte_jouee instanceof Carte_Tactique){
+                    EffetsTactiques.gestionTacticPostposeCarte(borne, (Carte_Tactique)carte_jouee, vue, J);
+                }
+            }
         }
 
         // Il sélectionne les bornes qu'il veut revendiquer
@@ -134,10 +165,10 @@ public class Tour {
 
         String name_joueur;
         if(borne_revend.getIdJoueur() == 1){
-            name_joueur = J1.getName();
+            name_joueur = J2.getName();
         }
         else{
-            name_joueur = J2.getName();
+            name_joueur = J1.getName();
         }
         
         vue.afficherMessage("" + name_joueur + " remporte la borne " + borne_revend.getId());
@@ -153,59 +184,83 @@ public class Tour {
         }  
     }
 
+    // Version non abouti d'une gestion du tour qui marche pour IA ou pour un joueur normal
+    // public static void gestion_tour(View vue, Frontiere frontiere, Joueur joueur_actif, Joueur autre_joueur){
 
-    // private static void configurerTroupes(Borne borne, View vue) {
-
-    //     Combinaison J1 = borne.getCombinaison(1);
-    //     Combinaison J2 = borne.getCombinaison(2);
+    //     boolean mode_reel = (joueur_actif.getNivia() == 0);
     
-    //     // Configurer les Jokers dans la combinaison de J1
-    //     for (Carte carte : J1.getCartes()) {
-    //         if(carte instanceof Carte_Tactique){
-    //             Carte_Tactique carteTactique = (Carte_Tactique) carte;
-    //             System.out.println("Carte Tactique trouvé dans la borne");
-    //             switch (carteTactique.getNom()) {
-    //                 case "Joker":
-    //                     System.out.println("Joker trouvé !");
-    //                     vue.appeffetJoker(carte);
-    //                     break;
-    //                 case "Espion":
-    //                     System.out.println("Espion trouvé !");
-    //                     vue.appeffetEspion(carte);
-    //                     break;
-    //                 case "Porte-Bouclier":
-    //                     System.out.println("Porte-bouclier trouvé !");
-    //                     vue.appeffetPorteBouclier(carte);
-    //                     break;
-    //                 default:
-    //                     break;
-    //             }
+    //         if(check_loose(joueur_actif, vue, frontiere)){
+    //             vue.afficherWinner(autre_joueur);
+    //             return;
+    //         }
+    
+    //     if(mode_real){
+    //             vue.afficherFrontiere(frontiere);
+    //     else{
+    //         //On récupère l'IA
+    //         Ai ia = getAi(J, vue);
+    //         if(ia == null){
+    //             system.err.println("Erreur: Récupération de l'IA");
     //         }
     //     }
-    //     // Recalculer le type après configuration
-    //     J1.calculate_type();
     
-    //     // Configurer les Jokers dans la combinaison de J2
-    //     for (Carte carte : J2.getCartes()) {
-    //         if(carte instanceof Carte_Tactique){
-    //             Carte_Tactique carteTactique = (Carte_Tactique) carte;
-    //             switch (carteTactique.getNom()) {
-    //                 case "Joker":
-    //                     vue.appeffetJoker(carte);
-    //                     break;
-    //                 case "Espion":
-    //                     vue.appeffetEspion(carte);
-    //                     break;
-    //                 case "Porte-Bouclier":
-    //                     vue.appeffetPorteBouclier(carte);
-    //                     break;
-    //                 default:
-    //                     break;
+    
+    //         // Le joueur sélectionne une carte de la main
+    //     Carte carte_jouee = new Carte(null, 0);
+    //     if(mode_real){
+    //             vue.afficherJoueur(joueur_actif);
+    //             carte_jouee = vue.select_card(joueur_actif);
+    //     }
+    //     else{
+    //         carte_jouee = ia.select_card(joueur_actif);
+    //     }
+    //         joueur_actif.retirerCarte(carte_jouee);
+    
+    //         boolean lock = true;
+    //         if(carte_jouee instanceof Carte_Tactique){
+    //             try{
+    //                 EffetsTactiques.gestionTacticPostSelectCard(joueur_actif, autre_joueur, (Carte_Tactique)carte_jouee, vue);
+    //             }
+    //             catch(Exception e){
+    //                 lock = false;
+    //                 vue.afficherMessage(e.getMessage());
     //             }
     //         }
+    
+    //         // Puis il sélectionne la borne sur laquelle il veut la poser
+    //         if(lock){
+    //         Borne borne = new Borne();
+    //         if(mode_real){
+    //                 borne = vue.select_borne(joueur_actif, frontiere);
+    //         }
+    //         else{
+    //             borne = ia.select_borne(J, F);
+    //             if(borne == null){
+    //                 vue.afficherMessage("Tour: L'IA est bloquée sur select_borne");
+    //             borne.ajouterCarte(joueur_actif.getId(), carte_jouee);
+    //             vue.afficherMessage("Carte ajoutée sur la borne " + borne.getId());
+    //             if(carte_jouee instanceof Carte_Tactique){
+    //                 EffetsTactiques.gestionTacticPostposeCarte(borne, (Carte_Tactique)carte_jouee, vue, joueur_actif);
+    //             }
+    //         }
+    
+    
+    //         vue.afficherFrontiere(frontiere);
+    
+    //         // On regarde quelles bornes sont revendiquables
+    //         List <Integer> listes_revendiquables = frontiere.getRevendiquables();
+    //         if(listes_revendiquables.size() == 0){
+    //             vue.afficherMessage("Aucunes bornes revendiquables ce tour-ci");
+    //         }
+    //         else{
+    //             // Il sélectionne les bornes qu'il veut revendiquer
+    //             Borne borne_revend = vue.select_revendication(frontiere, listes_revendiquables);
+    //             if(borne_revend != null){
+    //                 gestion_revend(borne_revend, frontiere, vue, joueur_actif, autre_joueur);
+    //             }
+    //         } 
     //     }
-    //     // Recalculer le type après configuration
-    //     J2.calculate_type();
     // }
+    
 
 }

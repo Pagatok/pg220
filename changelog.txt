@@ -1,3 +1,0 @@
-- Résolution du bug qui faisait piocher dans carte tactique meme quand celle-ci est vide repectivement normale
-- Pioche est maintenant une sous-classe de Card_list
-- Les fonctions de Factory ont été déplacées et adpatés dans Pioche

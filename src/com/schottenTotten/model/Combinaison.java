@@ -8,6 +8,10 @@ public class Combinaison extends Card_list{
 
     private Type type;
     private int max_cartes = 3; // Initilaisé à 3 mais des cartes tactiques peuvent la monter à 4
+    private boolean type_lock = false;
+
+
+    // ------------------------- CONSTRUCTEURS -------------------------
 
     public Combinaison() {
         super();
@@ -15,34 +19,17 @@ public class Combinaison extends Card_list{
     }
 
 
-    @Override
-    public boolean ajouterCarte(Carte carte){
-        if(super.nombreDeCartes() == max_cartes){
-            return false;
-        }
-        else if((carte.getCouleur() == null | carte.getValeur() == 0) & !(carte instanceof Carte_Tactique)){
-            System.err.println(carte.toString());
-            System.err.println("carte Vide détectée !");
-            System.exit(0);
-            return false;
-        }
-        else{
-            return super.ajouterCarte(carte);
-        }
-    }
 
+    // ------------------------- GETTERS -------------------------
 
-    // Renvoie le type de combinaison ()
+    // Renvoie le type de combinaison
     public Type getType(){
         return this.type;
     }
 
 
-    public void setType(Type type){
-        this.type = type;
-    }
-
-
+    // Renvoie le score d'une combinaison
+    // Càd la somme des valeurs des cartes
     public int getScore(){
 
         int somme = 0;
@@ -55,13 +42,9 @@ public class Combinaison extends Card_list{
     }
 
 
+    // Renvoie le nombre maximum de cartes qui peut être mis dans cette combinaison
     public int getMaxTaille(){
         return this.max_cartes;
-    }
-
-
-    public void setMaxTaille(int nbr_max_cartes){
-        this.max_cartes = nbr_max_cartes;
     }
 
 
@@ -69,11 +52,57 @@ public class Combinaison extends Card_list{
     public boolean isFull(){
         return !(this.max_cartes > super.nombreDeCartes()); 
     }
+
+
+
+
+    // ------------------------- SETTERS -------------------------
+
+
+    // Change le type de la combinaison
+    public void setType(Type type){
+        this.type = type;
+    }
+
+
+    // Verrouille/Déverouille le type de combinaison
+    public void lockType(boolean lock){
+        this.type_lock = lock;
+    }
+
+
+    // Ajouter une carte à la combinaison
+    @Override
+    public boolean ajouterCarte(Carte carte){
+        if(super.nombreDeCartes() == max_cartes){
+            return false;
+        }
+        else if((carte.getCouleur() == null | carte.getValeur() == 0) & !(carte instanceof Carte_Tactique)){
+            System.err.println(carte.toString());
+            System.err.println("carte Vide détectée !");
+            System.exit(0);
+            return false;
+        }
+        else{
+            boolean result = super.ajouterCarte(carte);
+            if(result){
+                calculateType();
+            }
+            return result;
+        }
+    }
+
+
+    // Augmente de 1 le nombre maximal de cartes pouvant être mises dans la combinaison
+    public void raiseMaxNbrCard(){
+        this.max_cartes += 1;
+    }
     
+
 
     // ------------------------- FONCTIONS PRIVEES -------------------------
 
-    // Fonctions pour checker le type de combinaision
+    // Vérifie si les cartes de la combinaison forment une suite
     private boolean check_suite() {
         if (nombreDeCartes() < 3) {
             return false; // Pas assez de cartes pour une suite
@@ -96,6 +125,7 @@ public class Combinaison extends Card_list{
     }
     
 
+    // Vérifie si les cartes de la combinaison forment une couleur
     private boolean check_couleur() {
         if (nombreDeCartes() < 3) {
             return false; // Pas assez de cartes pour une couleur
@@ -111,6 +141,7 @@ public class Combinaison extends Card_list{
     }
     
 
+    // vérifie si les cartes de la combinaion forment un brelan
     private boolean check_brelan(){
 
         // Récupère les valeurs des cartes et les trie
@@ -121,19 +152,34 @@ public class Combinaison extends Card_list{
         return (valeur1 == valeur2) && (valeur2 == valeur3);
     }
 
+
+    // Vérifie si les cartes de la cmbinaison forment une suite couleur
     private boolean check_suite_couleur(){
         return check_suite() && check_couleur();
     }
 
+
+    // Renvoie le type de combinaison que les cartes forment
+    // SOMME si le type est lock
+    private Type calculateType(){
+        if(this.type_lock){
+            return Type.SOMME;
+        }
+        else{
+            return real_calculate_type();
+        }
+    }
+
+    
     // Renvoie le type de combinaision de la combianiaison actuelle
-    public Type calculate_type() {
-        if (nombreDeCartes() < 3) {
+    private Type real_calculate_type() {
+        if (super.nombreDeCartes() < max_cartes) {
             return Type.SOMME; // Pas assez de cartes pour former un type avancé
         }
     
         if (check_suite_couleur()) {
             return Type.SUITE_COULEUR;
-        } else if (check_brelan() && nombreDeCartes() == 3) { // Brelan reste limité à 3 cartes
+        } else if (check_brelan() && super.nombreDeCartes() == 3) { // Brelan reste limité à 3 cartes
             return Type.BRELAN;
         } else if (check_couleur()) {
             return Type.COULEUR;
@@ -144,8 +190,9 @@ public class Combinaison extends Card_list{
         return Type.SOMME;
     }
 
-    // ------------------------- DEFINTION ENUM TYPE -------------------------
 
+
+    // ------------------------- DEFINTION ENUM TYPE -------------------------
 
     public enum Type{
         SOMME,

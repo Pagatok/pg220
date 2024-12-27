@@ -11,6 +11,9 @@ public class Card_list {
     private final List<Carte> liste_cartes;
     int taille_max;
 
+
+    // ------------------------- CONSTRUCTEURS -------------------------
+
     public Card_list(){
         this.liste_cartes = new ArrayList<>();
         this.taille_max = 1000;
@@ -21,6 +24,52 @@ public class Card_list {
         this.taille_max = taille_max;
     }
 
+
+    // ------------------------- GETTERS -------------------------
+
+
+    // Renvoie une carte décrite par sa position dans la liste
+    public Carte getCartePrecise(int indice_carte){
+        return this.liste_cartes.get(indice_carte);
+    }
+
+
+    // Renvoie le nombre de cartes que contient cette liste de cartes
+    public int nombreDeCartes(){
+        return liste_cartes.size();
+    }
+
+
+    // Renvoie une copie de la liste des cartes que contient cette liste
+    // (copie pour protéger l'originale)
+    public List<Carte> getCartes() {
+        return new ArrayList<>(liste_cartes);
+    }
+
+
+    // Renvoie la valeur de la carte identifée par sa position dans la liste
+    public int getValeurCarte(int indice_carte){
+        int valeur = liste_cartes.get(indice_carte).getValeur();
+        return valeur;
+    }
+
+
+    // Renvoie la couleur de la carte identifée par sa position dans la liste
+    public Couleur getCouleurCarte(int indice_carte){
+        Couleur valeur = liste_cartes.get(indice_carte).getCouleur();
+        return valeur;
+    }
+
+
+    // Vérifie si une carte appartient à la liste
+    public boolean carteIn(Carte carte){
+        return liste_cartes.contains(carte);
+    }
+
+
+    // ------------------------- FONCTIONS PUBLIQUES -------------------------
+
+    // Ajoutee une carte à la liste
     public boolean ajouterCarte(Carte carte) {
 
         if (liste_cartes.size() >= taille_max) {
@@ -31,17 +80,14 @@ public class Card_list {
         return true;
     }
 
-    // Vérifie si une carte appartient à la liste et renvoie le booléun correspondant
-    public boolean carteIn(Carte carte){
-        return liste_cartes.contains(carte);
-    }
 
-
+    // Retirer une carte de la liste
     public void removeCarte(Carte carte){
         liste_cartes.remove(carte);
     }
 
     
+    // Renvoie la première carte de la liste et la retire de celle-ci
     public Carte piocher(){
         Carte carte = liste_cartes.get(0);
         liste_cartes.remove(0);
@@ -49,44 +95,11 @@ public class Card_list {
         return carte;
     }
 
-    public Carte getCartePrecise(int id_carte){
-        return this.liste_cartes.get(id_carte);
-    }
 
-
-    public int nombreDeCartes(){
-        return liste_cartes.size();
-    }
-
-    public List<Carte> getCartes() {
-        return new ArrayList<>(liste_cartes); // Retourne une copie pour protéger la liste originale
-    }
-
-    // Fonction qui renvoie la liste des valeurs des cartes
-    public int getValeurCarte(int indice_carte){
-        int valeur = liste_cartes.get(indice_carte).getValeur();
-        return valeur;
-    }
-
-    public Couleur getCouleurCarte(int indice_carte){
-        Couleur valeur = liste_cartes.get(indice_carte).getCouleur();
-        return valeur;
-    }
-
+    // Mélange la liste de cartes
     public void shuffle(){
         Collections.shuffle(liste_cartes);
     }
-
-
-    public boolean isTacticIn(){
-        for(Carte carte : liste_cartes){
-            if(carte instanceof Carte_Tactique){
-                return true;
-            }
-        }
-        return false;
-    }
-
 
 
     @Override

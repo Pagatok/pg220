@@ -15,8 +15,15 @@ public class Pioche extends Card_list{
 
     private Pioche_Type type = Pioche_Type.NORMALE; 
 
+    private static String cartes_tactiques_desc = "src/com/schottenTotten/resources/cartes_tactiques.json";
 
-    // Intialise la pioche avec toutes les cartes dedans (pas triées)
+
+
+    // ------------------------- CONSTRUCTEURS -------------------------
+
+
+    // Intialise la pioche avec toutes les cartes clans dedans
+    // Note: Cette pioche n'est pas mélangée
     public Pioche(){
         
         super(54);
@@ -28,12 +35,14 @@ public class Pioche extends Card_list{
         }
     }
 
+
+    // Initilise la pioche avec toutes les cartes tactiques décrites dans cartes_tactiques_desc
     public Pioche(boolean isTactic) {
 
         super(10);
         this.type = Pioche_Type.TACTIQUE;
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("src/com/schottenTotten/resources/cartes_tactiques.json"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(cartes_tactiques_desc))) {
             StringBuilder jsonBuilder = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
@@ -50,6 +59,26 @@ public class Pioche extends Card_list{
     }
 
 
+
+    // ------------------------- GETTERS -------------------------
+
+
+    // Indique si la pioche est composée de cartes tactiques (true) ou de cartes clans (false)
+    public boolean isPiocheTactique(){
+        if(this.type == Pioche_Type.TACTIQUE){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+
+
+    // ------------------------- FONCTIONS PUBLIQUES -------------------------
+
+
+    // Renvoie la première carte de la pioche et la retire de celle-ci
     @Override
     public Carte piocher() throws NoSuchElementException{
         if(super.nombreDeCartes() != 0){
@@ -62,22 +91,7 @@ public class Pioche extends Card_list{
         }
     }
 
-
-    public boolean isPiocheTactique(){
-        if(this.type == Pioche_Type.TACTIQUE){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-
-    public String toString(){
-        return "Pioche: " + super.toString();
-    }
-
-
+    
 
     // ------------------------- FONCTIONS PRIVEES -------------------------
 
@@ -175,8 +189,19 @@ public class Pioche extends Card_list{
     }   
 
 
+
+    // ------------------------- TOSTRING ET TYPES -------------------------
+
+
     public enum Pioche_Type {
         NORMALE,
         TACTIQUE
     }
+
+
+    @Override
+    public String toString(){
+        return "Pioche: " + super.toString();
+    }
+
 }

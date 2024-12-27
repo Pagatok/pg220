@@ -120,7 +120,7 @@ public class ConsoleView implements View{
         Borne borne_selected = F.getBorne(valeur);
 
         // Vérifier que le joueur n'a pas déjà posé 3 cartes sur cette borne
-        if(borne_selected.nbr_cartes(J.getId()) >=3){
+        if(borne_selected.getCombinaison(J.getId()).nombreDeCartes() >=3){
             System.out.println("Erreur: Vous avez déjà posé 3 cartes sur cette borne");
             return select_borne(J, F);
         }

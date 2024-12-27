@@ -10,6 +10,10 @@ public class Carte_Tactique extends Carte {
     private List<Integer> valeurs_possibles;
     private int nbr_exemplaires = 1;
 
+    
+    // ------------------------- CONSTRUCTEURS -------------------------
+
+
     public Carte_Tactique(String nom, String description, Type type) {
         super(null, 0);
         this.nom = nom;
@@ -28,53 +32,75 @@ public class Carte_Tactique extends Carte {
         this.effet = effet;
     }
 
-    // Getter pour 'nom'
+
+    // ------------------------- GETTERS -------------------------
+
+
+    // Renvoie le nom de la carte
     @Override
     public String getNom() {
         return nom;
     }
+
+
+    // Renvoie le nombre d'exemplaires de la carte dans la pioche initale
+    // (Càd ne se met pas à jour si elles sont piochées)
+    public int getNbrexemplaires(){
+        return this.nbr_exemplaires;
+    }
+
+
+    // Renvoie la description de la carte
+    @Override
+    public String getDescription() {
+        return description;
+    }
+
+
+    // Renvoie le type de carte tactique de la carte (TROUPE_ELITE etc..)
+    public Type getType() {
+        return type;
+    }
+
+
+    // Renvoie la liste des valeurs que peut prendre la carte quand elle se transforme
+    public List<Integer> getValeursPoss(){
+        return this.valeurs_possibles;
+    }
+
+
+    // Décrit l'effet de la carte
+    public String getEffet(){
+        return this.effet;
+    }
+
+
+    // ------------------------- SETTERS -------------------------
 
     // Setter pour 'nom'
     public void setNom(String nom) {
         this.nom = nom;
     }
 
+
+    // Met à jour le nombre d'exemplaires de la carte à mettre dans la pioche initiale
     public void setNbrExemplaires(int nbr_exemplaires){
         this.nbr_exemplaires = nbr_exemplaires;
     }
 
-    public int getNbrexemplaires(){
-        return this.nbr_exemplaires;
-    }
 
-    // Getter pour 'description'
-    @Override
-    public String getDescription() {
-        return description;
-    }
-
-    // Setter pour 'description'
+    // Change la description de la carte
     public void setDescription(String description) {
         this.description = description;
     }
 
-    // Getter pour 'type'
-    public Type getType() {
-        return type;
-    }
 
-    // Setter pour 'type'
+    // Setter pour le type de la carte
     public void setType(Type type) {
         this.type = type;
     }
 
-    public List<Integer> getValeursPoss(){
-        return this.valeurs_possibles;
-    }
 
-    public String getEffet(){
-        return this.effet;
-    }
 
     // Méthode toString
     @Override
@@ -92,9 +118,13 @@ public class Carte_Tactique extends Carte {
         }
     }
 
+
+
+    // ------------------------- TYPES CUSTOMS -------------------------
+
     public enum Type {
         TROUPE_ELITE,
-        MODES_COMBAT,
+        MODE_COMBAT,
         RUSES
     }
 }
