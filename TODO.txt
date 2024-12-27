@@ -1,10 +1,7 @@
---------------v 2.1-----------------
-
-- Mise à jour du README
-
 --------------v 2.2-----------------
 
 
+- Mise à jour du README
 - Déplacer les constantes de jeu dans des json pour mieux différenceir variante basique et tactique
     ex: Le nombre de cartes dans la main
 - Peut-être parcourir les JSON avec la bibliothèque fait pour plutot que de le faire a la main
