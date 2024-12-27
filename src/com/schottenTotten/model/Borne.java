@@ -73,11 +73,6 @@ public class Borne {
     }
 
 
-
-
-
-
-
     // Méthode pour comparer les combinaisons et déterminer le gagnant
     public void determinerRevendication() {
         // Comparaison des types de combinaison

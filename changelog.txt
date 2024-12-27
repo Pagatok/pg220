@@ -1,2 +1,4 @@
-- Meilleure répartition du code pour la gestion des effets tactiques après avoir sélectionner une carte
-- Mettre une carte MODE_COMBAT ne prend plus un emplacement de carte clan
+- Rajout de commentaires décrivant mieux les différentes méthodes
+- Suppression des méthodes non utilisées
+- Mise en private de méthodes pas utilisées en dehors des classes
+==> L'objectif est de nettoyer le projet des trucs inutiles

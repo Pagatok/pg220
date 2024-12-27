@@ -10,12 +10,68 @@ public class Combinaison extends Card_list{
     private int max_cartes = 3; // Initilaisé à 3 mais des cartes tactiques peuvent la monter à 4
     private boolean type_lock = false;
 
+
+    // ------------------------- CONSTRUCTEURS -------------------------
+
     public Combinaison() {
         super();
         this.type = Type.SOMME;
     }
 
 
+
+    // ------------------------- GETTERS -------------------------
+
+    // Renvoie le type de combinaison
+    public Type getType(){
+        return this.type;
+    }
+
+
+    // Renvoie le score d'une combinaison
+    // Càd la somme des valeurs des cartes
+    public int getScore(){
+
+        int somme = 0;
+
+        for(int i = 0; i < super.nombreDeCartes(); i++){
+            somme = somme + super.getValeurCarte(i);
+        }
+
+        return somme;
+    }
+
+
+    // Renvoie le nombre maximum de cartes qui peut être mis dans cette combinaison
+    public int getMaxTaille(){
+        return this.max_cartes;
+    }
+
+
+    // Vérifie si la combinaison est plein, cad si on ne peut pas rajouter de cartes
+    public boolean isFull(){
+        return !(this.max_cartes > super.nombreDeCartes()); 
+    }
+
+
+
+
+    // ------------------------- SETTERS -------------------------
+
+
+    // Change le type de la combinaison
+    public void setType(Type type){
+        this.type = type;
+    }
+
+
+    // Verrouille/Déverouille le type de combinaison
+    public void lockType(boolean lock){
+        this.type_lock = lock;
+    }
+
+
+    // Ajouter une carte à la combinaison
     @Override
     public boolean ajouterCarte(Carte carte){
         if(super.nombreDeCartes() == max_cartes){
@@ -37,58 +93,16 @@ public class Combinaison extends Card_list{
     }
 
 
-    // Renvoie le type de combinaison ()
-    public Type getType(){
-        return this.type;
-    }
-
-
-    public void setType(Type type){
-        this.type = type;
-    }
-
-
-    public void lockType(boolean lock){
-        this.type_lock = lock;
-    }
-
-
-    public int getScore(){
-
-        int somme = 0;
-
-        for(int i = 0; i < super.nombreDeCartes(); i++){
-            somme = somme + super.getValeurCarte(i);
-        }
-
-        return somme;
-    }
-
-
-    public int getMaxTaille(){
-        return this.max_cartes;
-    }
-
-
-    public void setMaxTaille(int nbr_max_cartes){
-        this.max_cartes = nbr_max_cartes;
-    }
-
-
-    // Vérifie si la combinaison est plein, cad si on ne peut pas rajouter de cartes
-    public boolean isFull(){
-        return !(this.max_cartes > super.nombreDeCartes()); 
-    }
-
-
+    // Augmente de 1 le nombre maximal de cartes pouvant être mises dans la combinaison
     public void raiseMaxNbrCard(){
         this.max_cartes += 1;
     }
     
 
+
     // ------------------------- FONCTIONS PRIVEES -------------------------
 
-    // Fonctions pour checker le type de combinaision
+    // Vérifie si les cartes de la combinaison forment une suite
     private boolean check_suite() {
         if (nombreDeCartes() < 3) {
             return false; // Pas assez de cartes pour une suite
@@ -111,6 +125,7 @@ public class Combinaison extends Card_list{
     }
     
 
+    // Vérifie si les cartes de la combinaison forment une couleur
     private boolean check_couleur() {
         if (nombreDeCartes() < 3) {
             return false; // Pas assez de cartes pour une couleur
@@ -126,6 +141,7 @@ public class Combinaison extends Card_list{
     }
     
 
+    // vérifie si les cartes de la combinaion forment un brelan
     private boolean check_brelan(){
 
         // Récupère les valeurs des cartes et les trie
@@ -136,10 +152,15 @@ public class Combinaison extends Card_list{
         return (valeur1 == valeur2) && (valeur2 == valeur3);
     }
 
+
+    // Vérifie si les cartes de la cmbinaison forment une suite couleur
     private boolean check_suite_couleur(){
         return check_suite() && check_couleur();
     }
 
+
+    // Renvoie le type de combinaison que les cartes forment
+    // SOMME si le type est lock
     private Type calculateType(){
         if(this.type_lock){
             return Type.SOMME;
@@ -149,6 +170,7 @@ public class Combinaison extends Card_list{
         }
     }
 
+    
     // Renvoie le type de combinaision de la combianiaison actuelle
     private Type real_calculate_type() {
         if (super.nombreDeCartes() < max_cartes) {
@@ -168,8 +190,9 @@ public class Combinaison extends Card_list{
         return Type.SOMME;
     }
 
-    // ------------------------- DEFINTION ENUM TYPE -------------------------
 
+
+    // ------------------------- DEFINTION ENUM TYPE -------------------------
 
     public enum Type{
         SOMME,

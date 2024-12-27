@@ -1,17 +1,19 @@
 --------------v 2.1-----------------
 
+- Mise à jour du README
+- Mettre à jour les diagrames de classes
+- Supprimer les méthodes inutiles
 
 --------------v 2.2-----------------
 
-- Mise à jour du README
-- Mettre à jour les diagrames de classes
-- Déplacer les constantes de jeu dans des json pour mieux différenceir variante absique et tactique
+
+- Déplacer les constantes de jeu dans des json pour mieux différenceir variante basique et tactique
     ex: Le nombre de cartes dans la main
-- Peut-être parcourir les JSON avec la bibliothèque
+- Peut-être parcourir les JSON avec la bibliothèque fait pour plutot que de le faire a la main
 - supprimer les derniers appels à CarteTactiqueFactory
-- Supprimer les méthodes inutiles
 - Ajouter cartes tactiques de type ruse
 - Ne pas pouvoir jouer une carte tactique de plus que l'adversaire
+- Simplifier Tour.java en rassemblant la gestion du tour d'une ia et d'un joueur
 
 --------------v 2.3-----------------
 

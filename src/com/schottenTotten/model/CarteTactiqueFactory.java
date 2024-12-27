@@ -11,16 +11,23 @@ import java.util.regex.Pattern;
 import com.schottenTotten.model.Carte_Tactique.Type;
 
 public class CarteTactiqueFactory {
+
+
+    private static String cartes_tactiques_desc = "src/com/schottenTotten/resources/cartes_tactiques.json";
+
+
     public static void main(String[] args) {
         creerCartesTactiques();
     }
 
 
+    // Renvoie la liste des cartes tactiques
+    // Se base sur les infos données dans cartes_tactiques_desc
     public static Card_list creerCartesTactiques() {
 
         Card_list liste_cartes = new Card_list(10);
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("src/com/schottenTotten/resources/cartes_tactiques.json"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(cartes_tactiques_desc))) {
             StringBuilder jsonBuilder = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
@@ -39,7 +46,10 @@ public class CarteTactiqueFactory {
     }
 
 
-    public static void tacticJsonToList(String json, Card_list liste_cartes){
+    // ------------------------- FONCTIONS PRIVEES -------------------------    
+
+
+    private static void tacticJsonToList(String json, Card_list liste_cartes){
 
         Pattern pattern = Pattern.compile("\\{(.*?)\\}");
         Matcher matcher = pattern.matcher(json);
@@ -53,7 +63,7 @@ public class CarteTactiqueFactory {
         }
     }
 
-    public static Carte_Tactique jsonToTacticCard(String json) {
+    private static Carte_Tactique jsonToTacticCard(String json) {
 
         String carteData = json.replace("\"", "");
         String[] lignes = carteData.split(",");

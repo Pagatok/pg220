@@ -5,7 +5,7 @@ public class Carte {
     private int valeur;
     private Couleur couleur;
 
-    // Constructeur de base
+
     public Carte(Couleur couleur, int valeur) {
         if (valeur < 0 || valeur > 9) {
             throw new IllegalArgumentException("La valeur doit être comprise entre 1 et 9.");
@@ -14,6 +14,10 @@ public class Carte {
         this.valeur = valeur;
     }
 
+
+    // ------------------------- GETTERS -------------------------
+
+
     public Couleur getCouleur() {
         return couleur;
     }
@@ -21,6 +25,17 @@ public class Carte {
     public int getValeur() {
         return valeur;
     }
+
+    public String getNom(){
+        return this.toString();
+    }
+
+    public String getDescription(){
+        return "Carte Normale";
+    }
+
+
+    // ------------------------- SETTERS -------------------------
 
     public void setCouleur(Couleur new_color){
         this.couleur = new_color;
@@ -32,6 +47,10 @@ public class Carte {
         }
         this.valeur = new_valeur;
     }
+
+
+    // ------------------------- FONCTIONS PUBLIQUES -------------------------
+    
 
     @Override
     public boolean equals(Object obj) {
@@ -46,13 +65,6 @@ public class Carte {
         }
     }
 
-    public String getNom(){
-        return this.toString();
-    }
-
-    public String getDescription(){
-        return "Carte Normale";
-    }
 
     // Définition des couleurs
     public enum Couleur {
