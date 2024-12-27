@@ -5,6 +5,7 @@ interface Ai{
 	+ select_card(Joueur J): Carte
 	+ select_borne(Joueur J, Frontiere F): Borne
 	+ select_revendication(Frontiere F): int
+	+ select_pioche(): int
 }
 
 class BasicAi{

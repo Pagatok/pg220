@@ -8,6 +8,10 @@ public class Borne {
     private int id_joueur; // 1 pour J1, 2 pour J2, 0 si neutre
     private int id_borne;
 
+
+    // ------------------------- CONSTRUCTEURS -------------------------
+    
+
     public Borne(int id_borne){
         this.J1 = new Combinaison();
         this.J2 = new Combinaison();
@@ -15,6 +19,7 @@ public class Borne {
         this.id_joueur = 0;
         this.id_borne = id_borne;
     }
+
 
     public Borne(Combinaison J1, Combinaison J2, int id_borne) {
         this.J1 = J1;
@@ -25,6 +30,11 @@ public class Borne {
     }
 
 
+
+    // ------------------------- GETTERS -------------------------
+
+
+    // Renvoie la combinaison sur cette borne du joueur spécifié
     public Combinaison getCombinaison(int id_joueur){
         if(id_joueur == 1){
             return this.J1;
@@ -35,6 +45,34 @@ public class Borne {
     }
 
 
+    // Renvoie l'id de la borne
+    public int getId(){
+        return this.id_borne;
+    }
+
+
+    // Vérifie si la borne est revendiquable, cad si les 2 combinaisons sont pleines
+    public boolean isRevendiquable(){
+        return (J1.isFull() & J2.isFull());
+    }
+
+
+    // Renvoie l'Id du joueur qui possède la borne, 0 si personne
+    public int getIdJoueur() {
+        return id_joueur;
+    }
+
+
+    // Indique si la borne est revendiqué par un joueur ou non
+    public boolean isRevendique() {
+        return revendique;
+    }
+    
+
+
+    // ------------------------- SETTERS -------------------------
+
+
     // Verrouille type de combianison des deux côtés de la borne
     public void setLockType(boolean lock){
         this.J1.lockType(lock);
@@ -42,17 +80,14 @@ public class Borne {
     }
 
 
+    // augmente de 1 le nombre de cartes pouvant être posées des deux côtés de la borne
     public void raiseMaxNbrCard(){
         this.J1.raiseMaxNbrCard();
         this.J2.raiseMaxNbrCard();
     }
 
 
-    public int getId(){
-        return this.id_borne;
-    }
-
-
+    // ajoute une carte à la combinaison spécifiée
     public boolean ajouterCarte(int id_joueur, Carte carte){
         if(id_joueur == 1){
             if(J1.ajouterCarte(carte)){
@@ -108,6 +143,9 @@ public class Borne {
     }
 
 
+    // ------------------------- FONCTIONS PRIVEES -------------------------
+
+
     private int comparerTypes(){
         Combinaison.Type typeJ1 = J1.getType();
         Combinaison.Type typeJ2 = J2.getType();
@@ -115,20 +153,9 @@ public class Borne {
         return typeJ1.compareTo(typeJ2);
     }
 
-    // Getters pour accéder aux informations de la borne
-    public boolean isRevendique() {
-        return revendique;
-    }
 
 
-    // Vérifie si la borne est revendiquable, cad si les 2 combinaisons sont pleines
-    public boolean isRevendiquable(){
-        return (J1.isFull() & J2.isFull());
-    }
-
-    public int getIdJoueur() {
-        return id_joueur;
-    }
+    // ------------------------- TOSTRING -------------------------
 
 
     public String toString(){

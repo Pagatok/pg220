@@ -1,8 +1,6 @@
 --------------v 2.1-----------------
 
 - Mise à jour du README
-- Mettre à jour les diagrames de classes
-- Supprimer les méthodes inutiles
 
 --------------v 2.2-----------------
 
@@ -18,3 +16,4 @@
 --------------v 2.3-----------------
 
 - Variante experte: La revendication des bornes a lieu au début du tour pas à la fin
+- Changer l'implémentation des cartes tactiques en faisant de chacune une classe à part entière

@@ -3,115 +3,146 @@
 class Carte{
     - valeur: int
     - couleur: enum Couleur
-    + Carte(Couleur couleur, int valeur): Carte
-    + getValeur(): int
-    + getCouleur(): Couleur
-    + setValeur(int valeur)
-    + setCouleur(Couleur couleur)
-    + equals(Object obj): boolean
-    + toString(): String
+	+ Carte(Couleur couleur, int valeur): Carte
+	+ getValeur(): int
+	+ getCouleur(): Couleur
+	+ getNom(): String
+	+ getDescription(): String
+	+ setValeur(int valeur)
+	+ setCouleur(Couleur couleur)
+	+ equals(Object obj): boolean
+	+ toString(): String
+}
+
+class Carte_Tactique{
+	- nom: String
+	- description: string
+	- type: Type
+	- effet: String
+	- valeurs_possibles: List<Integer>
+	- nbr_exemplaires: int
+	+ Carte_Tactique(String nom, String descrption, Type type): Carte_Tactique
+	+ Carte_Tactique(String nom, String description, Type type, String effet, List<Integer> valeursPossibles): Carte_Tactique
+	+ getNbrexemplaires(): int
+	+ getType(): Type
+	+ getValeursPoss(): List<Integer>
+	+ getEffet(): String
+	+ setNom(String nom)
+	+ setNbrExemplaires(int nbr_exemplaires)
+	+ setDescription(String description)
+	+ setType(Type type)
+	+ toString(): String
 }
 
 class Combinaison{
-    - cartes: Card_list
-    - type: enum Type
-
-    + Combinaison(): Combinaison 
-    + getType(): Type 
-    + getScore(): int 
-    + ajouterCarte(Carte carte)
-    + toString(): String
+	- max_cartes: int
+	- type: enum Type
+	- type_lock: boolean
+	+ Combinaison(): Combinaison 
+        + getType(): Type 
+        + getScore(): int
+	+ getMaxTaille(): int
+	+ isFull(): boolean
+	+ setType(Type type)
+	+ lockType(boolean lock)
+	+ raiseMaxnbrCard() 
+	+ toString(): String
 }
 
 
 class Joueur{
-    - id_joueur: int
-    - pied: Card_list
-    - niv_ia: int
-    - name: String
-    + Joueur(int id_joueur): Joueur
-    + Joueur(int id_joueur, int niv_ia): Joueur
-    + Joueur(int id_joueur, int niv_ia, string playerName): Joueur
-    + getTaillePied(): int
-    + getId(): int
-    + getPied(): Card_list
-    + getNivIA(): int
-    + getName(): String
-    + isIA(): boolean
-    + setId(int id_joueur)
-    + appartientCarte(Carte carte): boolean
-    + ajouterCarte(Carte new_carte)
-    + retirerCarte(Carte old_carte)
-    + toString(): String
+        - id_joueur: int
+        - pied: Card_list
+        - niv_ia: int
+        - name: String
+	- joker_played: boolean
+        + Joueur(int id_joueur): Joueur
+        + Joueur(int id_joueur, int niv_ia): Joueur
+        + Joueur(int id_joueur, int niv_ia, String playerName): Joueur
+	+ Joueur(int id_joueur, int niv_ia, int nbr_cartes, String playerName): Joueur
+        + getTaillePied(): int
+        + getId(): int
+        + getPied(): Card_list
+        + getNivIA(): int
+        + getName(): String
+        + isIA(): boolean
+        + setId(int id_joueur)
+        + appartientCarte(Carte carte): boolean
+	+ setTailleMaxMain(int taille_max)
+	+ setPlayedJoker(boolean bool)
+        + ajouterCarte(Carte new_carte)
+        + retirerCarte(Carte old_carte)
+        + toString(): String
 }
 
 
 class Card_list{
     - liste_cartes: List<Carte>
     - int taille_max
-    + Card_list(): Card_list
-    + Card_list(int taille_max): Card_list
-    + ajouterCarte(Carte new_carte): boolean
-    + carteIn(carte carte): boolean
-    + removeCarte(Carte old_carte)
-    + nombreDeCartes(): int 
-    + getCartes(): List<Carte> 
-    + getValeurCarte(int indice_carte): int
-    + getCouleurCarte(int indice_carte): Couleur
-    + shuffle()
-    + piocher(): Carte
-    + toString(): String   
+	+ Card_list(): Card_list
+	+ Card_list(int taille_max): Card_list
+	+ getCartePrecise(int indice_carte): Carte
+	+ nombredeCartes(): int
+	+ getCartes(): List<Carte>
+	+ getValeurCarte(int indice_carte): int
+	+ getCouleurCarte(int indice_carte): Couleur
+	+ carteIn(carte carte): boolean
+	+ ajouterCarte(Carte carte)
+	+ removeCarte(Carte old_carte) 
+	+ shuffle()
+	+ piocher(): Carte
+	+ toString(): String   
 }
 
 class Borne{
-    - combinaisonJ1: Combinaison
-    - combinaisonJ2: Combinaison
-    - revendique: boolean
-    - id_joueur: int
-    - id_borne: int
-    + Borne(int id_borne): Borne
-    + Borne(Combinaison J1, Combinaison J2, int id_borne): Borne
-    + getId(): int
-    + determinerRevendiquation(): int
-    + isRevendique(): boolean
-    + getIdJoueur(): int
-    + nbr_cartes(int id_joueur): int
-    + ajouterCarte(int id_joueur, Carte carte): boolean
-    + toString(): String
+        - J1: Combinaison
+        - J2: Combinaison
+        - revendique: boolean
+        - id_joueur: int
+        - id_borne: int
+        + Borne(int id_borne): Borne
+        + Borne(Combinaison J1, Combinaison J2, int id_borne): Borne
+	+ getId(): int
+	+ getIdJoueur(): int
+	+ getCombinaison(int id_joueur): Combinaison
+        + determinerRevendiquation(): int
+        + isRevendique(): boolean
+	+ isRevendiquable(): boolean
+	+ ajouterCarte(int id_joueur, Carte carte): boolean
+	+ setlockType(boolean lock)
+	+ raisemaxNbrCard()
+        + toString(): String
 }
 
 class Frontiere{
-    - liste_bornes: List<Borne>
-    - gameover: boolean
-    + Frontiere(): Frontiere
-    + getBorne(int id_borne): Borne
-    + getNbrBornes(int id_joueur): int
-    + getSuccessifs(int id_joueur): int
-    + getBornesDispo(): List<Integer>
-    + is_gameover(): boolean
-    + getNbrBornesTotal(): int
-    + setGameOver()
-    + checkVictoire(): int
-    + toString(): string
+        - liste_bornes: List<Borne>
+        - gameover: boolean
+        + Frontiere(): Frontiere
+        + getBorne(int id_borne): Borne
+        + is_gameover(): boolean
+        + getNbrBornesTotal(): int
+	+ isFrontiereFull(): boolean
+	+ getrevendiquables(): List<Integer>
+        + setGameOver()
+        + checkVictoire(): int
+        + toString(): string
 }
 
 
 class Pioche{
-    - Card_list liste_carte
-    - int nbr_cartes
-    + Pioche(): Pioche
-    + shuffle()
-    + piocher(): Carte
-    + toString(): String
-
+	- type: Pioche_Type
+        + Pioche(): Pioche
+	+ Pioche(boolean isTactic): Pioche
+	+ isPiocheTactique(): boolean
 }
 
+Carte_Tactique --|> Carte
 Combinaison --|> Card_list
 Joueur --> Card_list
 Card_list --> Carte
 Borne --> Combinaison
 Frontiere --> Borne
-Pioche --> Card_list
+Pioche --|> Card_list
 
 
 @enduml
