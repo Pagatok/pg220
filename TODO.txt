@@ -1,6 +1,5 @@
 --------------v 2.1-----------------
 
-- Ne pas pouvoir jouer une carte tactique de plus que l'adversaire
 
 --------------v 2.2-----------------
 
@@ -12,6 +11,7 @@
 - supprimer les derniers appels à CarteTactiqueFactory
 - Supprimer les méthodes inutiles
 - Ajouter cartes tactiques de type ruse
+- Ne pas pouvoir jouer une carte tactique de plus que l'adversaire
 
 --------------v 2.3-----------------
 

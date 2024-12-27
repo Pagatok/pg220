@@ -1,2 +1,2 @@
-- On ne peut jouer qu'un seul joker par partie
-- La partie n'est plus limitée à 60 tours
+- Meilleure répartition du code pour la gestion des effets tactiques après avoir sélectionner une carte
+- Mettre une carte MODE_COMBAT ne prend plus un emplacement de carte clan

@@ -34,9 +34,12 @@ public class Tour {
 
         boolean lock = true;
         if(carte_jouee instanceof Carte_Tactique){
-            if(((Carte_Tactique)carte_jouee).getNom() == "Joker" & joueur_actif.hasPlayedJoker()){
-                vue.afficherMessage("Erreur: Vous ne pouvez joué qu'un seul joker dans une partie");
+            try{
+                EffetsTactiques.gestionTacticPostSelectCard(joueur_actif, autre_joueur, (Carte_Tactique)carte_jouee, vue);
+            }
+            catch(Exception e){
                 lock = false;
+                vue.afficherMessage(e.getMessage());
             }
         }
 
@@ -90,9 +93,12 @@ public class Tour {
 
         boolean lock = true;
         if(carte_jouee instanceof Carte_Tactique){
-            if(((Carte_Tactique)carte_jouee).getNom() == "Joker" & J.hasPlayedJoker()){
-                vue.afficherMessage("Erreur: Vous ne pouvez joué qu'un seul joker dans une partie");
+            try{
+                EffetsTactiques.gestionTacticPostSelectCard(J, passive_player, (Carte_Tactique)carte_jouee, vue);
+            }
+            catch(Exception e){
                 lock = false;
+                vue.afficherMessage(e.getMessage());
             }
         }
 
